@@ -8,6 +8,6 @@
 	"scripts": {
 		"start": "node build/bot.js",
 		"build": "npx tsc",
-		"auto": "git pull && npx tsc && node build/bot.js"
+		"auto": "git pull; npx tsc; node build/bot.js"
 	}
 }
