@@ -7,6 +7,6 @@
 	},
 	"scripts": {
 		"start": "node bot.js",
-		"compile": "npx tsc"
+		"build": "npx tsc"
 	}
 }
