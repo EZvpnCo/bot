@@ -5,8 +5,8 @@ const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 // Handle the /start command.
 bot.command("start", (ctx) => {
     const inlineKeyboard = new InlineKeyboard()
-        .text("Get random music", "random").row()
-    ctx.reply("خوش آمuihuhihدید :)", { reply_markup: inlineKeyboard, })
+        .text("Get Me", "random").row()
+    ctx.reply("fgdh :)", { reply_markup: inlineKeyboard, })
 });
 
 // Handle other messages.
