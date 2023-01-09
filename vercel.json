@@ -1,21 +1,8 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "bot.ts",
-            "use": "@vercel/node"
+    "functions": {
+        "api/bot.ts": {
+            "memory": 1024,
+            "maxDuration": 10
         }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "bot.ts",
-            "methods": [
-                "GET",
-                "POST",
-                "PUT",
-                "DELETE"
-            ]
-        }
-    ]
+    }
 }
