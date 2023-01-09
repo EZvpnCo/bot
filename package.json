@@ -4,9 +4,5 @@
 	},
 	"dependencies": {
 		"grammy": "^1.13.0"
-	},
-	"scripts": {
-		"start": "node bot.js",
-		"build": "npx tsc"
 	}
 }
