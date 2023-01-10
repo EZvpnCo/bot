@@ -43,8 +43,28 @@ const dailyPricesText = `🔻 تعرفه های پکیج Daily:
 پنج دیوایس، یک ماهه = 9$
 یک دیوایس، سه ماهه = 6$
 پنج دیوایس، سه ماهه = 27$`
-const tradePricesText = ''
-const gamePricesText = ''
+const tradePricesText = `🔻 تعرفه های پکیج Trade:
+
+سرویس Trade:
+یک دیوایس، یک ماهه = 2$
+پنج دیوایس، یک ماهه = 9$
+یک دیوایس، سه ماهه = 6$
+پنج دیوایس، سه ماهه = 27$
+
+سرویس +Trade:
+کمپانی، یک ماهه = 65$
+کمپانی (vip)، یک ماهه = 105$`
+const gamePricesText = `🔻 تعرفه های پکیج Game:
+
+سرویس Game:
+یک دیوایس، یک ماهه = 2$
+پنج دیوایس، یک ماهه = 9$
+یک دیوایس، سه ماهه = 6$
+پنج دیوایس، سه ماهه = 27$
+
+سرویس +Game:
+کلاب، یک ماهه = 65$
+کلاب (vip)، یک ماهه = 105$`
 
 // **********************************************************************************
 
@@ -75,17 +95,17 @@ bot.callbackQuery("prices", async (ctx) => {
 // dailyPrices
 bot.callbackQuery("dailyPrices", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply("dailyPrices");
+  await ctx.reply(dailyPricesText);
 });
 // tradePrices
 bot.callbackQuery("tradePrices", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply("tradePrices");
+  await ctx.reply(tradePricesText);
 });
 // gamePrices
 bot.callbackQuery("gamePrices", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply("gamePrices");
+  await ctx.reply(gamePricesText);
 });
 // =================> prices
 
