@@ -36,7 +36,33 @@ const downloadsKeyboard = new InlineKeyboard()
         .row()
         .text("صفحه اصلی", "mainMenu")
 
+const androidDownloadsKeyboard = new InlineKeyboard()
+        .text("Surfboard", "AndroidDownloads-Surfboard")
+        .row()
+        .text("OneClick", "AndroidDownloads-OneClick")
+        .row()
+        .text("OpenVPN", "AndroidDownloads-OpenVPN")
+        .row()
+        .text("صفحه اصلی", "mainMenu")
+
+const iOSDownloadsKeyboard = new InlineKeyboard()
+        .text("OneClick", "iOSDownloads-OneClick")
+        .row()
+        .text("صفحه اصلی", "mainMenu")
+
+const windowsDownloadsKeyboard = new InlineKeyboard()
+        .text("EZvpn", "WindowsDownloads-EZvpn")
+        .row()
+        .text("v2rayN", "WindowsDownloads-v2rayN")
+        .row()
+        .text("صفحه اصلی", "mainMenu")
+
+const macOSDownloadsKeyboard = new InlineKeyboard()
+        .text("صفحه اصلی", "mainMenu")
+
 const tutorialsKeyboard = new InlineKeyboard()
+        .text("Agent Panel", "AgentPanelTutorials")
+        .row()
         .text("Android", "AndroidTutorials")
         .row()
         .text("iOS", "iOSTutorials")
@@ -53,6 +79,8 @@ const androidTutorialsKeyboard = new InlineKeyboard()
         .text("OneClick", "AndroidTutorials-OneClick")
         .row()
         .text("L2tp", "AndroidTutorials-L2tp")
+        .row()
+        .text("OpenVPN", "AndroidTutorials-OpenVPN")
         .row()
         .text("صفحه اصلی", "mainMenu")
 
@@ -143,6 +171,7 @@ const diagnosisText = "از منو انتخاب کنید:"
 const faqText = "از منو انتخاب کنید:"
 
 const selectTutorialType = 'نوع آموزش مد نظر را انتخاب کنید:';
+const selectDownloadType = 'نوع را انتخاب کنید:';
 // **********************************************************************************
 
 
@@ -196,22 +225,69 @@ bot.callbackQuery("downloads", async (ctx) => {
 // AndroidDownloads
 bot.callbackQuery("AndroidDownloads", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply('AndroidDownloads');
+  await ctx.editMessageText(selectDownloadType, { reply_markup: androidDownloadsKeyboard });
+});
+bot.callbackQuery("AndroidDownloads-Surfboard", async (ctx) => {
+  await ctx.replyWithDocument(
+    "https://dl.ezvpn.co/downloads/android/Surfboard.apk",
+    { caption: `نام برنامه: Surfboard
+لینک دانلود برنامه(پلی استور):
+https://play.google.com/store/apps/details?id=com.getsurfboard&hl=en&gl=US` }
+  );
+  await ctx.answerCallbackQuery();
+});
+bot.callbackQuery("AndroidDownloads-OneClick", async (ctx) => {
+  await ctx.replyWithDocument(
+    "https://dl.ezvpn.co/downloads/android/OneClick.apk",
+    { caption: `نام برنامه: One Click
+لینک دانلود برنامه(پلی استور):
+https://play.google.com/store/apps/details?id=earth.oneclick&hl=en&gl=US` }
+  );
+  await ctx.answerCallbackQuery();
+});
+bot.callbackQuery("AndroidDownloads-OpenVPN", async (ctx) => {
+  await ctx.replyWithDocument(
+    "https://dl.ezvpn.co/downloads/android/OpenVPN.apk",
+    { caption: `نام برنامه: OpenVPN
+لینک دانلود برنامه(پلی استور):
+https://play.google.com/store/apps/details?id=net.openvpn.openvpn` }
+  );
+  await ctx.answerCallbackQuery();
 });
 // iOSDownloads
 bot.callbackQuery("iOSDownloads", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply('iOSDownloads');
+  await ctx.editMessageText(selectDownloadType, { reply_markup: iOSDownloadsKeyboard });
+});
+bot.callbackQuery("iOSDownloads-OneClick", async (ctx) => {
+  await ctx.reply(`نام برنامه: One Click
+لینک دانلود برنامه(اپ استور):
+https://apps.apple.com/us/app/oneclick-safe-easy-fast/id1545555197`);
+  await ctx.answerCallbackQuery();
 });
 // WindowsDownloads
 bot.callbackQuery("WindowsDownloads", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply('WindowsDownloads');
+  await ctx.editMessageText(selectDownloadType, { reply_markup: windowsDownloadsKeyboard });
+});
+bot.callbackQuery("WindowsDownloads-EZvpn", async (ctx) => {
+  await ctx.replyWithDocument(
+    "https://dl.ezvpn.co/downloads/windows/EZvpn.exe",
+    { caption: `نام برنامه: EZvpn` }
+  );
+  await ctx.answerCallbackQuery();
+});
+bot.callbackQuery("WindowsDownloads-v2rayN", async (ctx) => {
+  await ctx.replyWithDocument(
+    "https://dl.ezvpn.co/downloads/windows/v2rayN.zip",
+    { caption: `نام برنامه: v2rayN` }
+  );
+  await ctx.answerCallbackQuery();
 });
 // macOSDownloads
 bot.callbackQuery("macOSDownloads", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply('macOSDownloads');
+  await ctx.editMessageText(selectDownloadType, { reply_markup: macOSDownloadsKeyboard });
 });
 // =================> downloads
 
@@ -221,24 +297,87 @@ bot.callbackQuery("tutorials", async (ctx) => {
   await ctx.answerCallbackQuery();
   await ctx.editMessageText(tutorialsText, { reply_markup: tutorialsKeyboard });
 });
+// AgentPanelTutorials
+bot.callbackQuery("AgentPanelTutorials", async (ctx) => {
+  await ctx.answerCallbackQuery();
+});
 // AndroidTutorials
 bot.callbackQuery("AndroidTutorials", async (ctx) => {
   await ctx.answerCallbackQuery();
   await ctx.editMessageText(selectTutorialType, { reply_markup: androidTutorialsKeyboard });
 });
 bot.callbackQuery("AndroidTutorials-Surfboard", async (ctx) => {
+  await ctx.replyWithVideo(
+    "https://dl.ezvpn.co/tutorials/android/Surfboard.mp4",
+    { caption: "Android - Surfboard" }
+  );
   await ctx.answerCallbackQuery();
-  await ctx.replyWithVideo("https://dl.ezvpn.co/tutorials/android/Surfboard.mp4");
+});
+bot.callbackQuery("AndroidTutorials-OneClick", async (ctx) => {
+  await ctx.replyWithVideo(
+    "https://dl.ezvpn.co/tutorials/android/OneClick.mp4",
+    { caption: "Android - OneClick" }
+  );
+  await ctx.answerCallbackQuery();
+});
+bot.callbackQuery("AndroidTutorials-L2tp", async (ctx) => {
+  await ctx.replyWithVideo(
+    "https://dl.ezvpn.co/tutorials/android/L2tp.mp4",
+    { caption: "Android - L2tp" }
+  );
+  await ctx.answerCallbackQuery();
+});
+bot.callbackQuery("AndroidTutorials-OpenVPN", async (ctx) => {
+  await ctx.replyWithVideo(
+    "https://dl.ezvpn.co/tutorials/android/OpenVPN.mp4",
+    { caption: "Android - OpenVPN" }
+  );
+  await ctx.answerCallbackQuery();
 });
 // iOSTutorials
 bot.callbackQuery("iOSTutorials", async (ctx) => {
   await ctx.answerCallbackQuery();
   await ctx.editMessageText(selectTutorialType, { reply_markup: iOSTutorialsKeyboard });
 });
+bot.callbackQuery("iOSTutorials-OneClick", async (ctx) => {
+  await ctx.replyWithVideo(
+    "https://dl.ezvpn.co/tutorials/ios/OneClick.mp4",
+    { caption: "iOS - OneClick" }
+  );
+  await ctx.answerCallbackQuery();
+});
+bot.callbackQuery("iOSTutorials-L2tp", async (ctx) => {
+  await ctx.replyWithVideo(
+    "https://dl.ezvpn.co/tutorials/ios/L2tp.mp4",
+    { caption: "iOS - L2tp" }
+  );
+  await ctx.answerCallbackQuery();
+});
 // WindowsTutorials
 bot.callbackQuery("WindowsTutorials", async (ctx) => {
   await ctx.answerCallbackQuery();
   await ctx.editMessageText(selectTutorialType, { reply_markup: windowsTutorialsKeyboard });
+});
+bot.callbackQuery("WindowsTutorials-EZvpn", async (ctx) => {
+  await ctx.replyWithVideo(
+    "https://dl.ezvpn.co/tutorials/windows/EZvpn.mp4",
+    { caption: "Windows - EZvpn" }
+  );
+  await ctx.answerCallbackQuery();
+});
+bot.callbackQuery("WindowsTutorials-v2rayN", async (ctx) => {
+  await ctx.replyWithVideo(
+    "https://dl.ezvpn.co/tutorials/windows/v2rayN.mp4",
+    { caption: "Windows - v2rayN" }
+  );
+  await ctx.answerCallbackQuery();
+});
+bot.callbackQuery("WindowsTutorials-L2tp", async (ctx) => {
+  await ctx.replyWithVideo(
+    "https://dl.ezvpn.co/tutorials/windows/L2tp.mp4",
+    { caption: "Windows - L2tp" }
+  );
+  await ctx.answerCallbackQuery();
 });
 // macOSTutorials
 bot.callbackQuery("macOSTutorials", async (ctx) => {
