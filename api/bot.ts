@@ -1,4 +1,4 @@
-import { Bot, InlineKeyboard } from "grammy";
+import { Bot, InlineKeyboard, InputFile } from "grammy";
 
 const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 
@@ -410,7 +410,7 @@ bot.callbackQuery("WindowsTutorials", async (ctx) => {
 bot.callbackQuery("WindowsTutorials-EZvpn", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "BAACAgQAAxkBAAEBmEBjvYVXpkju_-qza50SuizAnGxFfAACXw0AAp0tKFFCm1xcYEhgvS0E",
+      new InputFile({ url: "https://dl.ezvpn.co/tutorials/windows/EZvpn.mp4" }),
       { caption: "Windows - EZvpn" }
     );
   } catch(e) {
