@@ -261,7 +261,7 @@ bot.callbackQuery("AndroidDownloads-OpenVPN", async (ctx) => {
 https://play.google.com/store/apps/details?id=net.openvpn.openvpn`
   try {
     await ctx.replyWithDocument(
-      "http://dl.ezvpn.co/downloads/android/OpenVPN1.apk",
+      new InputFile("http://dl.ezvpn.co/downloads/android/OpenVPN.apk", "OpenVPN"),
       { caption }
     );
   } catch(e) {
