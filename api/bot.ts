@@ -222,7 +222,14 @@ bot.callbackQuery("diagnosis", async (ctx) => {
   diagnosisList.map((v, index) => {
     diagnosisKeyboard.text(v[0], 'diagnosis-' + (index+1)).row()
   })
+  diagnosisKeyboard.text("صفحه اصلی", "mainMenu")
   await ctx.editMessageText(diagnosisText, { reply_markup: diagnosisKeyboard });
+});
+// diagnosis answer
+bot.callbackQuery(/(diagnosis-)\d{1,3}/g, async (ctx) => {
+  await ctx.answerCallbackQuery();
+  const q = parseInt(ctx.match.toString().replace("diagnosis-", "")) - 1
+  await ctx.reply(diagnosisList[q][1]);
 });
 // =================> diagnosis
 
@@ -234,13 +241,14 @@ bot.callbackQuery("faq", async (ctx) => {
   faqList.map((v, index) => {
     faqKeyboard.text(v[0], 'faq-' + (index+1)).row()
   })
+  faqKeyboard.text("صفحه اصلی", "mainMenu")
   await ctx.editMessageText(faqText, { reply_markup: faqKeyboard });
 });
 // faq answer
 bot.callbackQuery(/(faq-)\d{1,3}/g, async (ctx) => {
   await ctx.answerCallbackQuery();
-//   ctx.match;
-  await ctx.reply("تست" + ctx.match);
+  const q = parseInt(ctx.match.toString().replace("faq-", "")) - 1
+  await ctx.reply("faq" + q);
 });
 // =================> faq
 
