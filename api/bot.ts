@@ -4,9 +4,9 @@ const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 
 // Handle the /start command.
 bot.command("start", (ctx) => {
-    let text = 'سلام به <b>EZvpn</b> خوش اومدید :)';
-    text += '<br> جهت استفاده از ربات بر روی /menu کلیک کنید';
-    ctx.reply(text)
+    let text = 'سلام به *EZvpn* خوش اومدید :)';
+    text += '\nجهت استفاده از ربات بر روی /menu کلیک کنید';
+    ctx.reply(text, { parse_mode: "MarkdownV2" })
 });
 
 // Handle the /menu command.
@@ -27,7 +27,7 @@ bot.command("menu", (ctx) => {
         "EZvpnAdmin.t.me",
         )
     let text = 'از منوی زیر انتخاب کنید:';
-    ctx.reply(text, { reply_markup: inlineKeyboard, })
+    ctx.reply(text, { reply_markup: inlineKeyboard, parse_mode: "MarkdownV2" })
 });
 
 // Handle other messages.
