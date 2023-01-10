@@ -101,7 +101,7 @@ const Diagnosis = (bot: Bot) => {
     bot.callbackQuery(/(diagnosis:)\d{1,3}/g, async (ctx) => {
         await ctx.answerCallbackQuery();
         const q = parseInt(ctx.match.toString().replace("diagnosis:", "")) - 1;
-        await ctx.reply(`❓ ${diagnosisList[q][0]}\n\n💭 ${diagnosisList[q][1]}`);
+        await ctx.reply(`🛠 ${diagnosisList[q][0]}\n\n💭 ${diagnosisList[q][1]}`);
     });
 };
 
