@@ -6,10 +6,10 @@ const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 bot.command("start", (ctx) => {
     let text = 'سلام به <b>EZvpn</b> خوش اومدید :)';
     text += '<br> جهت استفاده از ربات بر روی /menu کلیک کنید';
-    ctx.reply(text, { parse_mode: "HTML" })
+    ctx.reply(text)
 });
 
-// Handle the /start command.
+// Handle the /menu command.
 bot.command("menu", (ctx) => {
     const inlineKeyboard = new InlineKeyboard()
         .text("تعرفه ها", "prices")
@@ -27,7 +27,7 @@ bot.command("menu", (ctx) => {
         "EZvpnAdmin.t.me",
         )
     let text = 'از منوی زیر انتخاب کنید:';
-    ctx.reply(text, { reply_markup: inlineKeyboard, parse_mode: "HTML" })
+    ctx.reply(text, { reply_markup: inlineKeyboard, })
 });
 
 // Handle other messages.
