@@ -60,7 +60,8 @@ bot.callbackQuery("prices", async (ctx) => {
 });
 // dailyPrices
 bot.callbackQuery("dailyPrices", async (ctx) => {
-  return await ctx.api.sendMessage(ctx.chat?.id!, "دیلی");
+  await ctx.answerCallbackQuery();
+  await ctx.reply("دیلی");
 });
 // =================> prices
 
