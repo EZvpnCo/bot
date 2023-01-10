@@ -1,4 +1,5 @@
 import { Bot, InlineKeyboard, InputFile } from "grammy";
+import Downloads from "./downloads";
 import MainMenu from "./mainMenu";
 import Prices from "./prices";
 
@@ -6,7 +7,7 @@ const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 
 MainMenu(bot);
 Prices(bot);
-
+Downloads(bot);
 // Define keyboards
 
 
