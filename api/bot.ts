@@ -228,29 +228,39 @@ bot.callbackQuery("AndroidDownloads", async (ctx) => {
   await ctx.editMessageText(selectDownloadType, { reply_markup: androidDownloadsKeyboard });
 });
 bot.callbackQuery("AndroidDownloads-Surfboard", async (ctx) => {
-  await ctx.replyWithDocument(
-    "https://dl.ezvpn.co/downloads/android/Surfboard.apk",
-    { caption: `نام برنامه: Surfboard
+  try {
+    await ctx.replyWithDocument(
+      "https://dl.ezvpn.co/downloads/android/Surfboard.apk",
+      {
+        caption: `نام برنامه: Surfboard
 لینک دانلود برنامه(پلی استور):
-https://play.google.com/store/apps/details?id=com.getsurfboard&hl=en&gl=US` }
-  );
+https://play.google.com/store/apps/details?id=com.getsurfboard&hl=en&gl=US`
+      }
+    );
+  } catch(e) {
+    console.log(e)
+  }
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("AndroidDownloads-OneClick", async (ctx) => {
   await ctx.replyWithDocument(
     "https://dl.ezvpn.co/downloads/android/OneClick.apk",
-    { caption: `نام برنامه: One Click
+    {
+      caption: `نام برنامه: One Click
 لینک دانلود برنامه(پلی استور):
-https://play.google.com/store/apps/details?id=earth.oneclick&hl=en&gl=US` }
+https://play.google.com/store/apps/details?id=earth.oneclick&hl=en&gl=US`
+    }
   );
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("AndroidDownloads-OpenVPN", async (ctx) => {
   await ctx.replyWithDocument(
     "https://dl.ezvpn.co/downloads/android/OpenVPN.apk",
-    { caption: `نام برنامه: OpenVPN
+    {
+      caption: `نام برنامه: OpenVPN
 لینک دانلود برنامه(پلی استور):
-https://play.google.com/store/apps/details?id=net.openvpn.openvpn` }
+https://play.google.com/store/apps/details?id=net.openvpn.openvpn`
+    }
   );
   await ctx.answerCallbackQuery();
 });
@@ -262,7 +272,8 @@ bot.callbackQuery("iOSDownloads", async (ctx) => {
 bot.callbackQuery("iOSDownloads-OneClick", async (ctx) => {
   await ctx.reply(`نام برنامه: One Click
 لینک دانلود برنامه(اپ استور):
-https://apps.apple.com/us/app/oneclick-safe-easy-fast/id1545555197`);
+https://apps.apple.com/us/app/oneclick-safe-easy-fast/id1545555197`
+, { disable_web_page_preview: true });
   await ctx.answerCallbackQuery();
 });
 // WindowsDownloads
