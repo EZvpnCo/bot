@@ -3,7 +3,7 @@ import { Bot, InlineKeyboard } from "grammy";
 const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 
 // Define keyboards
-const mainKeyboard = new InlineKeyboard()
+const mainMenuKeyboard = new InlineKeyboard()
         .text("تعرفه ها", "prices")
         .row()
         .text("دانلود", "downloads")
@@ -17,11 +17,23 @@ const mainKeyboard = new InlineKeyboard()
         .url("پشتیبانی", "EZvpnAdmin.t.me")
 
 const pricesKeyboard = new InlineKeyboard()
-        .text("وب گردی", "daily-prices")
+        .text("وب گردی", "dailyPrices")
         .row()
-        .text("گیم", "game-prices")
+        .text("گیم", "gamePrices")
         .row()
-        .text("ترید", "trade-prices")
+        .text("ترید", "tradePrices")
+        .row()
+        .text("صفحه اصلی", "mainMenu")
+
+
+
+// Define texts
+const mainMenuText = 'از منوی زیر انتخاب کنید:';
+
+
+
+// **********************************************************************************
+
 
 // Handle the /start command.
 bot.command("start", (ctx) => {
@@ -32,17 +44,26 @@ bot.command("start", (ctx) => {
 
 // Handle the /menu command.
 bot.command("menu", (ctx) => {
-    let text = 'از منوی زیر انتخاب کنید:';
-    ctx.reply(text, { reply_markup: mainKeyboard })
+    ctx.reply(mainMenuText, { reply_markup: mainMenuKeyboard })
 });
 
-// Handle other messages.
-bot.on("message", (ctx) => ctx.reply("میفهمم اما متوجه نمیشم :("));
+// mainMenu
+bot.callbackQuery("mainMenu", async (ctx) => {
+  await ctx.editMessageText(mainMenuText, { reply_markup: mainMenuKeyboard });
+});
 
+
+// =================> prices
 // prices
 bot.callbackQuery("prices", async (ctx) => {
   await ctx.editMessageText("نوع استفاده خود را انتخاب کنید:", { reply_markup: pricesKeyboard });
 });
+// dailyPrices
+bot.callbackQuery("dailyPrices", async (ctx) => {
+  return await ctx.api.sendMessage(ctx.chat?.id!, "دیلی");
+});
+// =================> prices
+
 
 // downloads
 bot.callbackQuery("downloads", async (ctx) => {
@@ -78,6 +99,11 @@ bot.callbackQuery("servers", async (ctx) => {
     text: "You were curious, indeed!",
   });
 });
+
+
+
+// Handle other messages.
+bot.on("message", (ctx) => ctx.reply("میفهمم اما متوجه نمیشم :("));
 
 // Start the bot.
 bot.start();
