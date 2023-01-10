@@ -239,7 +239,8 @@ bot.callbackQuery("faq", async (ctx) => {
 // faq answer
 bot.callbackQuery(/(faq-)\d{1,3}/g, async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply("تست");
+//   ctx.match;
+  await ctx.reply("تست" + ctx.match);
 });
 // =================> faq
 
