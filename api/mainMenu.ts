@@ -2,10 +2,10 @@ import { Bot, InlineKeyboard } from "grammy";
 
 const MainMenu = (bot: Bot) => {
     // text
-    const mainMenuText = "🔻 از منوی زیر انتخاب کنید:";
+    const text = "🔻 از منوی زیر انتخاب کنید:";
 
     // keyboard
-    const mainMenuKeyboard = new InlineKeyboard()
+    const keyboard = new InlineKeyboard()
         .text("💰 تعرفه‌ها", "prices")
         .row()
         .text("📥 مرکز دانلود", "downloads")
@@ -20,12 +20,13 @@ const MainMenu = (bot: Bot) => {
 
     // Handle the /menu command.
     bot.command("menu", (ctx) => {
-        ctx.reply(mainMenuText, { reply_markup: mainMenuKeyboard });
+        ctx.reply(text, { reply_markup: keyboard });
     });
 
     // mainMenu
     bot.callbackQuery("mainMenu", async (ctx) => {
-        await ctx.editMessageText(mainMenuText, { reply_markup: mainMenuKeyboard });
+        await ctx.editMessageText(text, { reply_markup: keyboard });
+        await ctx.answerCallbackQuery();
     });
 };
 

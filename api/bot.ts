@@ -1,14 +1,13 @@
 import { Bot, InlineKeyboard, InputFile } from "grammy";
 import MainMenu from "./mainMenu";
+import Prices from "./prices";
 
 const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 
 MainMenu(bot);
+Prices(bot);
 
 // Define keyboards
-
-const pricesKeyboard = new InlineKeyboard().text("وب گردی", "dailyPrices").row().text("ترید", "tradePrices").row().text("گیم", "gamePrices").row().text("صفحه اصلی", "mainMenu");
-
 const downloadsKeyboard = new InlineKeyboard().text("Android", "AndroidDownloads").row().text("iOS", "iOSDownloads").row().text("Windows", "WindowsDownloads").row().text("macOS", "macOSDownloads").row().text("صفحه اصلی", "mainMenu");
 
 const androidDownloadsKeyboard = new InlineKeyboard().text("Surfboard", "AndroidDownloads-Surfboard").row().text("OneClick", "AndroidDownloads-OneClick").row().text("OpenVPN", "AndroidDownloads-OpenVPN").row().text("صفحه اصلی", "mainMenu");
@@ -30,7 +29,8 @@ const windowsTutorialsKeyboard = new InlineKeyboard().text("EZvpn", "WindowsTuto
 const macOSTutorialsKeyboard = new InlineKeyboard().text("صفحه اصلی", "mainMenu");
 
 const faqList = [
-  ["آیا امکان تست قبل خرید وجود دارد؟", "بله با ارسال ایمیل به ادمین میتونید درخواست یه اکانت تست بدین . اکانت تست 1 روزه 1 کاربره و با حجم 1 گیگ میباشد و شامل تمام سرویس های معمولی و پلاس هست."],
+  ["آیا امکان تست قبل خرید وجود دارد؟",
+    "بله با ارسال ایمیل به ادمین میتونید درخواست یه اکانت تست بدین . اکانت تست 1 روزه 1 کاربره و با حجم 1 گیگ میباشد و شامل تمام سرویس های معمولی و پلاس هست."],
   ["فرق سرویس پلاس و معمولی چیه؟", "سرویس های پلاس موقع نت ملی هم کار میکنه و دارای تعداد بیشتری سرور هستن نسبت به سرویس معمولی"],
   ["سرویس ها چند کاربره هستن؟", "سرویس ها تک کاربره و 5 کاربره هستن در دوره های ماهانه و سه ماهه"],
   ["چطوری درامد دلاری داشته باشیم؟", "شما با فروش سرویس های ما میتونید 20 درصد رو به عنوان پورسانت مستقیما به کیف پول خودتون منتقل کنید. برای اینکار نیازه که حساب کاربری خودتون رو از یوزر به ایجنت تغییر بدین. برای اینکار با ادمین در ارتباط باشین."],
@@ -124,43 +124,6 @@ const diagnosisList = [
   ],
 ];
 
-// Define texts
-const pricesText = "نوع استفاده خود را انتخاب کنید:";
-const dailyPricesText = `🔻 تعرفه های پکیج Daily:
-
-سرویس Daily:
-یک کاربر، یک ماهه = 1$
-پنج کاربر، یک ماهه = 4.5$
-یک کاربر، سه ماهه = 3$
-پنج کاربر، سه ماهه = 13.5$
-
-سرویس +Daily:
-یک کاربر، یک ماهه = 2$
-پنج کاربر، یک ماهه = 9$
-یک کاربر، سه ماهه = 6$
-پنج کاربر، سه ماهه = 27$`;
-const tradePricesText = `🔻 تعرفه های پکیج Trade:
-
-سرویس Trade:
-یک کاربر، یک ماهه = 2$
-پنج کاربر، یک ماهه = 9$
-یک کاربر، سه ماهه = 6$
-پنج کاربر، سه ماهه = 27$
-
-سرویس +Trade:
-کمپانی، یک ماهه = 65$
-کمپانی (vip)، یک ماهه = 105$`;
-const gamePricesText = `🔻 تعرفه های پکیج Game:
-
-سرویس Game:
-یک کاربر، یک ماهه = 2$
-پنج کاربر، یک ماهه = 9$
-یک کاربر، سه ماهه = 6$
-پنج کاربر، سه ماهه = 27$
-
-سرویس +Game:
-کلاب، یک ماهه = 65$
-کلاب (vip)، یک ماهه = 105$`;
 
 const downloadsText = "پلتفورم مدنظر را انتخاب کنید:";
 const tutorialsText = "پلتفورم مدنظر را انتخاب کنید:";
@@ -195,29 +158,6 @@ bot.command("start", (ctx) => {
 جهت استفاده از ربات بر روی /menu کلیک کنید`;
   ctx.reply(text);
 });
-
-// =================> prices
-// prices
-bot.callbackQuery("prices", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(pricesText, { reply_markup: pricesKeyboard });
-});
-// dailyPrices
-bot.callbackQuery("dailyPrices", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.reply(dailyPricesText);
-});
-// tradePrices
-bot.callbackQuery("tradePrices", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.reply(tradePricesText);
-});
-// gamePrices
-bot.callbackQuery("gamePrices", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.reply(gamePricesText);
-});
-// =================> prices
 
 // =================> downloads
 // downloads
