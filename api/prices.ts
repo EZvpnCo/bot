@@ -9,6 +9,10 @@ const Prices = (bot: Bot) => {
         .text("Daily", "prices:daily")
         .text("Trade", "prices:trade")
         .text("Game", "prices:game")
+        .row()
+        .text("صفحه اصلی", "mainMenu");
+    const backKeyboard = new InlineKeyboard()
+        .text("برگشت", "prices")
         .text("صفحه اصلی", "mainMenu");
 
     // Handle the /prices command.
@@ -42,7 +46,7 @@ const Prices = (bot: Bot) => {
 پنج کاربره | سه ماهه | 27$
 `
     bot.callbackQuery("prices:daily", async (ctx) => {
-        await ctx.reply(dailyText);
+        await ctx.editMessageText(dailyText, { reply_markup: backKeyboard });
         await ctx.answerCallbackQuery();
     });
     // prices:trade
@@ -65,7 +69,7 @@ const Prices = (bot: Bot) => {
 یک ماهه (ویژه) | 105$
 `
     bot.callbackQuery("prices:trade", async (ctx) => {
-        await ctx.reply(tradeText);
+        await ctx.editMessageText(tradeText, { reply_markup: backKeyboard });
         await ctx.answerCallbackQuery();
     });
     // prices:game
@@ -88,7 +92,7 @@ const Prices = (bot: Bot) => {
 یک ماهه (ویژه) | 105$
 `
     bot.callbackQuery("prices:game", async (ctx) => {
-        await ctx.reply(gameText);
+        await ctx.editMessageText(gameText, { reply_markup: backKeyboard });
         await ctx.answerCallbackQuery();
     });
 };
