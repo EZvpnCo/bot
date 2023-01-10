@@ -56,7 +56,7 @@ const Faq = (bot: Bot) => {
     // keyboard
     const keyboard = new InlineKeyboard()
     faqList.map((v, index) => {
-        keyboard.text(v[0], "faq-" + (index + 1)).row();
+        keyboard.text(v[0], "faq:" + (index + 1)).row();
     });
     keyboard.text("صفحه اصلی", "mainMenu");
 
@@ -71,9 +71,9 @@ const Faq = (bot: Bot) => {
     });
 
     // faq answer
-    bot.callbackQuery(/(faq-)\d{1,3}/g, async (ctx) => {
+    bot.callbackQuery(/(faq:)\d{1,3}/g, async (ctx) => {
         await ctx.answerCallbackQuery();
-        const q = parseInt(ctx.match.toString().replace("faq-", "")) - 1;
+        const q = parseInt(ctx.match.toString().replace("faq:", "")) - 1;
         await ctx.reply(`❓ ${faqList[q][0]}\n\n💭 ${faqList[q][1]}`);
     });
 };
