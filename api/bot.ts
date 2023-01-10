@@ -410,7 +410,7 @@ bot.callbackQuery("WindowsTutorials", async (ctx) => {
 bot.callbackQuery("WindowsTutorials-EZvpn", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "https://dl.ezvpn.co/tutorials/windows/EZvpn.mp4",
+      "BAACAgQAAxkBAAEBmEBjvYVXpkju_-qza50SuizAnGxFfAACXw0AAp0tKFFCm1xcYEhgvS0E",
       { caption: "Windows - EZvpn" }
     );
   } catch(e) {
