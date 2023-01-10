@@ -47,13 +47,32 @@ const Downloads = (bot: Bot) => {
         .url('دانلود از Play Store', 'https://play.google.com/store/apps/details?id=com.getsurfboard')
         .row()
         .url('دانلود از EZvpn', 'http://dl.ezvpn.co/downloads/android/Surfboard.apk')
-        .row()
-        .text("برگشت", "downloads:android")
-        .text("صفحه اصلی", "mainMenu");
-    const android_surfboard = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/Surfboard.apk" });
+    const android_surfboard_file = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/Surfboard.apk" });
     bot.callbackQuery("downloads:android:surfboard", async (ctx) => {
         const text = `🎲 نام برنامه: Surfboard`
-        await ctx.replyWithDocument(android_surfboard, { caption: text, reply_markup: android_surfboard_keyboard });
+        await ctx.replyWithDocument(android_surfboard_file, { caption: text, reply_markup: android_surfboard_keyboard });
+        await ctx.answerCallbackQuery();
+    });
+    // ===> android:oneclick
+    const android_oneclick_keyboard = new InlineKeyboard()
+        .url('دانلود از Play Store', 'https://play.google.com/store/apps/details?id=earth.oneclick')
+        .row()
+        .url('دانلود از EZvpn', 'http://dl.ezvpn.co/downloads/android/OneClick.apk')
+    const android_oneclick_file = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OneClick.apk" });
+    bot.callbackQuery("downloads:android:oneclick", async (ctx) => {
+        const text = `🎲 نام برنامه: One Click`
+        await ctx.replyWithDocument(android_oneclick_file, { caption: text, reply_markup: android_oneclick_keyboard });
+        await ctx.answerCallbackQuery();
+    });
+    // ===> android:openvpn
+    const android_openvpn_keyboard = new InlineKeyboard()
+        .url('دانلود از Play Store', 'https://play.google.com/store/apps/details?id=net.openvpn.openvpn')
+        .row()
+        .url('دانلود از EZvpn', 'http://dl.ezvpn.co/downloads/android/OpenVPN.apk')
+    const android_openvpn_file = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OpenVPN.apk" });
+    bot.callbackQuery("downloads:android:openvpn", async (ctx) => {
+        const text = `🎲 نام برنامه: One Click`
+        await ctx.replyWithDocument(android_openvpn_file, { caption: text, reply_markup: android_openvpn_keyboard });
         await ctx.answerCallbackQuery();
     });
 
