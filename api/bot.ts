@@ -1,236 +1,131 @@
 import { Bot, InlineKeyboard, InputFile } from "grammy";
+import MainMenu from "./mainMenu";
 
 const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 
+MainMenu(bot);
+
 // Define keyboards
-const mainMenuKeyboard = new InlineKeyboard()
-        .text("تعرفه ها", "prices")
-        .row()
-        .text("دانلود", "downloads")
-        .text("آموزش ها", "tutorials")
-        .row()
-        .text("عیب یابی", "diagnosis")
-        .text("سوالات متداول", "faq")
-        .row()
-        .text("لیست سرورها", "servers")
-        .row()
-        .url("پشتیبانی", "EZvpnAdmin.t.me")
 
-const pricesKeyboard = new InlineKeyboard()
-        .text("وب گردی", "dailyPrices")
-        .row()
-        .text("ترید", "tradePrices")
-        .row()
-        .text("گیم", "gamePrices")
-        .row()
-        .text("صفحه اصلی", "mainMenu")
+const pricesKeyboard = new InlineKeyboard().text("وب گردی", "dailyPrices").row().text("ترید", "tradePrices").row().text("گیم", "gamePrices").row().text("صفحه اصلی", "mainMenu");
 
-const downloadsKeyboard = new InlineKeyboard()
-        .text("Android", "AndroidDownloads")
-        .row()
-        .text("iOS", "iOSDownloads")
-        .row()
-        .text("Windows", "WindowsDownloads")
-        .row()
-        .text("macOS", "macOSDownloads")
-        .row()
-        .text("صفحه اصلی", "mainMenu")
+const downloadsKeyboard = new InlineKeyboard().text("Android", "AndroidDownloads").row().text("iOS", "iOSDownloads").row().text("Windows", "WindowsDownloads").row().text("macOS", "macOSDownloads").row().text("صفحه اصلی", "mainMenu");
 
-const androidDownloadsKeyboard = new InlineKeyboard()
-        .text("Surfboard", "AndroidDownloads-Surfboard")
-        .row()
-        .text("OneClick", "AndroidDownloads-OneClick")
-        .row()
-        .text("OpenVPN", "AndroidDownloads-OpenVPN")
-        .row()
-        .text("صفحه اصلی", "mainMenu")
+const androidDownloadsKeyboard = new InlineKeyboard().text("Surfboard", "AndroidDownloads-Surfboard").row().text("OneClick", "AndroidDownloads-OneClick").row().text("OpenVPN", "AndroidDownloads-OpenVPN").row().text("صفحه اصلی", "mainMenu");
 
-const iOSDownloadsKeyboard = new InlineKeyboard()
-        .text("OneClick", "iOSDownloads-OneClick")
-        .row()
-        .text("صفحه اصلی", "mainMenu")
+const iOSDownloadsKeyboard = new InlineKeyboard().text("OneClick", "iOSDownloads-OneClick").row().text("صفحه اصلی", "mainMenu");
 
-const windowsDownloadsKeyboard = new InlineKeyboard()
-        .text("EZvpn", "WindowsDownloads-EZvpn")
-        .row()
-        .text("v2rayN", "WindowsDownloads-v2rayN")
-        .row()
-        .text("صفحه اصلی", "mainMenu")
+const windowsDownloadsKeyboard = new InlineKeyboard().text("EZvpn", "WindowsDownloads-EZvpn").row().text("v2rayN", "WindowsDownloads-v2rayN").row().text("صفحه اصلی", "mainMenu");
 
-const macOSDownloadsKeyboard = new InlineKeyboard()
-        .text("صفحه اصلی", "mainMenu")
+const macOSDownloadsKeyboard = new InlineKeyboard().text("صفحه اصلی", "mainMenu");
 
-const tutorialsKeyboard = new InlineKeyboard()
-        .text("Agent Panel", "AgentPanelTutorials")
-        .row()
-        .text("Android", "AndroidTutorials")
-        .row()
-        .text("iOS", "iOSTutorials")
-        .row()
-        .text("Windows", "WindowsTutorials")
-        .row()
-        .text("macOS", "macOSTutorials")
-        .row()
-        .text("صفحه اصلی", "mainMenu")
+const tutorialsKeyboard = new InlineKeyboard().text("Agent Panel", "AgentPanelTutorials").row().text("Android", "AndroidTutorials").row().text("iOS", "iOSTutorials").row().text("Windows", "WindowsTutorials").row().text("macOS", "macOSTutorials").row().text("صفحه اصلی", "mainMenu");
 
-const androidTutorialsKeyboard = new InlineKeyboard()
-        .text("Surfboard", "AndroidTutorials-Surfboard")
-        .row()
-        .text("OneClick", "AndroidTutorials-OneClick")
-        .row()
-        .text("L2tp", "AndroidTutorials-L2tp")
-        .row()
-        .text("OpenVPN", "AndroidTutorials-OpenVPN")
-        .row()
-        .text("صفحه اصلی", "mainMenu")
+const androidTutorialsKeyboard = new InlineKeyboard().text("Surfboard", "AndroidTutorials-Surfboard").row().text("OneClick", "AndroidTutorials-OneClick").row().text("L2tp", "AndroidTutorials-L2tp").row().text("OpenVPN", "AndroidTutorials-OpenVPN").row().text("صفحه اصلی", "mainMenu");
 
-const iOSTutorialsKeyboard = new InlineKeyboard()
-        .text("OneClick", "iOSTutorials-OneClick")
-        .row()
-        .text("L2tp", "iOSTutorials-L2tp")
-        .row()
-        .text("صفحه اصلی", "mainMenu")
+const iOSTutorialsKeyboard = new InlineKeyboard().text("OneClick", "iOSTutorials-OneClick").row().text("L2tp", "iOSTutorials-L2tp").row().text("صفحه اصلی", "mainMenu");
 
-const windowsTutorialsKeyboard = new InlineKeyboard()
-        .text("EZvpn", "WindowsTutorials-EZvpn")
-        .row()
-        .text("v2rayN", "WindowsTutorials-v2rayN")
-        .row()
-        .text("L2tp", "WindowsTutorials-L2tp")
-        .row()
-        .text("صفحه اصلی", "mainMenu")
+const windowsTutorialsKeyboard = new InlineKeyboard().text("EZvpn", "WindowsTutorials-EZvpn").row().text("v2rayN", "WindowsTutorials-v2rayN").row().text("L2tp", "WindowsTutorials-L2tp").row().text("صفحه اصلی", "mainMenu");
 
-const macOSTutorialsKeyboard = new InlineKeyboard()
-        .text("صفحه اصلی", "mainMenu")
+const macOSTutorialsKeyboard = new InlineKeyboard().text("صفحه اصلی", "mainMenu");
 
 const faqList = [
-    [
-        "آیا امکان تست قبل خرید وجود دارد؟",
-        "بله با ارسال ایمیل به ادمین میتونید درخواست یه اکانت تست بدین . اکانت تست 1 روزه 1 کاربره و با حجم 1 گیگ میباشد و شامل تمام سرویس های معمولی و پلاس هست.",
-    ],
-    [
-        "فرق سرویس پلاس و معمولی چیه؟",
-        "سرویس های پلاس موقع نت ملی هم کار میکنه و دارای تعداد بیشتری سرور هستن نسبت به سرویس معمولی",
-    ],
-    [
-        "سرویس ها چند کاربره هستن؟",
-        "سرویس ها تک کاربره و 5 کاربره هستن در دوره های ماهانه و سه ماهه",
-    ],
-    [
-        "چطوری درامد دلاری داشته باشیم؟",
-        "شما با فروش سرویس های ما میتونید 20 درصد رو به عنوان پورسانت مستقیما به کیف پول خودتون منتقل کنید. برای اینکار نیازه که حساب کاربری خودتون رو از یوزر به ایجنت تغییر بدین. برای اینکار با ادمین در ارتباط باشین.",
-    ],
-    [
-        "بر روی چه دستگاه هایی کار میکنه؟",
-        "بر روی تمامی دستگاه ها قابلیت نصب و فعالسازی وجود داره",
-    ],
-    [
-        "بر روی چه اینترنتی کار میکنه؟",
-        "روی تمامی اینترنت ها تست شده و کار میکنه ولی با توجه به اختلالات موجود قبل از خرید حتما اکانت تست دریافت کنید و تست کنید.",
-    ],
-    [
-        "تعرفه ها چند ماهه هستن؟",
-        "سرویس ها در بازه های زمانی یک ماهه و سه ماهه ارائه میشه",
-    ],
-    [
-        "از کدوم کشورا سرور دارین؟",
-        "فعلا از کشور های آلمان هلند فرانسه آمریکا ترکیه بحرین آذربایجان و ... موجوده",
-    ],
-    [
-        "با چه نرم افزاری کار میکنه؟",
-        `برای اندروید: surfboard – v2rayng – one click
+  ["آیا امکان تست قبل خرید وجود دارد؟", "بله با ارسال ایمیل به ادمین میتونید درخواست یه اکانت تست بدین . اکانت تست 1 روزه 1 کاربره و با حجم 1 گیگ میباشد و شامل تمام سرویس های معمولی و پلاس هست."],
+  ["فرق سرویس پلاس و معمولی چیه؟", "سرویس های پلاس موقع نت ملی هم کار میکنه و دارای تعداد بیشتری سرور هستن نسبت به سرویس معمولی"],
+  ["سرویس ها چند کاربره هستن؟", "سرویس ها تک کاربره و 5 کاربره هستن در دوره های ماهانه و سه ماهه"],
+  ["چطوری درامد دلاری داشته باشیم؟", "شما با فروش سرویس های ما میتونید 20 درصد رو به عنوان پورسانت مستقیما به کیف پول خودتون منتقل کنید. برای اینکار نیازه که حساب کاربری خودتون رو از یوزر به ایجنت تغییر بدین. برای اینکار با ادمین در ارتباط باشین."],
+  ["بر روی چه دستگاه هایی کار میکنه؟", "بر روی تمامی دستگاه ها قابلیت نصب و فعالسازی وجود داره"],
+  ["بر روی چه اینترنتی کار میکنه؟", "روی تمامی اینترنت ها تست شده و کار میکنه ولی با توجه به اختلالات موجود قبل از خرید حتما اکانت تست دریافت کنید و تست کنید."],
+  ["تعرفه ها چند ماهه هستن؟", "سرویس ها در بازه های زمانی یک ماهه و سه ماهه ارائه میشه"],
+  ["از کدوم کشورا سرور دارین؟", "فعلا از کشور های آلمان هلند فرانسه آمریکا ترکیه بحرین آذربایجان و ... موجوده"],
+  [
+    "با چه نرم افزاری کار میکنه؟",
+    `برای اندروید: surfboard – v2rayng – one click
 برای آیفون: one click – fair -rocket tool – shadowlink
 برای ویندوز: ezvpn – v2rayn – qv2ray`,
-    ],
-    [
-        "برای گیم سرویس موجوده؟",
-        "بله برای گیم در لوکیشن های ترکیه آلمان و بحرین موجوده",
-    ],
-    [
-        "برای ترید سرویس موجوده؟",
-        "بله برای ترید سرور های ترکیه موجود هستن بدون LEAK DNS",
-    ],
-]
+  ],
+  ["برای گیم سرویس موجوده؟", "بله برای گیم در لوکیشن های ترکیه آلمان و بحرین موجوده"],
+  ["برای ترید سرویس موجوده؟", "بله برای ترید سرور های ترکیه موجود هستن بدون LEAK DNS"],
+];
 
 const diagnosisList = [
-    [
-        "(iOS) سرور ها ایمپورت نمیشن",
-        `راه حل 1: مطمئن باشید که گزینه مربوط به سابزکریپشن رو انتخاب کردین
+  [
+    "(iOS) سرور ها ایمپورت نمیشن",
+    `راه حل 1: مطمئن باشید که گزینه مربوط به سابزکریپشن رو انتخاب کردین
 راه حل 2: مطمئن باشین که لینک رو درست کپی کردین و هیچ کارکتر یا جای خالی اضافی رو کپی نکرده باشین.
 راه حل 3: مطمئن باشین که آخر لینک اشتراک شما با sub=3 به اتمام رسیده باشه.
 راه حل 4: مطمئن باشین که vpn روشن نداشته باشین.`,
-    ],
-    [
-        "(iOS) وصل میشه ولی کار نمیکنه",
-        `راه حل 1: سرور هایی که TJ دارن داخل اسمشون رو تست کنید .
+  ],
+  [
+    "(iOS) وصل میشه ولی کار نمیکنه",
+    `راه حل 1: سرور هایی که TJ دارن داخل اسمشون رو تست کنید .
 راه حل 2: برنامه های دیگه ای رو تست کنید. از قسمت اموزش و دانلود میتونید برنامه های دیگه ای رو ببینید`,
-    ],
-    [
-        "(iOS) سرورها پینگ نمیدن",
-        `راه حل 1: با اینترنت دیگه ای تست بفرمایید
+  ],
+  [
+    "(iOS) سرورها پینگ نمیدن",
+    `راه حل 1: با اینترنت دیگه ای تست بفرمایید
 راه حل 2: لینک اشتراک رو پاک کنید و مجدد اضافه کنید.
 راه حل 3: زمان و حجم باقی مانده حسابتون رو چک بفرمایید.
 راه حل 4: مطمعن باشین که با دستگاه دیگه ای به اشتراکتون وصل نیستید.`,
-    ],
-    [
-        "(Android) سرور ها ایمپورت نمیشن",
-        `راه حل 1: مطمئن باشید که گزینه مربوط به سابزکریپشن رو انتخاب کردین
+  ],
+  [
+    "(Android) سرور ها ایمپورت نمیشن",
+    `راه حل 1: مطمئن باشید که گزینه مربوط به سابزکریپشن رو انتخاب کردین
 راه حل 2: مطمئن باشین که لینک رو درست کپی کردین و هیچ کارکتر یا جای خالی اضافی رو کپی نکرده باشین.
 راه حل 3: برای برنامه surfboard مطمئن باشید که آخر لینک اشتراکتون با surfboard=1 و برای بقیه برنامه ها و دستگاه ها با sub=3 به اتمام رسیده باشه.
 راه حل 4: مطمئن باشین که vpn روشن نداشته باشین.`,
-    ],
-    [
-        "(Android) وصل میشه ولی کار نمیکنه",
-        `راه حل 1: سرور هایی که TJ دارن داخل اسمشون رو تست کنید .
+  ],
+  [
+    "(Android) وصل میشه ولی کار نمیکنه",
+    `راه حل 1: سرور هایی که TJ دارن داخل اسمشون رو تست کنید .
 راه حل 2: برنامه های دیگه ای رو تست کنید. از قسمت اموزش و دانلود میتونید برنامه های دیگه ای رو ببینید
 راه حل 3: نوع کانکشن رو روی global یا سراسری قرار بدین و چک کنید.
 راه حل 4: پروفایل خودتون رو یک بار آپدیت کنید.`,
-    ],
-    [
-        "(Android) سرورها پینگ نمیدن",
-        `راه حل 1: با اینترنت دیگه ای تست بفرمایید
+  ],
+  [
+    "(Android) سرورها پینگ نمیدن",
+    `راه حل 1: با اینترنت دیگه ای تست بفرمایید
 راه حل 2: لینک اشتراک رو پاک کنید و مجدد اضافه کنید.
 راه حل 3: زمان و حجم باقی مانده حسابتون رو چک بفرمایید.
 راه حل 4: مطمئن باشین که با دستگاه دیگه ای به اشتراکتون وصل نیستید.`,
-    ],
-    [
-        "(Android) L2tp تند تند قطع میشه",
-        `راه حل 1: مطمعن باشید که به vpn  دیگه ای وصل نباشید
+  ],
+  [
+    "(Android) L2tp تند تند قطع میشه",
+    `راه حل 1: مطمعن باشید که به vpn  دیگه ای وصل نباشید
 راه حل 2: برنامه های دیگه ای رو تست بفرمایید . از قسمت اموزش و دانلود میتونید برنامه های دیگه ای رو ببینید.
 راه حل 3: از پشتیبانی درخواست فایل سرتیفیکیت کنین.`,
-    ],
-    [
-        "(Windows) سرور ها ایمپورت نمیشن",
-        `راه حل 1: مطمئن باشید که گزینه مربوط به سابزکریپشن رو انتخاب کردین
+  ],
+  [
+    "(Windows) سرور ها ایمپورت نمیشن",
+    `راه حل 1: مطمئن باشید که گزینه مربوط به سابزکریپشن رو انتخاب کردین
 راه حل 2: مطمئن باشین که لینک رو درست کپی کردین و هیچ کارکتر یا جای خالی اضافی رو کپی نکرده باشین.
 راه حل 3: مطمئن باشید که آخر لینک اشتراکتون با sub=3 به اتمام رسیده باشه.
 راه حل 4: مطمئن باشین که vpn روشن نداشته باشین.`,
-    ],
-    [
-        "(Windows) وصل میشه ولی کار نمیکنه",
-        `راه حل 1: سرور هایی که TJ دارن داخل اسمشون رو تست کنید .
+  ],
+  [
+    "(Windows) وصل میشه ولی کار نمیکنه",
+    `راه حل 1: سرور هایی که TJ دارن داخل اسمشون رو تست کنید .
 راه حل 2: برنامه های دیگه ای رو تست کنید. از قسمت اموزش و دانلود میتونید برنامه های دیگه ای رو ببینید
 راه حل 3: نوع کانکشن رو روی global یا سراسری قرار بدین و چک کنید.
 راه حل 4: پروفایل خودتون رو یک بار آپدیت کنید.`,
-    ],
-    [
-        "(Windows) سرورها پینگ نمیدن",
-        `راه حل 1: با اینترنت دیگه ای تست بفرمایید
+  ],
+  [
+    "(Windows) سرورها پینگ نمیدن",
+    `راه حل 1: با اینترنت دیگه ای تست بفرمایید
 راه حل 2: لینک اشتراک رو پاک کنید و مجدد اضافه کنید.
 راه حل 3: زمان و حجم باقی مانده حسابتون رو چک بفرمایید.
 راه حل 4: مطمئن باشین که با دستگاه دیگه ای به اشتراکتون وصل نیستید.`,
-    ],
-    [
-        "(Windows) L2tp تند تند قطع میشه",
-        `راه حل 1: مطمئن باشید که به vpn  دیگه ای وصل نباشید
+  ],
+  [
+    "(Windows) L2tp تند تند قطع میشه",
+    `راه حل 1: مطمئن باشید که به vpn  دیگه ای وصل نباشید
 راه حل 2: برنامه های دیگه ای رو تست بفرمایید . از قسمت اموزش و دانلود میتونید برنامه های دیگه ای رو ببینید.
 راه حل 3: از پشتیبانی درخواست فایل سرتیفیکیت کنین.`,
-    ],
-]
+  ],
+];
 
 // Define texts
-const mainMenuText = 'از منوی زیر انتخاب کنید:';
-const pricesText = "نوع استفاده خود را انتخاب کنید:"
+const pricesText = "نوع استفاده خود را انتخاب کنید:";
 const dailyPricesText = `🔻 تعرفه های پکیج Daily:
 
 سرویس Daily:
@@ -243,7 +138,7 @@ const dailyPricesText = `🔻 تعرفه های پکیج Daily:
 یک کاربر، یک ماهه = 2$
 پنج کاربر، یک ماهه = 9$
 یک کاربر، سه ماهه = 6$
-پنج کاربر، سه ماهه = 27$`
+پنج کاربر، سه ماهه = 27$`;
 const tradePricesText = `🔻 تعرفه های پکیج Trade:
 
 سرویس Trade:
@@ -254,7 +149,7 @@ const tradePricesText = `🔻 تعرفه های پکیج Trade:
 
 سرویس +Trade:
 کمپانی، یک ماهه = 65$
-کمپانی (vip)، یک ماهه = 105$`
+کمپانی (vip)، یک ماهه = 105$`;
 const gamePricesText = `🔻 تعرفه های پکیج Game:
 
 سرویس Game:
@@ -265,18 +160,17 @@ const gamePricesText = `🔻 تعرفه های پکیج Game:
 
 سرویس +Game:
 کلاب، یک ماهه = 65$
-کلاب (vip)، یک ماهه = 105$`
+کلاب (vip)، یک ماهه = 105$`;
 
-const downloadsText = "پلتفورم مدنظر را انتخاب کنید:"
-const tutorialsText = "پلتفورم مدنظر را انتخاب کنید:"
+const downloadsText = "پلتفورم مدنظر را انتخاب کنید:";
+const tutorialsText = "پلتفورم مدنظر را انتخاب کنید:";
 
-const diagnosisText = "از منو انتخاب کنید:"
-const faqText = "از منو انتخاب کنید:"
+const diagnosisText = "از منو انتخاب کنید:";
+const faqText = "از منو انتخاب کنید:";
 
-const selectTutorialType = 'نوع آموزش مد نظر را انتخاب کنید:';
-const selectDownloadType = 'نوع را انتخاب کنید:';
+const selectTutorialType = "نوع آموزش مد نظر را انتخاب کنید:";
+const selectDownloadType = "نوع را انتخاب کنید:";
 // **********************************************************************************
-
 
 // ===> files
 const androidSurfboard = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/Surfboard.apk" });
@@ -295,25 +189,12 @@ const windowsEZvpnTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/windo
 const windowsV2rayNTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/windows/v2rayN.mp4" });
 const windowsL2tpTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/windows/L2tp.mp4" });
 
-
-
 // Handle the /start command.
 bot.command("start", (ctx) => {
-    let text = 'سلام به *EZvpn* خوش اومدید :)';
-    text += '\nجهت استفاده از ربات بر روی /menu کلیک کنید';
-    ctx.reply(text)
+  const text = `سلام به *EZvpn* خوش اومدید :)
+جهت استفاده از ربات بر روی /menu کلیک کنید`;
+  ctx.reply(text);
 });
-
-// Handle the /menu command.
-bot.command("menu", (ctx) => {
-    ctx.reply(mainMenuText, { reply_markup: mainMenuKeyboard })
-});
-
-// mainMenu
-bot.callbackQuery("mainMenu", async (ctx) => {
-  await ctx.editMessageText(mainMenuText, { reply_markup: mainMenuKeyboard });
-});
-
 
 // =================> prices
 // prices
@@ -350,35 +231,35 @@ bot.callbackQuery("AndroidDownloads", async (ctx) => {
   await ctx.editMessageText(selectDownloadType, { reply_markup: androidDownloadsKeyboard });
 });
 bot.callbackQuery("AndroidDownloads-Surfboard", async (ctx) => {
-    const caption = `نام برنامه: Surfboard
+  const caption = `نام برنامه: Surfboard
 لینک دانلود برنامه(پلی استور):
-https://play.google.com/store/apps/details?id=com.getsurfboard&hl=en&gl=US`
+https://play.google.com/store/apps/details?id=com.getsurfboard&hl=en&gl=US`;
   try {
     await ctx.replyWithDocument(androidSurfboard, { caption });
-  } catch(e) {
-    console.log(e)
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("AndroidDownloads-OneClick", async (ctx) => {
   const caption = `نام برنامه: One Click
 لینک دانلود برنامه(پلی استور):
-https://play.google.com/store/apps/details?id=earth.oneclick&hl=en&gl=US`
+https://play.google.com/store/apps/details?id=earth.oneclick&hl=en&gl=US`;
   try {
     await ctx.replyWithDocument(androidOneClick, { caption });
-  } catch(e) {
-    console.log(e)
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("AndroidDownloads-OpenVPN", async (ctx) => {
-    const caption = `نام برنامه: OpenVPN
+  const caption = `نام برنامه: OpenVPN
 لینک دانلود برنامه(پلی استور):
-https://play.google.com/store/apps/details?id=net.openvpn.openvpn`
+https://play.google.com/store/apps/details?id=net.openvpn.openvpn`;
   try {
     await ctx.replyWithDocument(androidOpenVPN, { caption });
-  } catch(e) {
-    console.log(e)
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
@@ -389,10 +270,10 @@ bot.callbackQuery("iOSDownloads", async (ctx) => {
 });
 bot.callbackQuery("iOSDownloads-OneClick", async (ctx) => {
   await ctx.reply(
-`نام برنامه: One Click
+    `نام برنامه: One Click
 لینک دانلود برنامه(اپ استور):
 https://apps.apple.com/us/app/oneclick-safe-easy-fast/id1545555197`,
-{ disable_web_page_preview: true }
+    { disable_web_page_preview: true }
   );
   await ctx.answerCallbackQuery();
 });
@@ -403,7 +284,7 @@ bot.callbackQuery("WindowsDownloads", async (ctx) => {
 });
 bot.callbackQuery("WindowsDownloads-EZvpn", async (ctx) => {
   await ctx.reply(
-`نام برنامه: EZvpn
+    `نام برنامه: EZvpn
 لینک دانلود برنامه:
 http://dl.ezvpn.co/downloads/windows/EZvpn.exe`
   );
@@ -411,7 +292,7 @@ http://dl.ezvpn.co/downloads/windows/EZvpn.exe`
 });
 bot.callbackQuery("WindowsDownloads-v2rayN", async (ctx) => {
   await ctx.reply(
-`نام برنامه: v2rayN
+    `نام برنامه: v2rayN
 لینک دانلود برنامه:
 http://dl.ezvpn.co/downloads/windows/v2rayN.zip`
   );
@@ -441,45 +322,33 @@ bot.callbackQuery("AndroidTutorials", async (ctx) => {
 });
 bot.callbackQuery("AndroidTutorials-Surfboard", async (ctx) => {
   try {
-    await ctx.replyWithVideo(
-      androidSurfboardTut,
-      { caption: "Android - Surfboard" }
-    );
-  } catch(e) {
-    console.log(e)
+    await ctx.replyWithVideo(androidSurfboardTut, { caption: "Android - Surfboard" });
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("AndroidTutorials-OneClick", async (ctx) => {
   try {
-    await ctx.replyWithVideo(
-      androidOneClickTut,
-      { caption: "Android - OneClick" }
-    );
-  } catch(e) {
-    console.log(e)
+    await ctx.replyWithVideo(androidOneClickTut, { caption: "Android - OneClick" });
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("AndroidTutorials-L2tp", async (ctx) => {
   try {
-    await ctx.replyWithVideo(
-      androidL2tpTut,
-      { caption: "Android - L2tp" }
-    );
-  } catch(e) {
-    console.log(e)
+    await ctx.replyWithVideo(androidL2tpTut, { caption: "Android - L2tp" });
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("AndroidTutorials-OpenVPN", async (ctx) => {
   try {
-    await ctx.replyWithVideo(
-      androidOpenVPNTut,
-      { caption: "Android - OpenVPN" }
-    );
-  } catch(e) {
-    console.log(e)
+    await ctx.replyWithVideo(androidOpenVPNTut, { caption: "Android - OpenVPN" });
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
@@ -490,23 +359,17 @@ bot.callbackQuery("iOSTutorials", async (ctx) => {
 });
 bot.callbackQuery("iOSTutorials-OneClick", async (ctx) => {
   try {
-    await ctx.replyWithVideo(
-      iOSOneClickTut,
-      { caption: "iOS - OneClick" }
-    );
-  } catch(e) {
-    console.log(e)
+    await ctx.replyWithVideo(iOSOneClickTut, { caption: "iOS - OneClick" });
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("iOSTutorials-L2tp", async (ctx) => {
   try {
-    await ctx.replyWithVideo(
-      iOSL2tpTut,
-      { caption: "iOS - L2tp" }
-    );
-  } catch(e) {
-    console.log(e)
+    await ctx.replyWithVideo(iOSL2tpTut, { caption: "iOS - L2tp" });
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
@@ -517,34 +380,25 @@ bot.callbackQuery("WindowsTutorials", async (ctx) => {
 });
 bot.callbackQuery("WindowsTutorials-EZvpn", async (ctx) => {
   try {
-    await ctx.replyWithVideo(
-      windowsEZvpnTut,
-      { caption: "Windows - EZvpn" }
-    );
-  } catch(e) {
-    console.log(e)
+    await ctx.replyWithVideo(windowsEZvpnTut, { caption: "Windows - EZvpn" });
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("WindowsTutorials-v2rayN", async (ctx) => {
   try {
-    await ctx.replyWithVideo(
-      windowsV2rayNTut,
-      { caption: "Windows - v2rayN" }
-    );
-  } catch(e) {
-    console.log(e)
+    await ctx.replyWithVideo(windowsV2rayNTut, { caption: "Windows - v2rayN" });
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("WindowsTutorials-L2tp", async (ctx) => {
   try {
-    await ctx.replyWithVideo(
-      windowsL2tpTut,
-      { caption: "Windows - L2tp" }
-    );
-  } catch(e) {
-    console.log(e)
+    await ctx.replyWithVideo(windowsL2tpTut, { caption: "Windows - L2tp" });
+  } catch (e) {
+    console.log(e);
   }
   await ctx.answerCallbackQuery();
 });
@@ -559,17 +413,17 @@ bot.callbackQuery("macOSTutorials", async (ctx) => {
 // diagnosis
 bot.callbackQuery("diagnosis", async (ctx) => {
   await ctx.answerCallbackQuery();
-  const diagnosisKeyboard = new InlineKeyboard()
+  const diagnosisKeyboard = new InlineKeyboard();
   diagnosisList.map((v, index) => {
-    diagnosisKeyboard.text(v[0], 'diagnosis-' + (index+1)).row()
-  })
-  diagnosisKeyboard.text("صفحه اصلی", "mainMenu")
+    diagnosisKeyboard.text(v[0], "diagnosis-" + (index + 1)).row();
+  });
+  diagnosisKeyboard.text("صفحه اصلی", "mainMenu");
   await ctx.editMessageText(diagnosisText, { reply_markup: diagnosisKeyboard });
 });
 // diagnosis answer
 bot.callbackQuery(/(diagnosis-)\d{1,3}/g, async (ctx) => {
   await ctx.answerCallbackQuery();
-  const q = parseInt(ctx.match.toString().replace("diagnosis-", "")) - 1
+  const q = parseInt(ctx.match.toString().replace("diagnosis-", "")) - 1;
   await ctx.reply(diagnosisList[q][1]);
 });
 // =================> diagnosis
@@ -578,17 +432,17 @@ bot.callbackQuery(/(diagnosis-)\d{1,3}/g, async (ctx) => {
 // faq
 bot.callbackQuery("faq", async (ctx) => {
   await ctx.answerCallbackQuery();
-  const faqKeyboard = new InlineKeyboard()
+  const faqKeyboard = new InlineKeyboard();
   faqList.map((v, index) => {
-    faqKeyboard.text(v[0], 'faq-' + (index+1)).row()
-  })
-  faqKeyboard.text("صفحه اصلی", "mainMenu")
+    faqKeyboard.text(v[0], "faq-" + (index + 1)).row();
+  });
+  faqKeyboard.text("صفحه اصلی", "mainMenu");
   await ctx.editMessageText(faqText, { reply_markup: faqKeyboard });
 });
 // faq answer
 bot.callbackQuery(/(faq-)\d{1,3}/g, async (ctx) => {
   await ctx.answerCallbackQuery();
-  const q = parseInt(ctx.match.toString().replace("faq-", "")) - 1
+  const q = parseInt(ctx.match.toString().replace("faq-", "")) - 1;
   await ctx.reply(faqList[q][1]);
 });
 // =================> faq
