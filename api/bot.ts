@@ -137,10 +137,6 @@ const selectDownloadType = "نوع را انتخاب کنید:";
 // **********************************************************************************
 
 // ===> files
-const androidSurfboard = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/Surfboard.apk" });
-const androidOneClick = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OneClick.apk" });
-const androidOpenVPN = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OpenVPN.apk" });
-
 const androidSurfboardTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/android/Surfboard.mp4" });
 const androidOneClickTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/android/OneClick.mp4" });
 const androidL2tpTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/android/L2tp.mp4" });
@@ -161,74 +157,6 @@ bot.command("start", (ctx) => {
 });
 
 // =================> downloads
-bot.callbackQuery("AndroidDownloads-Surfboard", async (ctx) => {
-  const caption = `نام برنامه: Surfboard
-لینک دانلود برنامه(پلی استور):
-https://play.google.com/store/apps/details?id=com.getsurfboard&hl=en&gl=US`;
-  try {
-    await ctx.replyWithDocument(androidSurfboard, { caption });
-  } catch (e) {
-    console.log(e);
-  }
-  await ctx.answerCallbackQuery();
-});
-bot.callbackQuery("AndroidDownloads-OneClick", async (ctx) => {
-  const caption = `نام برنامه: One Click
-لینک دانلود برنامه(پلی استور):
-https://play.google.com/store/apps/details?id=earth.oneclick&hl=en&gl=US`;
-  try {
-    await ctx.replyWithDocument(androidOneClick, { caption });
-  } catch (e) {
-    console.log(e);
-  }
-  await ctx.answerCallbackQuery();
-});
-bot.callbackQuery("AndroidDownloads-OpenVPN", async (ctx) => {
-  const caption = `نام برنامه: OpenVPN
-لینک دانلود برنامه(پلی استور):
-https://play.google.com/store/apps/details?id=net.openvpn.openvpn`;
-  try {
-    await ctx.replyWithDocument(androidOpenVPN, { caption });
-  } catch (e) {
-    console.log(e);
-  }
-  await ctx.answerCallbackQuery();
-});
-// iOSDownloads
-bot.callbackQuery("iOSDownloads", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(selectDownloadType, { reply_markup: iOSDownloadsKeyboard });
-});
-bot.callbackQuery("iOSDownloads-OneClick", async (ctx) => {
-  await ctx.reply(
-    `نام برنامه: One Click
-لینک دانلود برنامه(اپ استور):
-https://apps.apple.com/us/app/oneclick-safe-easy-fast/id1545555197`,
-    { disable_web_page_preview: true }
-  );
-  await ctx.answerCallbackQuery();
-});
-// WindowsDownloads
-bot.callbackQuery("WindowsDownloads", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(selectDownloadType, { reply_markup: windowsDownloadsKeyboard });
-});
-bot.callbackQuery("WindowsDownloads-EZvpn", async (ctx) => {
-  await ctx.reply(
-    `نام برنامه: EZvpn
-لینک دانلود برنامه:
-http://dl.ezvpn.co/downloads/windows/EZvpn.exe`
-  );
-  await ctx.answerCallbackQuery();
-});
-bot.callbackQuery("WindowsDownloads-v2rayN", async (ctx) => {
-  await ctx.reply(
-    `نام برنامه: v2rayN
-لینک دانلود برنامه:
-http://dl.ezvpn.co/downloads/windows/v2rayN.zip`
-  );
-  await ctx.answerCallbackQuery();
-});
 // macOSDownloads
 bot.callbackQuery("macOSDownloads", async (ctx) => {
   await ctx.answerCallbackQuery();
