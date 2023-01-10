@@ -248,7 +248,7 @@ bot.callbackQuery("faq", async (ctx) => {
 bot.callbackQuery(/(faq-)\d{1,3}/g, async (ctx) => {
   await ctx.answerCallbackQuery();
   const q = parseInt(ctx.match.toString().replace("faq-", "")) - 1
-  await ctx.reply("faq" + q);
+  await ctx.reply(faqList[q][1]);
 });
 // =================> faq
 
