@@ -47,6 +47,34 @@ const tutorialsKeyboard = new InlineKeyboard()
         .row()
         .text("صفحه اصلی", "mainMenu")
 
+const androidTutorialsKeyboard = new InlineKeyboard()
+        .text("Surfboard", "AndroidTutorials-Surfboard")
+        .row()
+        .text("OneClick", "AndroidTutorials-OneClick")
+        .row()
+        .text("L2tp", "AndroidTutorials-L2tp")
+        .row()
+        .text("صفحه اصلی", "mainMenu")
+
+const iOSTutorialsKeyboard = new InlineKeyboard()
+        .text("OneClick", "iOSTutorials-OneClick")
+        .row()
+        .text("L2tp", "iOSTutorials-L2tp")
+        .row()
+        .text("صفحه اصلی", "mainMenu")
+
+const windowsTutorialsKeyboard = new InlineKeyboard()
+        .text("EZvpn", "WindowsTutorials-EZvpn")
+        .row()
+        .text("v2rayN", "WindowsTutorials-v2rayN")
+        .row()
+        .text("L2tp", "WindowsTutorials-L2tp")
+        .row()
+        .text("صفحه اصلی", "mainMenu")
+
+const macOSTutorialsKeyboard = new InlineKeyboard()
+        .text("صفحه اصلی", "mainMenu")
+
 const diagnosisList = [
     [
         "عیب یابی اول",
@@ -114,6 +142,7 @@ const tutorialsText = "پلتفورم مدنظر را انتخاب کنید:"
 const diagnosisText = "از منو انتخاب کنید:"
 const faqText = "از منو انتخاب کنید:"
 
+const selectTutorialType = 'نوع آموزش مد نظر را انتخاب کنید:';
 // **********************************************************************************
 
 
@@ -195,22 +224,26 @@ bot.callbackQuery("tutorials", async (ctx) => {
 // AndroidTutorials
 bot.callbackQuery("AndroidTutorials", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply('AndroidTutorials');
+  await ctx.editMessageText(selectTutorialType, { reply_markup: androidTutorialsKeyboard });
+});
+bot.callbackQuery("AndroidTutorials-Surfboard", async (ctx) => {
+  await ctx.answerCallbackQuery();
+  await ctx.replyWithVideo("https://dl.ezvpn.co/tutorials/android/Surfboard.mp4");
 });
 // iOSTutorials
 bot.callbackQuery("iOSTutorials", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply('iOSTutorials');
+  await ctx.editMessageText(selectTutorialType, { reply_markup: iOSTutorialsKeyboard });
 });
 // WindowsTutorials
 bot.callbackQuery("WindowsTutorials", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply('WindowsTutorials');
+  await ctx.editMessageText(selectTutorialType, { reply_markup: windowsTutorialsKeyboard });
 });
 // macOSTutorials
 bot.callbackQuery("macOSTutorials", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply('macOSTutorials');
+  await ctx.editMessageText(selectTutorialType, { reply_markup: macOSTutorialsKeyboard });
 });
 // =================> tutorials
 
