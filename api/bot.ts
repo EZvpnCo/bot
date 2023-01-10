@@ -16,6 +16,12 @@ const mainKeyboard = new InlineKeyboard()
         .row()
         .url("پشتیبانی", "EZvpnAdmin.t.me")
 
+const pricesKeyboard = new InlineKeyboard()
+        .text("وب گردی", "daily-prices")
+        .row()
+        .text("گیم", "game-prices")
+        .row()
+        .text("ترید", "trade-prices")
 
 // Handle the /start command.
 bot.command("start", (ctx) => {
@@ -35,9 +41,7 @@ bot.on("message", (ctx) => ctx.reply("میفهمم اما متوجه نمیشم 
 
 // prices
 bot.callbackQuery("prices", async (ctx) => {
-  await ctx.answerCallbackQuery({
-    text: "You were curious, indeed!",
-  });
+  await ctx.editMessageText("نوع استفاده خود را انتخاب کنید:", { reply_markup: pricesKeyboard });
 });
 
 // downloads
