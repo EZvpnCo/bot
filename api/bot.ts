@@ -157,6 +157,27 @@ bot.command("start", (ctx) => {
 });
 
 // =================> downloads
+// WindowsDownloads
+bot.callbackQuery("WindowsDownloads", async (ctx) => {
+  await ctx.answerCallbackQuery();
+  await ctx.editMessageText(selectDownloadType, { reply_markup: windowsDownloadsKeyboard });
+});
+bot.callbackQuery("WindowsDownloads-EZvpn", async (ctx) => {
+  await ctx.reply(
+    `نام برنامه: EZvpn
+لینک دانلود برنامه:
+http://dl.ezvpn.co/downloads/windows/EZvpn.exe`
+  );
+  await ctx.answerCallbackQuery();
+});
+bot.callbackQuery("WindowsDownloads-v2rayN", async (ctx) => {
+  await ctx.reply(
+    `نام برنامه: v2rayN
+لینک دانلود برنامه:
+http://dl.ezvpn.co/downloads/windows/v2rayN.zip`
+  );
+  await ctx.answerCallbackQuery();
+});
 // macOSDownloads
 bot.callbackQuery("macOSDownloads", async (ctx) => {
   await ctx.answerCallbackQuery();

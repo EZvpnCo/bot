@@ -133,21 +133,19 @@ const WindowsDownload = (bot: Bot) => {
     });
 
     // ===> windows:ezvpn
-    const windows_ezvpn_file = new InputFile({ url: "http://dl.ezvpn.co/downloads/windows/EZvpn.exe" });
     const windows_ezvpn_keyboard = new InlineKeyboard()
         .url('دانلود از EZvpn', 'http://dl.ezvpn.co/downloads/windows/EZvpn.exe')
     bot.callbackQuery("downloads:windows:ezvpn", async (ctx) => {
         const text = `🎲 نام برنامه: EZvpn`
-        await ctx.replyWithDocument(windows_ezvpn_file, { caption: text, reply_markup: windows_ezvpn_keyboard });
+        await ctx.reply(text, { reply_markup: windows_ezvpn_keyboard });
         await ctx.answerCallbackQuery();
     });
     // ===> windows:v2rayn
-    const windows_v2rayn_file = new InputFile({ url: "http://dl.ezvpn.co/downloads/windows/v2rayN.zip" });
     const windows_v2rayn_keyboard = new InlineKeyboard()
         .url('دانلود از EZvpn', 'http://dl.ezvpn.co/downloads/windows/v2rayN.zip')
     bot.callbackQuery("downloads:windows:v2rayn", async (ctx) => {
         const text = `🎲 نام برنامه: v2rayN`
-        await ctx.replyWithDocument(windows_v2rayn_file, { caption: text, reply_markup: windows_v2rayn_keyboard });
+        await ctx.reply(text, { reply_markup: windows_v2rayn_keyboard });
         await ctx.answerCallbackQuery();
     });
 }
