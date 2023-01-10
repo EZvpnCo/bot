@@ -228,7 +228,6 @@ bot.callbackQuery("AndroidDownloads", async (ctx) => {
   await ctx.editMessageText(selectDownloadType, { reply_markup: androidDownloadsKeyboard });
 });
 bot.callbackQuery("AndroidDownloads-Surfboard", async (ctx) => {
-  
     const caption = `نام برنامه: Surfboard
 لینک دانلود برنامه(پلی استور):
 https://play.google.com/store/apps/details?id=com.getsurfboard&hl=en&gl=US`
@@ -262,7 +261,7 @@ bot.callbackQuery("AndroidDownloads-OpenVPN", async (ctx) => {
 https://play.google.com/store/apps/details?id=net.openvpn.openvpn`
   try {
     await ctx.replyWithDocument(
-      "http://dl.ezvpn.co/downloads/android/OpenVPN.apk",
+      "http://dl.ezvpn.co/downloads/android/OpenVPN1.apk",
       { caption }
     );
   } catch(e) {
