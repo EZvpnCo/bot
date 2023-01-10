@@ -1,5 +1,6 @@
 import { Bot, InlineKeyboard, InputFile } from "grammy";
 import Downloads from "./downloads";
+import Faq from "./faq";
 import MainMenu from "./mainMenu";
 import Prices from "./prices";
 
@@ -8,19 +9,9 @@ const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 MainMenu(bot);
 Prices(bot);
 Downloads(bot);
+Faq(bot);
 // Define keyboards
 
-
-const iOSDownloadsKeyboard = new InlineKeyboard().text("OneClick", "iOSDownloads-OneClick").row().text("صفحه اصلی", "mainMenu");
-
-const windowsDownloadsKeyboard = new InlineKeyboard().text("EZvpn", "WindowsDownloads-EZvpn").row().text("v2rayN", "WindowsDownloads-v2rayN").row().text("صفحه اصلی", "mainMenu");
-
-const macOSDownloadsKeyboard = new InlineKeyboard().text("صفحه اصلی", "mainMenu");
-
-
-
-
-const tutorialsKeyboard = new InlineKeyboard().text("Agent Panel", "AgentPanelTutorials").row().text("Android", "AndroidTutorials").row().text("iOS", "iOSTutorials").row().text("Windows", "WindowsTutorials").row().text("macOS", "macOSTutorials").row().text("صفحه اصلی", "mainMenu");
 
 const androidTutorialsKeyboard = new InlineKeyboard().text("Surfboard", "AndroidTutorials-Surfboard").row().text("OneClick", "AndroidTutorials-OneClick").row().text("L2tp", "AndroidTutorials-L2tp").row().text("OpenVPN", "AndroidTutorials-OpenVPN").row().text("صفحه اصلی", "mainMenu");
 
@@ -30,25 +21,7 @@ const windowsTutorialsKeyboard = new InlineKeyboard().text("EZvpn", "WindowsTuto
 
 const macOSTutorialsKeyboard = new InlineKeyboard().text("صفحه اصلی", "mainMenu");
 
-const faqList = [
-  ["آیا امکان تست قبل خرید وجود دارد؟",
-    "بله با ارسال ایمیل به ادمین میتونید درخواست یه اکانت تست بدین . اکانت تست 1 روزه 1 کاربره و با حجم 1 گیگ میباشد و شامل تمام سرویس های معمولی و پلاس هست."],
-  ["فرق سرویس پلاس و معمولی چیه؟", "سرویس های پلاس موقع نت ملی هم کار میکنه و دارای تعداد بیشتری سرور هستن نسبت به سرویس معمولی"],
-  ["سرویس ها چند کاربره هستن؟", "سرویس ها تک کاربره و 5 کاربره هستن در دوره های ماهانه و سه ماهه"],
-  ["چطوری درامد دلاری داشته باشیم؟", "شما با فروش سرویس های ما میتونید 20 درصد رو به عنوان پورسانت مستقیما به کیف پول خودتون منتقل کنید. برای اینکار نیازه که حساب کاربری خودتون رو از یوزر به ایجنت تغییر بدین. برای اینکار با ادمین در ارتباط باشین."],
-  ["بر روی چه دستگاه هایی کار میکنه؟", "بر روی تمامی دستگاه ها قابلیت نصب و فعالسازی وجود داره"],
-  ["بر روی چه اینترنتی کار میکنه؟", "روی تمامی اینترنت ها تست شده و کار میکنه ولی با توجه به اختلالات موجود قبل از خرید حتما اکانت تست دریافت کنید و تست کنید."],
-  ["تعرفه ها چند ماهه هستن؟", "سرویس ها در بازه های زمانی یک ماهه و سه ماهه ارائه میشه"],
-  ["از کدوم کشورا سرور دارین؟", "فعلا از کشور های آلمان هلند فرانسه آمریکا ترکیه بحرین آذربایجان و ... موجوده"],
-  [
-    "با چه نرم افزاری کار میکنه؟",
-    `برای اندروید: surfboard – v2rayng – one click
-برای آیفون: one click – fair -rocket tool – shadowlink
-برای ویندوز: ezvpn – v2rayn – qv2ray`,
-  ],
-  ["برای گیم سرویس موجوده؟", "بله برای گیم در لوکیشن های ترکیه آلمان و بحرین موجوده"],
-  ["برای ترید سرویس موجوده؟", "بله برای ترید سرور های ترکیه موجود هستن بدون LEAK DNS"],
-];
+
 
 const diagnosisList = [
   [
@@ -133,7 +106,6 @@ const diagnosisText = "از منو انتخاب کنید:";
 const faqText = "از منو انتخاب کنید:";
 
 const selectTutorialType = "نوع آموزش مد نظر را انتخاب کنید:";
-const selectDownloadType = "نوع را انتخاب کنید:";
 // **********************************************************************************
 
 // ===> files
@@ -156,34 +128,7 @@ bot.command("start", (ctx) => {
   ctx.reply(text);
 });
 
-// =================> downloads
-// WindowsDownloads
-bot.callbackQuery("WindowsDownloads", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(selectDownloadType, { reply_markup: windowsDownloadsKeyboard });
-});
-bot.callbackQuery("WindowsDownloads-EZvpn", async (ctx) => {
-  await ctx.reply(
-    `نام برنامه: EZvpn
-لینک دانلود برنامه:
-http://dl.ezvpn.co/downloads/windows/EZvpn.exe`
-  );
-  await ctx.answerCallbackQuery();
-});
-bot.callbackQuery("WindowsDownloads-v2rayN", async (ctx) => {
-  await ctx.reply(
-    `نام برنامه: v2rayN
-لینک دانلود برنامه:
-http://dl.ezvpn.co/downloads/windows/v2rayN.zip`
-  );
-  await ctx.answerCallbackQuery();
-});
-// macOSDownloads
-bot.callbackQuery("macOSDownloads", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(selectDownloadType, { reply_markup: macOSDownloadsKeyboard });
-});
-// =================> downloads
+
 
 // =================> tutorials
 // AgentPanelTutorials
@@ -303,24 +248,6 @@ bot.callbackQuery(/(diagnosis-)\d{1,3}/g, async (ctx) => {
 });
 // =================> diagnosis
 
-// =================> faq
-// faq
-bot.callbackQuery("faq", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  const faqKeyboard = new InlineKeyboard();
-  faqList.map((v, index) => {
-    faqKeyboard.text(v[0], "faq-" + (index + 1)).row();
-  });
-  faqKeyboard.text("صفحه اصلی", "mainMenu");
-  await ctx.editMessageText(faqText, { reply_markup: faqKeyboard });
-});
-// faq answer
-bot.callbackQuery(/(faq-)\d{1,3}/g, async (ctx) => {
-  await ctx.answerCallbackQuery();
-  const q = parseInt(ctx.match.toString().replace("faq-", "")) - 1;
-  await ctx.reply(faqList[q][1]);
-});
-// =================> faq
 
 // =================> servers
 // servers
