@@ -175,6 +175,15 @@ const selectDownloadType = 'نوع را انتخاب کنید:';
 // **********************************************************************************
 
 
+// ===> files
+const androidSurfboard = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/Surfboard.apk" }, "AndroidSurfboard");
+const androidOneClick = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OneClick.apk" }, "AndroidOneClick");
+const androidOpenVPN = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OpenVPN.apk" }, "AndroidOpenVPN");
+
+const windowsEZvpn = new InputFile({ url: "http://dl.ezvpn.co/downloads/windows/EZvpn.exe" }, "WindowsEZvpn");
+const windowsV2rayN = new InputFile({ url: "http://dl.ezvpn.co/downloads/windows/v2rayN.zip" }, "WindowsV2rayN");
+
+
 // Handle the /start command.
 bot.command("start", (ctx) => {
     let text = 'سلام به *EZvpn* خوش اومدید :)';
@@ -232,10 +241,7 @@ bot.callbackQuery("AndroidDownloads-Surfboard", async (ctx) => {
 لینک دانلود برنامه(پلی استور):
 https://play.google.com/store/apps/details?id=com.getsurfboard&hl=en&gl=US`
   try {
-    await ctx.replyWithDocument(
-      "http://dl.ezvpn.co/downloads/android/Surfboard.apk",
-      { caption }
-    );
+    await ctx.replyWithDocument(androidSurfboard, { caption });
   } catch(e) {
     console.log(e)
   }
@@ -246,10 +252,7 @@ bot.callbackQuery("AndroidDownloads-OneClick", async (ctx) => {
 لینک دانلود برنامه(پلی استور):
 https://play.google.com/store/apps/details?id=earth.oneclick&hl=en&gl=US`
   try {
-    await ctx.replyWithDocument(
-      "http://dl.ezvpn.co/downloads/android/OneClick.apk",
-      { caption }
-    );
+    await ctx.replyWithDocument(androidOneClick, { caption });
   } catch(e) {
     console.log(e)
   }
@@ -260,10 +263,7 @@ bot.callbackQuery("AndroidDownloads-OpenVPN", async (ctx) => {
 لینک دانلود برنامه(پلی استور):
 https://play.google.com/store/apps/details?id=net.openvpn.openvpn`
   try {
-    await ctx.replyWithDocument(
-      new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OpenVPN.apk" }, "OpenVPN"),
-      { caption }
-    );
+    await ctx.replyWithDocument(androidOpenVPN, { caption });
   } catch(e) {
     console.log(e)
   }
@@ -288,10 +288,7 @@ bot.callbackQuery("WindowsDownloads", async (ctx) => {
 });
 bot.callbackQuery("WindowsDownloads-EZvpn", async (ctx) => {
   try {
-    await ctx.replyWithDocument(
-      "http://dl.ezvpn.co/downloads/windows/EZvpn.exe",
-      { caption: `نام برنامه: EZvpn` }
-    );
+    await ctx.replyWithDocument(windowsEZvpn, { caption: `نام برنامه: EZvpn` });
   } catch(e) {
     console.log(e)
   }
@@ -299,10 +296,7 @@ bot.callbackQuery("WindowsDownloads-EZvpn", async (ctx) => {
 });
 bot.callbackQuery("WindowsDownloads-v2rayN", async (ctx) => {
   try {
-    await ctx.replyWithDocument(
-      "http://dl.ezvpn.co/downloads/windows/v2rayN.zip",
-      { caption: `نام برنامه: v2rayN` }
-    );
+    await ctx.replyWithDocument(windowsV2rayN, { caption: `نام برنامه: v2rayN` });
   } catch(e) {
     console.log(e)
   }
