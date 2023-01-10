@@ -19,9 +19,9 @@ const mainMenuKeyboard = new InlineKeyboard()
 const pricesKeyboard = new InlineKeyboard()
         .text("وب گردی", "dailyPrices")
         .row()
-        .text("گیم", "gamePrices")
-        .row()
         .text("ترید", "tradePrices")
+        .row()
+        .text("گیم", "gamePrices")
         .row()
         .text("صفحه اصلی", "mainMenu")
 
@@ -30,7 +30,21 @@ const pricesKeyboard = new InlineKeyboard()
 // Define texts
 const mainMenuText = 'از منوی زیر انتخاب کنید:';
 
+const dailyPricesText = `🔻 تعرفه های پکیج Daily:
 
+سرویس Daily:
+یک دیوایس، یک ماهه = 1$
+پنج دیوایس، یک ماهه = 4.5$
+یک دیوایس، سه ماهه = 3$
+پنج دیوایس، سه ماهه = 13.5$
+
+سرویس +Daily:
+یک دیوایس، یک ماهه = 2$
+پنج دیوایس، یک ماهه = 9$
+یک دیوایس، سه ماهه = 6$
+پنج دیوایس، سه ماهه = 27$`
+const tradePricesText = ''
+const gamePricesText = ''
 
 // **********************************************************************************
 
@@ -61,7 +75,17 @@ bot.callbackQuery("prices", async (ctx) => {
 // dailyPrices
 bot.callbackQuery("dailyPrices", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply("دیلی");
+  await ctx.reply("dailyPrices");
+});
+// tradePrices
+bot.callbackQuery("tradePrices", async (ctx) => {
+  await ctx.answerCallbackQuery();
+  await ctx.reply("tradePrices");
+});
+// gamePrices
+bot.callbackQuery("gamePrices", async (ctx) => {
+  await ctx.answerCallbackQuery();
+  await ctx.reply("gamePrices");
 });
 // =================> prices
 
