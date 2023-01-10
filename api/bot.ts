@@ -222,7 +222,7 @@ bot.callbackQuery("diagnosis", async (ctx) => {
   diagnosisList.map((v, index) => {
     diagnosisKeyboard.text(v[0], 'diagnosis-' + (index+1)).row()
   })
-  await ctx.reply(diagnosisText, { reply_markup: diagnosisKeyboard });
+  await ctx.editMessageText(diagnosisText, { reply_markup: diagnosisKeyboard });
 });
 // =================> diagnosis
 
@@ -234,7 +234,12 @@ bot.callbackQuery("faq", async (ctx) => {
   faqList.map((v, index) => {
     faqKeyboard.text(v[0], 'faq-' + (index+1)).row()
   })
-  await ctx.reply(faqText, { reply_markup: faqKeyboard });
+  await ctx.editMessageText(faqText, { reply_markup: faqKeyboard });
+});
+// faq answer
+bot.callbackQuery(/(faq-)\d{1,3}/g, async (ctx) => {
+  await ctx.answerCallbackQuery();
+  await ctx.reply("تست");
 });
 // =================> faq
 
