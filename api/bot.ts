@@ -176,12 +176,22 @@ const selectDownloadType = 'نوع را انتخاب کنید:';
 
 
 // ===> files
-const androidSurfboard = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/Surfboard.apk" }, "AndroidSurfboard");
-const androidOneClick = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OneClick.apk" }, "AndroidOneClick");
-const androidOpenVPN = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OpenVPN.apk" }, "AndroidOpenVPN");
+const androidSurfboard = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/Surfboard.apk" });
+const androidOneClick = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OneClick.apk" });
+const androidOpenVPN = new InputFile({ url: "http://dl.ezvpn.co/downloads/android/OpenVPN.apk" });
 
-const windowsEZvpn = new InputFile({ url: "http://dl.ezvpn.co/downloads/windows/EZvpn.exe" }, "WindowsEZvpn");
-const windowsV2rayN = new InputFile({ url: "http://dl.ezvpn.co/downloads/windows/v2rayN.zip" }, "WindowsV2rayN");
+const androidSurfboardTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/android/Surfboard.mp4" });
+const androidOneClickTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/android/OneClick.mp4" });
+const androidL2tpTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/android/L2tp.mp4" });
+const androidOpenVPNTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/android/OpenVPN.mp4" });
+
+const iOSOneClickTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/ios/OneClick.mp4" });
+const iOSL2tpTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/ios/L2tp.mp4" });
+
+const windowsEZvpnTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/windows/EZvpn.mp4" });
+const windowsV2rayNTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/windows/v2rayN.mp4" });
+const windowsL2tpTut = new InputFile({ url: "http://dl.ezvpn.co/tutorials/windows/L2tp.mp4" });
+
 
 
 // Handle the /start command.
@@ -275,10 +285,12 @@ bot.callbackQuery("iOSDownloads", async (ctx) => {
   await ctx.editMessageText(selectDownloadType, { reply_markup: iOSDownloadsKeyboard });
 });
 bot.callbackQuery("iOSDownloads-OneClick", async (ctx) => {
-  await ctx.reply(`نام برنامه: One Click
+  await ctx.reply(
+`نام برنامه: One Click
 لینک دانلود برنامه(اپ استور):
-https://apps.apple.com/us/app/oneclick-safe-easy-fast/id1545555197`
-, { disable_web_page_preview: true });
+https://apps.apple.com/us/app/oneclick-safe-easy-fast/id1545555197`,
+{ disable_web_page_preview: true }
+  );
   await ctx.answerCallbackQuery();
 });
 // WindowsDownloads
@@ -287,19 +299,19 @@ bot.callbackQuery("WindowsDownloads", async (ctx) => {
   await ctx.editMessageText(selectDownloadType, { reply_markup: windowsDownloadsKeyboard });
 });
 bot.callbackQuery("WindowsDownloads-EZvpn", async (ctx) => {
-  try {
-    await ctx.replyWithDocument(windowsEZvpn, { caption: `نام برنامه: EZvpn` });
-  } catch(e) {
-    console.log(e)
-  }
+  await ctx.reply(
+`نام برنامه: EZvpn
+لینک دانلود برنامه:
+http://dl.ezvpn.co/downloads/windows/EZvpn.exe`
+  );
   await ctx.answerCallbackQuery();
 });
 bot.callbackQuery("WindowsDownloads-v2rayN", async (ctx) => {
-  try {
-    await ctx.replyWithDocument(windowsV2rayN, { caption: `نام برنامه: v2rayN` });
-  } catch(e) {
-    console.log(e)
-  }
+  await ctx.reply(
+`نام برنامه: v2rayN
+لینک دانلود برنامه:
+http://dl.ezvpn.co/downloads/windows/v2rayN.zip`
+  );
   await ctx.answerCallbackQuery();
 });
 // macOSDownloads
@@ -327,7 +339,7 @@ bot.callbackQuery("AndroidTutorials", async (ctx) => {
 bot.callbackQuery("AndroidTutorials-Surfboard", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "http://dl.ezvpn.co/tutorials/android/Surfboard.mp4",
+      androidSurfboardTut,
       { caption: "Android - Surfboard" }
     );
   } catch(e) {
@@ -338,7 +350,7 @@ bot.callbackQuery("AndroidTutorials-Surfboard", async (ctx) => {
 bot.callbackQuery("AndroidTutorials-OneClick", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "http://dl.ezvpn.co/tutorials/android/OneClick.mp4",
+      androidOneClickTut,
       { caption: "Android - OneClick" }
     );
   } catch(e) {
@@ -349,7 +361,7 @@ bot.callbackQuery("AndroidTutorials-OneClick", async (ctx) => {
 bot.callbackQuery("AndroidTutorials-L2tp", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "http://dl.ezvpn.co/tutorials/android/L2tp.mp4",
+      androidL2tpTut,
       { caption: "Android - L2tp" }
     );
   } catch(e) {
@@ -360,7 +372,7 @@ bot.callbackQuery("AndroidTutorials-L2tp", async (ctx) => {
 bot.callbackQuery("AndroidTutorials-OpenVPN", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "http://dl.ezvpn.co/tutorials/android/OpenVPN.mp4",
+      androidOpenVPNTut,
       { caption: "Android - OpenVPN" }
     );
   } catch(e) {
@@ -376,7 +388,7 @@ bot.callbackQuery("iOSTutorials", async (ctx) => {
 bot.callbackQuery("iOSTutorials-OneClick", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "http://dl.ezvpn.co/tutorials/ios/OneClick.mp4",
+      iOSOneClickTut,
       { caption: "iOS - OneClick" }
     );
   } catch(e) {
@@ -387,7 +399,7 @@ bot.callbackQuery("iOSTutorials-OneClick", async (ctx) => {
 bot.callbackQuery("iOSTutorials-L2tp", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "http://dl.ezvpn.co/tutorials/ios/L2tp.mp4",
+      iOSL2tpTut,
       { caption: "iOS - L2tp" }
     );
   } catch(e) {
@@ -403,7 +415,7 @@ bot.callbackQuery("WindowsTutorials", async (ctx) => {
 bot.callbackQuery("WindowsTutorials-EZvpn", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "http://dl.ezvpn.co/tutorials/windows/EZvpn.mp4",
+      windowsEZvpnTut,
       { caption: "Windows - EZvpn" }
     );
   } catch(e) {
@@ -414,7 +426,7 @@ bot.callbackQuery("WindowsTutorials-EZvpn", async (ctx) => {
 bot.callbackQuery("WindowsTutorials-v2rayN", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "http://dl.ezvpn.co/tutorials/windows/v2rayN.mp4",
+      windowsV2rayNTut,
       { caption: "Windows - v2rayN" }
     );
   } catch(e) {
@@ -425,7 +437,7 @@ bot.callbackQuery("WindowsTutorials-v2rayN", async (ctx) => {
 bot.callbackQuery("WindowsTutorials-L2tp", async (ctx) => {
   try {
     await ctx.replyWithVideo(
-      "http://dl.ezvpn.co/tutorials/windows/L2tp.mp4",
+      windowsL2tpTut,
       { caption: "Windows - L2tp" }
     );
   } catch(e) {
