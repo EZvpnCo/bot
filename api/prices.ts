@@ -11,9 +11,6 @@ const Prices = (bot: Bot) => {
         .text("Game", "prices:game")
         .row()
         .text("صفحه اصلی", "mainMenu");
-    const backKeyboard = new InlineKeyboard()
-        .text("برگشت", "prices")
-        .text("صفحه اصلی", "mainMenu");
 
     // Handle the /prices command.
     bot.command("prices", (ctx) => {
@@ -25,7 +22,14 @@ const Prices = (bot: Bot) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
     });
-    // prices:daily
+
+
+    // ========> sub menu
+    const back_keyboard = new InlineKeyboard()
+        .text("برگشت", "prices")
+        .text("صفحه اصلی", "mainMenu");
+
+    // ===> daily
     const dailyText = `
 🔻 پکیج Daily مناسب برای وب گردی، شبکه های اجتماعی، دانلود و آپلود و سایر کارهای روزمره عادی استفاده می شود.
 🔻 این پکیج دارای دو نوع سرویس می باشد: دیلی و دیلی پلاس
@@ -46,10 +50,11 @@ const Prices = (bot: Bot) => {
 پنج کاربره | سه ماهه | 27$
 `
     bot.callbackQuery("prices:daily", async (ctx) => {
-        await ctx.editMessageText(dailyText, { reply_markup: backKeyboard });
+        await ctx.editMessageText(dailyText, { reply_markup: back_keyboard });
         await ctx.answerCallbackQuery();
     });
-    // prices:trade
+
+    // ===> trade
     const tradeText = `
 🔻 پکیج Trade مناسب برای تریدرها می باشد.
 🔻 این پکیج برای وبگردی، دانلود و شبکه های اجتماعی مناسب نیست.
@@ -69,10 +74,11 @@ const Prices = (bot: Bot) => {
 یک ماهه (ویژه) | 105$
 `
     bot.callbackQuery("prices:trade", async (ctx) => {
-        await ctx.editMessageText(tradeText, { reply_markup: backKeyboard });
+        await ctx.editMessageText(tradeText, { reply_markup: back_keyboard });
         await ctx.answerCallbackQuery();
     });
-    // prices:game
+
+    // ===> game
     const gameText = `
 🔻 پکیج Game مناسب برای گیمرها می باشد.
 🔻 این پکیج برای وبگردی، دانلود و شبکه های اجتماعی مناسب نیست.
@@ -92,7 +98,7 @@ const Prices = (bot: Bot) => {
 یک ماهه (ویژه) | 105$
 `
     bot.callbackQuery("prices:game", async (ctx) => {
-        await ctx.editMessageText(gameText, { reply_markup: backKeyboard });
+        await ctx.editMessageText(gameText, { reply_markup: back_keyboard });
         await ctx.answerCallbackQuery();
     });
 };

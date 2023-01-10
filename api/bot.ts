@@ -8,15 +8,16 @@ MainMenu(bot);
 Prices(bot);
 
 // Define keyboards
-const downloadsKeyboard = new InlineKeyboard().text("Android", "AndroidDownloads").row().text("iOS", "iOSDownloads").row().text("Windows", "WindowsDownloads").row().text("macOS", "macOSDownloads").row().text("صفحه اصلی", "mainMenu");
 
-const androidDownloadsKeyboard = new InlineKeyboard().text("Surfboard", "AndroidDownloads-Surfboard").row().text("OneClick", "AndroidDownloads-OneClick").row().text("OpenVPN", "AndroidDownloads-OpenVPN").row().text("صفحه اصلی", "mainMenu");
 
 const iOSDownloadsKeyboard = new InlineKeyboard().text("OneClick", "iOSDownloads-OneClick").row().text("صفحه اصلی", "mainMenu");
 
 const windowsDownloadsKeyboard = new InlineKeyboard().text("EZvpn", "WindowsDownloads-EZvpn").row().text("v2rayN", "WindowsDownloads-v2rayN").row().text("صفحه اصلی", "mainMenu");
 
 const macOSDownloadsKeyboard = new InlineKeyboard().text("صفحه اصلی", "mainMenu");
+
+
+
 
 const tutorialsKeyboard = new InlineKeyboard().text("Agent Panel", "AgentPanelTutorials").row().text("Android", "AndroidTutorials").row().text("iOS", "iOSTutorials").row().text("Windows", "WindowsTutorials").row().text("macOS", "macOSTutorials").row().text("صفحه اصلی", "mainMenu");
 
@@ -125,8 +126,7 @@ const diagnosisList = [
 ];
 
 
-const downloadsText = "پلتفورم مدنظر را انتخاب کنید:";
-const tutorialsText = "پلتفورم مدنظر را انتخاب کنید:";
+
 
 const diagnosisText = "از منو انتخاب کنید:";
 const faqText = "از منو انتخاب کنید:";
@@ -160,16 +160,6 @@ bot.command("start", (ctx) => {
 });
 
 // =================> downloads
-// downloads
-bot.callbackQuery("downloads", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(downloadsText, { reply_markup: downloadsKeyboard });
-});
-// AndroidDownloads
-bot.callbackQuery("AndroidDownloads", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(selectDownloadType, { reply_markup: androidDownloadsKeyboard });
-});
 bot.callbackQuery("AndroidDownloads-Surfboard", async (ctx) => {
   const caption = `نام برنامه: Surfboard
 لینک دانلود برنامه(پلی استور):
@@ -246,11 +236,6 @@ bot.callbackQuery("macOSDownloads", async (ctx) => {
 // =================> downloads
 
 // =================> tutorials
-// tutorials
-bot.callbackQuery("tutorials", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(tutorialsText, { reply_markup: tutorialsKeyboard });
-});
 // AgentPanelTutorials
 bot.callbackQuery("AgentPanelTutorials", async (ctx) => {
   await ctx.answerCallbackQuery();
