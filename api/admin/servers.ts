@@ -155,7 +155,7 @@ ${server.country} | ${server.iso}
                         description: `${server.username}@${server.ip}\n` + ctx.emoji`${server.flag}` + ` ${server.country} | ${server.iso}`,
                     },
                 ],
-                { cache_time: 100 },
+                { cache_time: 0, },
             );
         }
         catch (e) {
@@ -171,18 +171,21 @@ ${server.country} | ${server.iso}
             const bellow_keyboard = new InlineKeyboard()
                 .text("✅ تایید", "management:servers:add:confirm" + tempID)
 
-            ctx.reply("تایید می کنید؟", { reply_markup: bellow_keyboard })
+            ctx.reply("تایید می کنید؟", { reply_markup: bellow_keyboard, reply_to_message_id: ctx.message.message_id })
         }
     });
 
     bot.callbackQuery(/(management:servers:add:confirm)\d{1,}/g, async (ctx) => {
         const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm", ""));
         const server = getTempServer(tempID)
+
+        serversList.push(server)
+
         removeTempServer(tempID)
-        // save in db
+
         const keys = new InlineKeyboard().text("✅ ثبت شد")
         await ctx.editMessageReplyMarkup({ reply_markup: keys });
-        await ctx.answerCallbackQuery(server?.name + "✅ ثبت شد");
+        await ctx.answerCallbackQuery(server?.name + " ✅ ثبت شد");
     });
 };
 
