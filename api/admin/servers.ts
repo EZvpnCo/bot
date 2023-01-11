@@ -137,7 +137,7 @@ _${server.description}_
                         title: server.name,
                         input_message_content: {
                             message_text: _text,
-                            parse_mode: "MarkdownV2",
+                            parse_mode: "HTML",
                         },
                         reply_markup: bellow_keyboard,
                         url: server.domain,
