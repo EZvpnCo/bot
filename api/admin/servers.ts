@@ -19,25 +19,24 @@ type serverType = {
     password: string,
     domain: string,
     deleted: false | null,
-} | null
+}
 
 const getFlagEmoji = (country: string) => {
     return flagCountryList[country] || 'bug';
 }
 
-const tempServers: serverType[] = []
+const tempServers: (serverType | null)[] = []
 const addTempServer = (server: serverType) => {
     tempServers.push(server)
     return tempServers.length - 1
 }
-
 const getTempServer = (id: number) => {
     return tempServers[id]
 }
-
 const removeTempServer = (id: number) => {
     tempServers[id] = null
 }
+
 
 const serversList: serverType[] = [
     {
@@ -57,6 +56,11 @@ const serversList: serverType[] = [
         deleted: false,
     }
 ]
+const createServer = async (server: serverType) => {
+    server.created = moment().toDate();
+    server.id = serversList[serversList.length - 1].id! + 1;
+    serversList.push(server)
+}
 
 const ManagementServers = (bot: MyBot) => {
 
@@ -177,7 +181,7 @@ ${server.country} | ${server.iso}
 
     bot.callbackQuery(/(management:servers:add:confirm)\d{1,}/g, async (ctx) => {
         const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm", ""));
-        const server = getTempServer(tempID)
+        const server = getTempServer(tempID)!
 
         serversList.push(server)
 
@@ -185,7 +189,7 @@ ${server.country} | ${server.iso}
 
         const keys = new InlineKeyboard().text("✅ ثبت شد")
         await ctx.editMessageReplyMarkup({ reply_markup: keys });
-        await ctx.answerCallbackQuery(server?.name + " ✅ ثبت شد");
+        await ctx.answerCallbackQuery(server.name + " ✅ ثبت شد");
     });
 };
 
