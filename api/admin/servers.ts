@@ -119,17 +119,15 @@ const ManagementServers = (bot: MyBot) => {
     bot.inlineQuery(regAdd, async (ctx) => {
         try {
             const server = extractServer(ctx.match!);
-            console.log(ctx.match![0].replace(/(\r\n|\n|\r)/gm, "%"))
             const bellow_keyboard = new InlineKeyboard()
-                .text("✅ تایید", "ctx.match![0]")
+                .text("✅ تایید", ctx.match![0].replace(/(\r\n|\n|\r)/gm, "\n"))
                 .text("❌ لغو", "management:servers:add:cancel")
 
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
-<span class="tg-spoiler">${server.username}@${server.ip}:${server.password}</span>
+<span class="tg-spoiler"><code>${server.username}@${server.ip}:${server.password}</code></span>
 ${server.country} | ${server.iso}
 <b>Domain:</b> <code>${server.domain}</code>
-<i>${server.description}</i>
-`
+<pre>${server.description}</pre>`
             await ctx.answerInlineQuery(
                 [
                     {
@@ -156,6 +154,7 @@ ${server.country} | ${server.iso}
 
     bot.callbackQuery(regAdd, async (ctx) => {
         const server = extractServer(ctx.match!);
+        // save in db
         const keys = new InlineKeyboard().text("✅ ثبت شد")
         await ctx.editMessageReplyMarkup({ reply_markup: keys });
         await ctx.answerCallbackQuery("✅ ثبت شد");
