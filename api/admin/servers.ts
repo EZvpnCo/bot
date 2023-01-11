@@ -87,7 +87,6 @@ const ManagementServers = (bot: MyBot) => {
 
 
     // ====> add server
-    const regAdd = /management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/
     const extractServer = (match: string | RegExpMatchArray) => {
         const code = match[2]
         const iso = countries.getAlpha2Code(match[1], "en").toLowerCase()
@@ -116,12 +115,12 @@ const ManagementServers = (bot: MyBot) => {
         }
         return server;
     }
-    bot.inlineQuery(regAdd, async (ctx) => {
+    bot.inlineQuery(/management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/, async (ctx) => {
+        console.log(ctx.inlineQuery.query)
         try {
             const server = extractServer(ctx.match!);
-            console.log(ctx.match![0].replace(/(\r\n|\n|\r)/gm, "#"))
             const bellow_keyboard = new InlineKeyboard()
-                .text("✅ تایید", "management:servers:add:\nGermany-07\n38.54.2.172\nusername")
+                .switchInline("✅ تایید", ctx.inlineQuery.query)
                 .text("❌ لغو", "management:servers:add:cancel")
 
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
@@ -153,13 +152,17 @@ ${server.country} | ${server.iso}
 
     });
 
-    bot.callbackQuery(regAdd, async (ctx) => {
-        const server = extractServer(ctx.match!);
-        // save in db
-        const keys = new InlineKeyboard().text("✅ ثبت شد")
-        await ctx.editMessageReplyMarkup({ reply_markup: keys });
-        await ctx.answerCallbackQuery("✅ ثبت شد");
-    });
+    bot.on("message", (ctx) => ctx.reply(JSON.stringify(ctx)));
+
+    // bot.callbackQuery(regAdd, async (ctx) => {
+    //     const server = extractServer(ctx.match!);
+    //     // save in db
+    //     const keys = new InlineKeyboard().text("✅ ثبت شد")
+    //     await ctx.editMessageReplyMarkup({ reply_markup: keys });
+    //     await ctx.answerCallbackQuery("✅ ثبت شد");
+    // });
+
+
 
     bot.callbackQuery("management:servers:add:cancel", async (ctx) => {
         const keys = new InlineKeyboard().text("❌ لغو شد")
