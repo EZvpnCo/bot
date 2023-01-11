@@ -3,7 +3,9 @@
 		"typescript": "^4.9.4"
 	},
 	"dependencies": {
-		"grammy": "^1.13.0"
+		"@grammyjs/emoji": "^1.1.0",
+		"grammy": "^1.13.0",
+		"moment": "^2.29.4"
 	},
 	"scripts": {
 		"start": "node build/bot.js",

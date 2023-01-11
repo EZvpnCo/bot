@@ -1,16 +1,28 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@grammyjs/emoji': ^1.1.0
   grammy: ^1.13.0
+  moment: ^2.29.4
   typescript: ^4.9.4
 
 dependencies:
+  '@grammyjs/emoji': 1.1.0_grammy@1.13.0
   grammy: 1.13.0
+  moment: 2.29.4
 
 devDependencies:
   typescript: 4.9.4
 
 packages:
+
+  /@grammyjs/emoji/1.1.0_grammy@1.13.0:
+    resolution: {integrity: sha512-G5U2jieeC218nBeeAZ2FT1JuIBGeKnZzEIenv68I0L8w4HG2Oi0v59HQ/E71X1z490a/6KNppKiCnukxymlDFA==}
+    peerDependencies:
+      grammy: ^1.7.1
+    dependencies:
+      grammy: 1.13.0
+    dev: false
 
   /@grammyjs/types/2.11.0:
     resolution: {integrity: sha512-x3Q1ngj89Sxu4bsLLPPAzAhAn+dqtaVtRPGXagVCZO7MJFbiWKdhs0aJKtC+HNaSlEhCS1unBOVde0ecAh9MZQ==}
@@ -51,6 +63,10 @@ packages:
     transitivePeerDependencies:
       - encoding
       - supports-color
+    dev: false
+
+  /moment/2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
     dev: false
 
   /ms/2.1.2:

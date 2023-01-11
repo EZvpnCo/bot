@@ -1,6 +1,7 @@
 import { Bot, } from "grammy";
+import { MyBot } from "./bot";
 
-const PingPong = (bot: Bot) => {
+const PingPong = (bot: MyBot) => {
 
     // Handle the /ping command.
     bot.command("ping", async (ctx) => {

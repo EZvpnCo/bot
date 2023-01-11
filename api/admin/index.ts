@@ -1,13 +1,16 @@
-import { Bot, InlineKeyboard, } from "grammy";
+import { EmojiFlavor } from "@grammyjs/emoji";
+import { Bot, Context, InlineKeyboard, } from "grammy";
+import { MyBot } from "../bot";
 import { Admins as admins } from "../config";
+import AdminServers from "./servers";
 
-const Admin = (bot: Bot) => {
+const Admin = (bot: MyBot) => {
 
     const keyboard = new InlineKeyboard()
-        .text("📡 سرورها", "admin:servers")
-        .text("📟 نودها", "admin:nodes")
+        .text("📡 سرورها", "management:servers")
+        .text("📟 نودها", "management:nodes")
         .row()
-        .text("👥 کاربران", "admin:users")
+        .text("👥 کاربران", "management:users")
         .row()
         .text("صفحه اصلی 🏠", "mainMenu")
 
@@ -24,6 +27,10 @@ const Admin = (bot: Bot) => {
         await ctx.editMessageText(_text, { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
     });
+
+    AdminServers(bot);
+
+
 };
 
 export default Admin;

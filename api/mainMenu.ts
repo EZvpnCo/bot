@@ -1,7 +1,8 @@
 import { Bot, Context, InlineKeyboard } from "grammy";
+import { MyBot } from "./bot";
 import { Admins as admins } from "./config";
 
-const MainMenu = (bot: Bot) => {
+const MainMenu = (bot: MyBot) => {
     // text
     const text = "🔻 از منوی زیر انتخاب کنید:";
 
@@ -19,7 +20,9 @@ const MainMenu = (bot: Bot) => {
             .text("🖥 سرورها", "servers")
             .row()
             .url("💬 پشتیبانی", "EZvpnAdmin.t.me")
-            .row();
+            .row()
+            .text("🕹 حساب من", "myaccount")
+
 
         if (admins.includes(ctx?.from?.id!)) keyboard.text("🎛 مدیریت", "management")
         return keyboard

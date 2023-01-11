@@ -1,6 +1,7 @@
 import { Bot, InlineKeyboard, InputFile } from "grammy";
+import { MyBot } from "./bot";
 
-const Tutorials = (bot: Bot) => {
+const Tutorials = (bot: MyBot) => {
     // text
     const text = "محتوای مدنظر را انتخاب کنید:";
 
@@ -37,7 +38,7 @@ const Tutorials = (bot: Bot) => {
 
 export default Tutorials;
 
-const AgentPanelTutorials = (bot: Bot) => {
+const AgentPanelTutorials = (bot: MyBot) => {
     const text = "محتوای مدنظر را انتخاب کنید:";
 
     // ===> macos
@@ -50,7 +51,7 @@ const AgentPanelTutorials = (bot: Bot) => {
     });
 }
 
-const AndroidTutorials = (bot: Bot) => {
+const AndroidTutorials = (bot: MyBot) => {
     const text = "محتوای مدنظر را انتخاب کنید:";
 
     // ===> android
@@ -107,7 +108,7 @@ const AndroidTutorials = (bot: Bot) => {
 
 
 
-const IOSTutorials = (bot: Bot) => {
+const IOSTutorials = (bot: MyBot) => {
     const text = "محتوای مدنظر را انتخاب کنید:";
 
     // ===> ios
@@ -144,7 +145,7 @@ const IOSTutorials = (bot: Bot) => {
 }
 
 
-const WindowsTutorials = (bot: Bot) => {
+const WindowsTutorials = (bot: MyBot) => {
     const text = "محتوای مدنظر را انتخاب کنید:";
 
     // ===> windows
@@ -191,7 +192,7 @@ const WindowsTutorials = (bot: Bot) => {
 }
 
 
-const MacOSTutorials = (bot: Bot) => {
+const MacOSTutorials = (bot: MyBot) => {
     const text = "محتوای مدنظر را انتخاب کنید:";
 
     // ===> macos

@@ -1,6 +1,7 @@
 import { Bot, InlineKeyboard, InputFile } from "grammy";
+import { MyBot } from "./bot";
 
-const Downloads = (bot: Bot) => {
+const Downloads = (bot: MyBot) => {
     // text
     const text = "پلتفورم مدنظر را انتخاب کنید:";
 
@@ -36,7 +37,7 @@ export default Downloads;
 
 
 
-const AndroidDownload = (bot: Bot) => {
+const AndroidDownload = (bot: MyBot) => {
     const text = "اپلیکیشن مدنظر را انتخاب کنید:";
 
     // ===> android
@@ -92,7 +93,7 @@ const AndroidDownload = (bot: Bot) => {
 
 
 
-const IOSDownload = (bot: Bot) => {
+const IOSDownload = (bot: MyBot) => {
     const text = "اپلیکیشن مدنظر را انتخاب کنید:";
 
     // ===> ios
@@ -117,7 +118,7 @@ const IOSDownload = (bot: Bot) => {
 }
 
 
-const WindowsDownload = (bot: Bot) => {
+const WindowsDownload = (bot: MyBot) => {
     const text = "اپلیکیشن مدنظر را انتخاب کنید:";
 
     // ===> windows
@@ -151,7 +152,7 @@ const WindowsDownload = (bot: Bot) => {
 }
 
 
-const MacOSDownload = (bot: Bot) => {
+const MacOSDownload = (bot: MyBot) => {
     const text = "اپلیکیشن مدنظر را انتخاب کنید:";
 
     // ===> macos

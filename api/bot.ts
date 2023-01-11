@@ -1,4 +1,4 @@
-import { Bot } from "grammy";
+import { Bot, Context } from "grammy";
 import { BotToken } from "./config"
 
 import Admin from "./admin";
@@ -12,7 +12,13 @@ import Prices from "./prices";
 import Servers from "./servers";
 import Tutorials from "./tutorials";
 
-const bot = new Bot(BotToken);
+import { EmojiFlavor, emojiParser } from "@grammyjs/emoji";
+
+export type MyContext = EmojiFlavor<Context>;
+export type MyBot = Bot<MyContext>
+const bot = new Bot<MyContext>(BotToken);
+bot.use(emojiParser());
+
 
 // Handle the /start command.
 bot.command("start", (ctx) => {

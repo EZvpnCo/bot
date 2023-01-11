@@ -1,6 +1,7 @@
 import { Bot, InlineKeyboard } from "grammy";
+import { MyBot } from "./bot";
 
-const Prices = (bot: Bot) => {
+const Prices = (bot: MyBot) => {
     // text
     const text = "نوع کاربری خود را انتخاب کنید:";
 

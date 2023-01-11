@@ -1,6 +1,7 @@
 import { Bot, InlineKeyboard } from "grammy";
+import { MyBot } from "./bot";
 
-const Diagnosis = (bot: Bot) => {
+const Diagnosis = (bot: MyBot) => {
     // text
     const text = "🔻 از منوی زیر انتخاب کنید:";
 
@@ -101,10 +102,10 @@ const Diagnosis = (bot: Bot) => {
     bot.callbackQuery(/(diagnosis:)\d{1,3}/g, async (ctx) => {
         await ctx.answerCallbackQuery();
         const q = parseInt(ctx.match.toString().replace("diagnosis:", "")) - 1;
-    const keyboard = new InlineKeyboard() 
-         .text("برگشت ↩️", "diagnosis") 
-         .text("صفحه اصلی 🏠", "mainMenu");
-        await ctx.editMessageText(`🛠 ${diagnosisList[q][0]}\n\n💭 ${diagnosisList[q][1]}`, { reply_markup: keyboard });
+        const keyboard = new InlineKeyboard()
+            .text("برگشت ↩️", "diagnosis")
+            .text("صفحه اصلی 🏠", "mainMenu");
+        await ctx.editMessageText(`🛠 ${diagnosisList[q][0]}\n\n💭 ${diagnosisList[q][1]}`, { reply_markup: keyboard });
     });
 };
 
