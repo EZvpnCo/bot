@@ -121,7 +121,7 @@ const ManagementServers = (bot: MyBot) => {
             const server = extractServer(ctx.match!);
             console.log(ctx.match![0].replace(/(\r\n|\n|\r)/gm, "#"))
             const bellow_keyboard = new InlineKeyboard()
-                .text("✅ تایید", "management:servers:add:\nGermany-07\n38.54.2.172\nusername\npassword\nDescription")
+                .text("✅ تایید", "management:servers:add:\nGermany-07\n38.54.2.172\nusername")
                 .text("❌ لغو", "management:servers:add:cancel")
 
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
