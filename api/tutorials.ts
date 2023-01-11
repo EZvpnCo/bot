@@ -68,18 +68,39 @@ const AndroidTutorials = (bot: Bot) => {
         await ctx.answerCallbackQuery();
     });
 
-    // ===> android:surfboard
-    const android_surfboard_tutorial = "http://dl.ezvpn.co/tutorials/android/Surfboard.mp4";
-    const android_surfboard_keyboard = new InlineKeyboard()
+    const android_back_keyboard = new InlineKeyboard()
         .text("برگشت", "tutorials:android")
         .text("صفحه اصلی", "mainMenu");
-    bot.callbackQuery("tutorials:android:surfboard", async (ctx) => {
-        const text = `
-Android - Surfboard
 
-${android_surfboard_tutorial}
-`
-        await ctx.reply(text, { reply_markup: android_surfboard_keyboard });
+    // ===> android:surfboard
+    const android_surfboard_tutorial = "http://dl.ezvpn.co/tutorials/android/Surfboard.mp4";
+    bot.callbackQuery("tutorials:android:surfboard", async (ctx) => {
+        const text = `Android - Surfboard\n\n${android_surfboard_tutorial}`
+        await ctx.editMessageText(text, { reply_markup: android_back_keyboard });
+        await ctx.answerCallbackQuery();
+    });
+
+    // ===> android:oneclick
+    const android_oneclick_tutorial = "http://dl.ezvpn.co/tutorials/android/OneClick.mp4";
+    bot.callbackQuery("tutorials:android:oneclick", async (ctx) => {
+        const text = `Android - OneClick\n\n${android_oneclick_tutorial}`
+        await ctx.editMessageText(text, { reply_markup: android_back_keyboard });
+        await ctx.answerCallbackQuery();
+    });
+
+    // ===> android:l2tp
+    const android_l2tp_tutorial = "http://dl.ezvpn.co/tutorials/android/L2tp.mp4";
+    bot.callbackQuery("tutorials:android:l2tp", async (ctx) => {
+        const text = `Android - L2tp\n\n${android_l2tp_tutorial}`
+        await ctx.editMessageText(text, { reply_markup: android_back_keyboard });
+        await ctx.answerCallbackQuery();
+    });
+
+    // ===> android:openvpn
+    const android_openvpn_tutorial = "http://dl.ezvpn.co/tutorials/android/OpenVPN.mp4";
+    bot.callbackQuery("tutorials:android:openvpn", async (ctx) => {
+        const text = `Android - OpenVPN\n\n${android_openvpn_tutorial}`
+        await ctx.editMessageText(text, { reply_markup: android_back_keyboard });
         await ctx.answerCallbackQuery();
     });
 }
@@ -87,72 +108,97 @@ ${android_surfboard_tutorial}
 
 
 const IOSTutorials = (bot: Bot) => {
-    const text = "اپلیکیشن مدنظر را انتخاب کنید:";
+    const text = "محتوای مدنظر را انتخاب کنید:";
 
     // ===> ios
     const keyboard = new InlineKeyboard()
-        .text("OneClick", "downloads:ios:oneclick")
+        .text("OneClick", "tutorials:ios:oneclick")
+        .text("L2tp", "tutorials:ios:l2tp")
         .row()
-        .text("برگشت", "downloads")
+        .text("برگشت", "tutorials")
         .text("صفحه اصلی", "mainMenu");
-    bot.callbackQuery("downloads:ios", async (ctx) => {
+    bot.callbackQuery("tutorials:ios", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
     });
 
+    const ios_back_keyboard = new InlineKeyboard()
+        .text("برگشت", "tutorials:ios")
+        .text("صفحه اصلی", "mainMenu");
+
     // ===> ios:oneclick
-    const ios_oneclick_keyboard = new InlineKeyboard()
-        .url('دانلود از App Store', 'https://apps.apple.com/us/app/oneclick-safe-easy-fast/id1545555197')
-    bot.callbackQuery("downloads:ios:oneclick", async (ctx) => {
-        const text = `🎲 نام برنامه: One Click`
-        await ctx.reply(text, { reply_markup: ios_oneclick_keyboard });
+    const ios_oneclick_tutorial = "http://dl.ezvpn.co/tutorials/ios/OneClick.mp4";
+    bot.callbackQuery("tutorials:ios:oneclick", async (ctx) => {
+        const text = `iOS - OneClick\n\n${ios_oneclick_tutorial}`
+        await ctx.editMessageText(text, { reply_markup: ios_back_keyboard });
+        await ctx.answerCallbackQuery();
+    });
+
+    // ===> ios:l2tp
+    const ios_l2tp_tutorial = "http://dl.ezvpn.co/tutorials/ios/L2tp.mp4";
+    bot.callbackQuery("tutorials:ios:l2tp", async (ctx) => {
+        const text = `iOS - L2tp\n\n${ios_l2tp_tutorial}`
+        await ctx.editMessageText(text, { reply_markup: ios_back_keyboard });
         await ctx.answerCallbackQuery();
     });
 }
 
 
 const WindowsTutorials = (bot: Bot) => {
-    const text = "اپلیکیشن مدنظر را انتخاب کنید:";
+    const text = "محتوای مدنظر را انتخاب کنید:";
 
     // ===> windows
     const keyboard = new InlineKeyboard()
-        .text("EZvpn", "downloads:windows:ezvpn")
-        .text("v2rayN", "downloads:windows:v2rayn")
+        .text("EZvpn", "tutorials:windows:ezvpn")
+        .text("v2rayN", "tutorials:windows:v2rayn")
         .row()
-        .text("برگشت", "downloads")
+        .text("L2tp", "tutorials:windows:l2tp")
+        .row()
+        .text("برگشت", "tutorials")
         .text("صفحه اصلی", "mainMenu");
-    bot.callbackQuery("downloads:windows", async (ctx) => {
+    bot.callbackQuery("tutorials:windows", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
     });
 
+    const windows_back_keyboard = new InlineKeyboard()
+        .text("برگشت", "tutorials:windows")
+        .text("صفحه اصلی", "mainMenu");
+
     // ===> windows:ezvpn
-    const windows_ezvpn_keyboard = new InlineKeyboard()
-        .url('دانلود از EZvpn', 'http://dl.ezvpn.co/downloads/windows/EZvpn.exe')
-    bot.callbackQuery("downloads:windows:ezvpn", async (ctx) => {
-        const text = `🎲 نام برنامه: EZvpn`
-        await ctx.reply(text, { reply_markup: windows_ezvpn_keyboard });
+    const windows_ezvpn_tutorial = "http://dl.ezvpn.co/tutorials/windows/EZvpn.mp4";
+    bot.callbackQuery("tutorials:windows:ezvpn", async (ctx) => {
+        const text = `Windows - EZvpn\n\n${windows_ezvpn_tutorial}`
+        await ctx.editMessageText(text, { reply_markup: windows_back_keyboard });
         await ctx.answerCallbackQuery();
     });
+
     // ===> windows:v2rayn
-    const windows_v2rayn_keyboard = new InlineKeyboard()
-        .url('دانلود از EZvpn', 'http://dl.ezvpn.co/downloads/windows/v2rayN.zip')
-    bot.callbackQuery("downloads:windows:v2rayn", async (ctx) => {
-        const text = `🎲 نام برنامه: v2rayN`
-        await ctx.reply(text, { reply_markup: windows_v2rayn_keyboard });
+    const windows_v2rayn_tutorial = "http://dl.ezvpn.co/tutorials/windows/v2rayN.mp4";
+    bot.callbackQuery("tutorials:windows:v2rayn", async (ctx) => {
+        const text = `Windows - v2rayN\n\n${windows_v2rayn_tutorial}`
+        await ctx.editMessageText(text, { reply_markup: windows_back_keyboard });
+        await ctx.answerCallbackQuery();
+    });
+
+    // ===> windows:l2tp
+    const windows_l2tp_tutorial = "http://dl.ezvpn.co/tutorials/windows/L2tp.mp4";
+    bot.callbackQuery("tutorials:windows:l2tp", async (ctx) => {
+        const text = `Windows - L2tp\n\n${windows_l2tp_tutorial}`
+        await ctx.editMessageText(text, { reply_markup: windows_back_keyboard });
         await ctx.answerCallbackQuery();
     });
 }
 
 
 const MacOSTutorials = (bot: Bot) => {
-    const text = "اپلیکیشن مدنظر را انتخاب کنید:";
+    const text = "محتوای مدنظر را انتخاب کنید:";
 
     // ===> macos
     const keyboard = new InlineKeyboard()
-        .text("برگشت", "downloads")
+        .text("برگشت", "tutorials")
         .text("صفحه اصلی", "mainMenu");
-    bot.callbackQuery("downloads:macos", async (ctx) => {
+    bot.callbackQuery("tutorials:macos", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
     });
