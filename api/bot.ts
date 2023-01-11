@@ -4,12 +4,14 @@ import Downloads from "./downloads";
 import Faq from "./faq";
 import MainMenu from "./mainMenu";
 import Prices from "./prices";
+import Tutorials from "./tutorials";
 
 const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 
 MainMenu(bot);
 Prices(bot);
 Downloads(bot);
+Tutorials(bot);
 Faq(bot);
 Diagnosis(bot);
 // Define keyboards
@@ -29,7 +31,6 @@ const macOSTutorialsKeyboard = new InlineKeyboard().text("صفحه اصلی", "m
 
 
 
-const selectTutorialType = "نوع آموزش مد نظر را انتخاب کنید:";
 // **********************************************************************************
 
 // ===> files
@@ -55,15 +56,6 @@ bot.command("start", (ctx) => {
 
 
 // =================> tutorials
-// AgentPanelTutorials
-bot.callbackQuery("AgentPanelTutorials", async (ctx) => {
-  await ctx.answerCallbackQuery();
-});
-// AndroidTutorials
-bot.callbackQuery("AndroidTutorials", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(selectTutorialType, { reply_markup: androidTutorialsKeyboard });
-});
 bot.callbackQuery("AndroidTutorials-Surfboard", async (ctx) => {
   try {
     await ctx.replyWithVideo(androidSurfboardTut, { caption: "Android - Surfboard" });
@@ -97,10 +89,6 @@ bot.callbackQuery("AndroidTutorials-OpenVPN", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 // iOSTutorials
-bot.callbackQuery("iOSTutorials", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(selectTutorialType, { reply_markup: iOSTutorialsKeyboard });
-});
 bot.callbackQuery("iOSTutorials-OneClick", async (ctx) => {
   try {
     await ctx.replyWithVideo(iOSOneClickTut, { caption: "iOS - OneClick" });
@@ -118,10 +106,6 @@ bot.callbackQuery("iOSTutorials-L2tp", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 // WindowsTutorials
-bot.callbackQuery("WindowsTutorials", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(selectTutorialType, { reply_markup: windowsTutorialsKeyboard });
-});
 bot.callbackQuery("WindowsTutorials-EZvpn", async (ctx) => {
   try {
     await ctx.replyWithVideo(windowsEZvpnTut, { caption: "Windows - EZvpn" });
@@ -146,11 +130,7 @@ bot.callbackQuery("WindowsTutorials-L2tp", async (ctx) => {
   }
   await ctx.answerCallbackQuery();
 });
-// macOSTutorials
-bot.callbackQuery("macOSTutorials", async (ctx) => {
-  await ctx.answerCallbackQuery();
-  await ctx.editMessageText(selectTutorialType, { reply_markup: macOSTutorialsKeyboard });
-});
+
 // =================> tutorials
 
 
