@@ -99,13 +99,13 @@ const Diagnosis = (bot: MyBot) => {
     });
 
     // diagnosis answer
-    bot.callbackQuery(/(diagnosis:)\d{1,3}/g, async (ctx) => {
-        await ctx.answerCallbackQuery();
+    bot.callbackQuery(/(diagnosis:)\d{1,}/g, async (ctx) => {
         const q = parseInt(ctx.match.toString().replace("diagnosis:", "")) - 1;
         const keyboard = new InlineKeyboard()
             .text("برگشت ↩️", "diagnosis")
             .text("صفحه اصلی 🏠", "mainMenu");
         await ctx.editMessageText(`🛠 ${diagnosisList[q][0]}\n\n💭 ${diagnosisList[q][1]}`, { reply_markup: keyboard });
+        await ctx.answerCallbackQuery();
     });
 };
 

@@ -38,11 +38,9 @@ const serversList: server[] = [
     }
 ]
 
-const AdminServers = (bot: MyBot) => {
+const ManagementServers = (bot: MyBot) => {
 
-
-
-    const genKeyboard = (ctx: MyContext) => {
+    const genServersListKeyboard = (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
         serversList.forEach((v, i) => {
@@ -52,6 +50,8 @@ const AdminServers = (bot: MyBot) => {
         })
 
         keyboard
+            .text("➕ افزودن سرور جدید", "management:servers:add")
+            .row()
             .text("برگشت ↪️", "management")
             .text("صفحه اصلی 🏠", "mainMenu")
 
@@ -59,23 +59,28 @@ const AdminServers = (bot: MyBot) => {
     }
 
 
-
-
-
     bot.callbackQuery("management:servers", async (ctx) => {
-        let _text, _keyboard
-        if (!admins.includes(ctx?.from?.id!)) {
-            _text = `شما دسترسی های لازم رو نداری 🚫`
-        }
-        else {
-            _text = "📡 مدیریت سرورها"
-            _keyboard = genKeyboard(ctx)
-        }
+        const _text = "📡 مدیریت سرورها"
+        const _keyboard = genServersListKeyboard(ctx)
         await ctx.editMessageText(_text, { reply_markup: _keyboard });
+        await ctx.answerCallbackQuery();
+    });
+
+
+    bot.callbackQuery(/(management:servers:)\d{1,}/g, async (ctx) => {
+        const id = parseInt(ctx.match.toString().replace("management:servers:", ""));
+        const _text = "server " + id
+        await ctx.editMessageText(_text);
+        await ctx.answerCallbackQuery();
+    });
+
+    bot.callbackQuery("management:servers:add", async (ctx) => {
+        const _text = "add server"
+        await ctx.editMessageText(_text);
         await ctx.answerCallbackQuery();
     });
 
 
 };
 
-export default AdminServers;
+export default ManagementServers;

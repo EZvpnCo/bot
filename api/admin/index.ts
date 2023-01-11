@@ -2,7 +2,7 @@ import { EmojiFlavor } from "@grammyjs/emoji";
 import { Bot, Context, InlineKeyboard, } from "grammy";
 import { MyBot } from "../bot";
 import { Admins as admins } from "../config";
-import AdminServers from "./servers";
+import ManagementServers from "./servers";
 
 const Admin = (bot: MyBot) => {
 
@@ -15,22 +15,28 @@ const Admin = (bot: MyBot) => {
         .text("صفحه اصلی 🏠", "mainMenu")
 
 
-    bot.callbackQuery("management", async (ctx) => {
-        let _text, _keyboard
+    bot.callbackQuery(/(management.*)/g, async (ctx, _next) => {
         if (!admins.includes(ctx?.from?.id!)) {
-            _text = `شما دسترسی های لازم رو نداری 🚫`
+            const _text = `شما دسترسی های لازم رو نداری 🚫`
+            await ctx.answerCallbackQuery(_text);
         }
         else {
-            _text = `به بخش مدیریت خوش اومدی\nچیکار میتونم انجام بدم برات؟`
-            _keyboard = keyboard
+            return _next();
         }
+    })
+
+    bot.callbackQuery("management", async (ctx) => {
+        let _text, _keyboard
+
+        _text = `به بخش مدیریت خوش اومدی\nچیکار میتونم انجام بدم برات؟`
+        _keyboard = keyboard
+
         await ctx.editMessageText(_text, { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
-    });
-
-    AdminServers(bot);
+    })
 
 
+    ManagementServers(bot);
 };
 
 export default Admin;
