@@ -77,6 +77,7 @@ const ManagementServers = (bot: MyBot) => {
             .switchInlineCurrent("➕ افزودن سرور جدید", "management:servers:add:\nGermany-07\n38.54.2.172\nusername\npassword\nDescription")
             .row()
             .text("↪️", "management")
+            .text("🔄", "management:servers")
             .text("🏠", "mainMenu")
 
         return keyboard;
@@ -173,7 +174,8 @@ ${server.country} | ${server.iso}
             const server = extractServer(ctx.match!);
             const tempID = addTempServer(server);
             const bellow_keyboard = new InlineKeyboard()
-                .text("✅ تایید", "management:servers:add:confirm" + tempID)
+                .text("✅ تایید", "management:servers:add:confirm:" + tempID)
+                .text("❌ لغو", "management:servers:add:cancel:" + tempID)
 
             const cttx = await ctx.reply("تایید می کنید؟", { reply_markup: bellow_keyboard, reply_to_message_id: ctx.message.message_id })
             setTimeout(() => {
@@ -183,12 +185,11 @@ ${server.country} | ${server.iso}
                     ctx.api.editMessageReplyMarkup(cttx.chat.id, cttx.message_id, { reply_markup: bellow_keyboard })
                     removeTempServer(tempID)
                 }
-
             }, 5000)
         }
     });
 
-    bot.callbackQuery(/(management:servers:add:confirm)\d{1,}/g, async (ctx) => {
+    bot.callbackQuery(/(management:servers:add:confirm:)\d{1,}/g, async (ctx) => {
         const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm", ""));
         const server = getTempServer(tempID)
         if (!server) {
@@ -202,6 +203,20 @@ ${server.country} | ${server.iso}
         const keys = new InlineKeyboard().text("✅ ثبت شد")
         await ctx.editMessageReplyMarkup({ reply_markup: keys });
         await ctx.answerCallbackQuery(server.name + " ✅ ثبت شد");
+    });
+
+    bot.callbackQuery(/(management:servers:add:cancel:)\d{1,}/g, async (ctx) => {
+        const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm", ""));
+        const server = getTempServer(tempID)
+        if (!server) {
+            await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
+            return
+        }
+        removeTempServer(tempID)
+
+        const keys = new InlineKeyboard().text("❌ لغو شد")
+        await ctx.editMessageReplyMarkup({ reply_markup: keys });
+        await ctx.answerCallbackQuery(server.name + " ❌ لغو شد");
     });
 };
 
