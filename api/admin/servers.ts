@@ -136,14 +136,13 @@ const ManagementServers = (bot: MyBot) => {
     bot.inlineQuery(/management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/, async (ctx) => {
         try {
             const server = extractServer(ctx.match!);
-            const tempID = addTempServer(server)
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
-<code><span class="tg-spoiler">${server.username}@${server.ip}:${server.password}</span></code>
+<code>${server.username}@${server.ip}:${server.password}</code>
 ${server.country} | ${server.iso}
 <b>Domain:</b> <code>${server.domain}</code>
 <pre>${server.description}</pre>
-
-<code>management:servers:add:${tempID}</code>
+========================
+<span class="tg-spoiler">management:servers:add:${ctx.inlineQuery.query.replace("\n", "|")}</span>
 `
             await ctx.answerInlineQuery(
                 [
@@ -168,14 +167,16 @@ ${server.country} | ${server.iso}
 
     });
 
-    bot.hears(/(management:servers:add:)\d{1,}/g, (ctx, _next) => {
+    bot.hears(/management:servers:add:\|(.*)-(.*)\|(.*)\|(.*)\|(.*)\|(.*)/, async (ctx, _next) => {
         if (!ctx?.message?.via_bot) return _next()
         else {
-            const tempID = parseInt(ctx.match.toString().replace("management:servers:add:", ""));
+            const server = extractServer(ctx.match!);
+            const tempID = addTempServer(server);
             const bellow_keyboard = new InlineKeyboard()
                 .text("✅ تایید", "management:servers:add:confirm" + tempID)
 
-            ctx.reply("تایید می کنید؟", { reply_markup: bellow_keyboard, reply_to_message_id: ctx.message.message_id })
+            await ctx.reply("تایید می کنید؟", { reply_markup: bellow_keyboard, reply_to_message_id: ctx.message.message_id })
+
         }
     });
 
@@ -183,7 +184,7 @@ ${server.country} | ${server.iso}
         const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm", ""));
         const server = getTempServer(tempID)!
 
-        serversList.push(server)
+        await createServer(server)
 
         removeTempServer(tempID)
 
