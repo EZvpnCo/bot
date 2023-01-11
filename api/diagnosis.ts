@@ -85,7 +85,7 @@ const Diagnosis = (bot: Bot) => {
     diagnosisList.map((v, index) => {
         keyboard.text(v[0], "diagnosis:" + (index + 1)).row();
     });
-    keyboard.text("صفحه اصلی", "mainMenu");
+    keyboard.text("صفحه اصلی 🏠", "mainMenu");
 
     // Handle the /diagnosis command.
     bot.command("diagnosis", (ctx) => {
@@ -101,7 +101,10 @@ const Diagnosis = (bot: Bot) => {
     bot.callbackQuery(/(diagnosis:)\d{1,3}/g, async (ctx) => {
         await ctx.answerCallbackQuery();
         const q = parseInt(ctx.match.toString().replace("diagnosis:", "")) - 1;
-        await ctx.reply(`🛠 ${diagnosisList[q][0]}\n\n💭 ${diagnosisList[q][1]}`);
+    const keyboard = new InlineKeyboard() 
+         .text("برگشت ↩️", "diagnosis") 
+         .text("صفحه اصلی 🏠", "mainMenu");
+        await ctx.editMessageText(`🛠 ${diagnosisList[q][0]}\n\n💭 ${diagnosisList[q][1]}`, { reply_markup: keyboard });
     });
 };
 
