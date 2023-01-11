@@ -85,8 +85,8 @@ const ManagementServers = (bot: MyBot) => {
         const mch = ctx.match!;
 
         const code = mch[2]
-        const iso = countries.getAlpha2Code(mch[1], "en")
-        const domain = iso + "-" + code + ".ezvpn.co"
+        const iso = countries.getAlpha2Code(mch[1], "en").toLowerCase()
+        const domain = iso + code + ".ezvpn.co"
         const flag = `flag_${mch[1].toLowerCase()}`
         const country = mch[1]
         const name = mch[1] + "-" + code
@@ -128,55 +128,14 @@ const ManagementServers = (bot: MyBot) => {
                             "https://grammy.dev/",
                         ),
                     url: server.domain,
-                    description: `${server.username}@${server.ip}:${server.password}
-${server.country} | ${server.flag} | ${server.iso}`,
+                    description: `${server.username}@${server.ip}` +
+                        ctx.emoji`${server.flag}` + ` ${server.country} | ${server.iso}`,
                     thumb_url: "https://cdn.jsdelivr.net/gh/mt-theme/metron-assets@3.0.2/metron/media/flags/1x1/nl.svg",
                 },
             ],
             { cache_time: 100 },
         );
     });
-
-    bot.inlineQuery(/management:servers:add /, async (ctx) => {
-        await ctx.answerInlineQuery(
-            [
-                {
-                    type: "article",
-                    id: "grammy-website",
-                    title: "grammY",
-                    input_message_content: {
-                        message_text:
-                            "<b>grammY</b> is the best way to create your own Telegram bots. \
-They even have a pretty website! 👇",
-                        parse_mode: "HTML",
-                    },
-                    reply_markup: new InlineKeyboard().url(
-                        "grammY website",
-                        "https://grammy.dev/",
-                    ),
-                    url: "https://grammy.dev/",
-                    description: "The Telegram Bot Framework.",
-                },
-            ],
-            { cache_time: 30 * 24 * 3600 }, // one month in seconds
-        );
-    });
-
-    // bot.callbackQuery("management:servers:add", async (ctx) => {
-    //     const _text = `❕برای افزودن سرور به شکل زیر دستور را وارد کنید: 
-
-
-    //     `
-    //     const _keyboard = new InlineKeyboard()
-    //         .switchInlineCurrent("")
-    //         .row()
-    //         .text("↪️", "management:servers")
-    //         .text("🏠", "mainMenu")
-    //         .text("🎛", "management")
-
-    //     await ctx.editMessageText(_text, { parse_mode: 'MarkdownV2', reply_markup: _keyboard });
-    //     await ctx.answerCallbackQuery();
-    // });
 
 
 };
