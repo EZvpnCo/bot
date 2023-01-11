@@ -62,6 +62,10 @@ const createServer = async (server: serverType) => {
     serversList.push(server)
 }
 
+const getServer = async (_id: number): Promise<serverType | null> => {
+    return serversList.filter(({ id }) => id == _id)[0]
+}
+
 const ManagementServers = (bot: MyBot) => {
 
     const genServersListKeyboard = (ctx: MyContext) => {
@@ -86,8 +90,7 @@ const ManagementServers = (bot: MyBot) => {
 
     bot.callbackQuery("management:servers", async (ctx) => {
         try {
-            const _text = `📡 مدیریت سرورها
-تعداد: ${serversList.length}`
+            const _text = `📡 مدیریت سرورها\nتعداد: ${serversList.length}`
             const _keyboard = genServersListKeyboard(ctx)
             await ctx.editMessageText(_text, { reply_markup: _keyboard });
             await ctx.answerCallbackQuery();
@@ -99,18 +102,37 @@ const ManagementServers = (bot: MyBot) => {
 
     bot.callbackQuery(/(management:servers:)\d{1,}/g, async (ctx) => {
         const id = parseInt(ctx.match.toString().replace("management:servers:", ""));
-        const _text = "server " + id
+        const server = await getServer(id)
+        if (!server) {
+            await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
+            return
+        }
+        const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
+<b>ip:</b> <code>${server.ip}</code>
+<b>Username:</b> <code>${server.username}</code>
+<b>Password:</b> <code>${server.password}</code>
+<b>Domain:</b> <code>${server.domain}</code>
+<b>Created:</b> <code>${moment(server.created).format("YYYY-MM-DD HH:mm:ss")}</code>
+
+__ <pre>${server.description}</pre>`
+
         const _keyboard = new InlineKeyboard()
+            .text("Install XrayR", "management:servers:" + id + ":install_xrayr")
+            .row()
+            .text("Config XrayR", "management:servers:" + id + ":config_xrayr")
+            .row()
+            .text("Restart XrayR", "management:servers:" + id + ":restart_xrayr")
+            .row()
             .text("↪️", "management:servers")
             .text("🏠", "mainMenu")
             .text("🎛", "management")
 
-        await ctx.editMessageText(_text, { reply_markup: _keyboard });
+        await ctx.editMessageText(_text, { reply_markup: _keyboard, parse_mode: "HTML", });
         await ctx.answerCallbackQuery();
     });
 
 
-    // ====> add server
+    // =========================================================================================> add server
     const extractServer = (match: string | RegExpMatchArray) => {
         const code = match[2]
         const iso = countries.getAlpha2Code(match[1], "en").toLowerCase()
