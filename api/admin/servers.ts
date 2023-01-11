@@ -120,14 +120,14 @@ const ManagementServers = (bot: MyBot) => {
         try {
             const server = extractServer(ctx.match!);
             const bellow_keyboard = new InlineKeyboard()
-                .text("✅ تایید", "jjjjj")
+                .text("✅ تایید", "ctx.match![0]")
                 .text("❌ لغو", "management:servers:add:cancel")
 
-            const _text = ctx.emoji`${server.flag}` + ` *${server.name}*
-${server.username}@${server.ip}:${server.password}
+            const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
+<span class="tg-spoiler">${server.username}@${server.ip}:${server.password}</span>
 ${server.country} | ${server.iso}
-*Domain:* ${server.domain}
-_${server.description}_
+<b>Domain:</b> <code>${server.domain}</code>
+<i>${server.description}</i>
 `
             await ctx.answerInlineQuery(
                 [
