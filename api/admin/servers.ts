@@ -119,8 +119,9 @@ const ManagementServers = (bot: MyBot) => {
     bot.inlineQuery(regAdd, async (ctx) => {
         try {
             const server = extractServer(ctx.match!);
+            console.log(ctx.match![0].replace(/(\r\n|\n|\r)/gm, "#"))
             const bellow_keyboard = new InlineKeyboard()
-                .text("✅ تایید", ctx.match![0].replace(/(\r\n|\n|\r)/gm, "#"))
+                .text("✅ تایید", "management:servers:add:")
                 .text("❌ لغو", "management:servers:add:cancel")
 
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
