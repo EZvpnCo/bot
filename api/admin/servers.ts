@@ -120,7 +120,7 @@ const ManagementServers = (bot: MyBot) => {
         try {
             const server = extractServer(ctx.match!);
             const bellow_keyboard = new InlineKeyboard()
-                .text("✅ تایید", ctx.match![0])
+                .text("✅ تایید", "jjjjj")
                 .text("❌ لغو", "management:servers:add:cancel")
 
             const _text = ctx.emoji`${server.flag}` + ` *${server.name}*
