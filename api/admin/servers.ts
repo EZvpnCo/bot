@@ -133,7 +133,7 @@ ${server.country} | ${server.flag} | ${server.iso}`,
                     thumb_url: "https://cdn.jsdelivr.net/gh/mt-theme/metron-assets@3.0.2/metron/media/flags/1x1/nl.svg",
                 },
             ],
-            { cache_time: 30 * 24 * 3600 }, // one month in seconds
+            { cache_time: 100 },
         );
     });
 
