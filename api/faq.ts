@@ -58,7 +58,7 @@ const Faq = (bot: Bot) => {
     faqList.map((v, index) => {
         keyboard.text(v[0], "faq:" + (index + 1)).row();
     });
-    keyboard.text("صفحه اصلی", "mainMenu");
+    keyboard.text("صفحه اصلی 🏠", "mainMenu");
 
     // Handle the /faq command.
     bot.command("faq", (ctx) => {
@@ -74,7 +74,10 @@ const Faq = (bot: Bot) => {
     bot.callbackQuery(/(faq:)\d{1,3}/g, async (ctx) => {
         await ctx.answerCallbackQuery();
         const q = parseInt(ctx.match.toString().replace("faq:", "")) - 1;
-        await ctx.reply(`❓ ${faqList[q][0]}\n\n💭 ${faqList[q][1]}`);
+    const keyboard = new InlineKeyboard() 
+         .text("برگشت ↩️", "faq") 
+         .text("صفحه اصلی 🏠", "mainMenu");
+        await ctx.editMessageText(`❓ ${faqList[q][0]}\n\n💭 ${faqList[q][1]}`, { reply_markup: keyboard });
     });
 };
 
