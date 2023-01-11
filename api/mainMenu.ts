@@ -24,7 +24,7 @@ const MainMenu = (bot: MyBot) => {
             .text("🕹 حساب من", "myaccount")
 
 
-        if (admins.includes(ctx?.from?.id!)) keyboard.text("🎛 مدیریت", "management")
+        keyboard.text("🎛 مدیریت", "management")
         return keyboard
     }
 
