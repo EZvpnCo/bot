@@ -11,18 +11,18 @@ const Admin = (bot: Bot) => {
         .row()
         .text("صفحه اصلی 🏠", "mainMenu")
 
-    // Handle the /ping command.
-    bot.command("management", async (ctx) => {
+
+    bot.callbackQuery("management", async (ctx) => {
         let _text, _keyboard
         if (!admins.includes(ctx?.from?.id!)) {
             _text = `شما دسترسی های لازم رو نداری 🚫`
         }
         else {
-            _text = `به بخش مدیریت خوش اومدی
-            چیکار میتونم انجام بدم برات؟`
+            _text = `به بخش مدیریت خوش اومدی\nچیکار میتونم انجام بدم برات؟`
             _keyboard = keyboard
         }
-        await ctx.reply(_text, { reply_markup: _keyboard });
+        await ctx.editMessageText(_text, { reply_markup: _keyboard });
+        await ctx.answerCallbackQuery();
     });
 };
 
