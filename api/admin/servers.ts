@@ -45,7 +45,7 @@ const ManagementServers = (bot: MyBot) => {
 
         serversList.forEach((v, i) => {
             keyboard
-                .text(v.name + ctx.emoji` ${v.flag}`, "hello")
+                .text(v.name + ctx.emoji` ${v.flag}`, "management:servers:" + v.id)
                 .row()
         })
 
