@@ -3,12 +3,14 @@ lockfileVersion: 5.4
 specifiers:
   '@grammyjs/emoji': ^1.1.0
   grammy: ^1.13.0
+  i18n-iso-countries: ^7.5.0
   moment: ^2.29.4
   typescript: ^4.9.4
 
 dependencies:
   '@grammyjs/emoji': 1.1.0_grammy@1.13.0
   grammy: 1.13.0
+  i18n-iso-countries: 7.5.0
   moment: 2.29.4
 
 devDependencies:
@@ -47,6 +49,10 @@ packages:
       ms: 2.1.2
     dev: false
 
+  /diacritics/1.3.0:
+    resolution: {integrity: sha512-wlwEkqcsaxvPJML+rDh/2iS824jbREk6DUMUKkEaSlxdYHeS43cClJtsWglvw2RfeXGm6ohKDqsXteJ5sP5enA==}
+    dev: false
+
   /event-target-shim/5.0.1:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
     engines: {node: '>=6'}
@@ -63,6 +69,13 @@ packages:
     transitivePeerDependencies:
       - encoding
       - supports-color
+    dev: false
+
+  /i18n-iso-countries/7.5.0:
+    resolution: {integrity: sha512-PtfKJNWLVhhU0KBX/8asmywjAcuyQk07mmmMwxFJcddTNBJJ1yvpY2qxVmyxbtVF+9+6eg9phgpv83XPUKU5CA==}
+    engines: {node: '>= 12'}
+    dependencies:
+      diacritics: 1.3.0
     dev: false
 
   /moment/2.29.4:

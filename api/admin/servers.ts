@@ -4,29 +4,29 @@ import moment from "moment";
 import { MyBot, MyContext } from "../bot";
 import { EmojiName } from "@grammyjs/emoji/out/emoji"
 
-type server = {
-    id: number,
+import * as countries from "i18n-iso-countries"
+
+type serverType = {
+    id: number | null,
     name: string,
     description: string,
     created: Date,
     country: string,
-    location: string,
     flag: EmojiName,
     iso: string,
     ip: string,
     username: string,
     password: string,
     domain: string,
-    deleted: false,
+    deleted: false | null,
 }
 
-const serversList: server[] = [
+const serversList: serverType[] = [
     {
         id: 1,
 
         name: "Bahrain-01",
         description: "description",
-        location: "Bahrain/Unja",
         ip: "38.54.2.172",
         username: "ubuntu",
         password: "(C[3Sz{WB8",
@@ -52,7 +52,7 @@ const ManagementServers = (bot: MyBot) => {
         })
 
         keyboard
-            .switchInlineCurrent("➕ افزودن سرور جدید", "management:servers:add:Germany-07(Description)Germany/Frankfurt:ip username password")
+            .switchInlineCurrent("➕ افزودن سرور جدید", "management:servers:add:\nGermany-07\n38.54.2.172\nusername\npassword\nDescription")
             .row()
             .text("↪️", "management")
             .text("🏠", "mainMenu")
@@ -81,27 +81,59 @@ const ManagementServers = (bot: MyBot) => {
         await ctx.answerCallbackQuery();
     });
 
-    bot.inlineQuery(/management:servers:add:(.*)\((.*)\)(.*)\/(.*):(.*) (.*) (.*)/, async (ctx) => {
-        const mm = ctx.match;
-        await ctx.api.sendMessage(ctx.from.id, "Hello" + JSON.stringify(mm))
+    bot.inlineQuery(/management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/, async (ctx) => {
+        const mch = ctx.match!;
+
+        const code = mch[2]
+        const iso = countries.getAlpha2Code(mch[1], "en")
+        const domain = iso + "-" + code + ".ezvpn.co"
+        const flag = `flag_${mch[1].toLowerCase()}`
+        const country = mch[1]
+        const name = mch[1] + "-" + code
+        const server: serverType = {
+            id: null,
+            name,
+            description: mch![6],
+
+            created: moment().toDate(),
+            country,
+
+            ip: mch![3],
+            username: mch[4],
+            password: mch[5],
+            domain,
+
+            // @ts-ignore
+            flag,
+            iso,
+
+
+            deleted: false
+        }
+
+
         await ctx.answerInlineQuery(
             [
                 {
                     type: "article",
-                    id: "grammy-website",
-                    title: "grammY",
+                    id: server.name.toLowerCase(),
+                    title: server.name,
                     input_message_content: {
-                        message_text:
-                            "<b>grammY</b> is the best way to create your own Telegram bots. \
-They even have a pretty website! 👇",
-                        parse_mode: "HTML",
+                        message_text: "Hello",
+                        parse_mode: "MarkdownV2",
                     },
-                    reply_markup: new InlineKeyboard().url(
-                        "grammY website",
-                        "https://grammy.dev/",
-                    ),
-                    url: "https://grammy.dev/",
-                    description: "The Telegram Bot Framework.",
+                    reply_markup: new InlineKeyboard()
+                        .url(
+                            "grammY website",
+                            "https://grammy.dev/",
+                        ),
+                    url: server.domain,
+                    description: `
+${server.description}
+${server.username}@${server.ip}:${server.password}
+${server.country} | ${server.flag} | ${server.iso}
+`,
+                    thumb_url: "https://www.gravatar.com/avatar/322405c4c096af649a8e96d718b7fefa?s=64&d=identicon&r=PG",
                 },
             ],
             { cache_time: 30 * 24 * 3600 }, // one month in seconds
