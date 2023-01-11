@@ -23,14 +23,14 @@ const MainMenu = (bot: Bot) => {
 
     // Handle the /menu command.
     bot.command("menu", async (ctx) => {
-        ctx.reply("fff" + JSON.stringify(ctx) + "fff")
+        ctx.reply("fff" + ctx?.from?.id + "fff")
         // if (admins.includes(ctx.msg.from?.id)) keyboard.text("🎛 مدیریت", "management")
         await ctx.reply(text, { reply_markup: keyboard });
     });
 
     // mainMenu
     bot.callbackQuery("mainMenu", async (ctx) => {
-        ctx.reply("mmm" + JSON.stringify(ctx) + "mmm")
+        ctx.reply("mmm" + ctx?.from?.id + "mmm")
         // if (admins.includes(ctx.from.id)) keyboard.text("🎛 مدیریت", "management")
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
