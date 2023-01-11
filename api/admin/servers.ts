@@ -23,16 +23,18 @@ type server = {
 const serversList: server[] = [
     {
         id: 1,
+
         name: "Bahrain-01",
         description: "description",
-        created: moment("2022-12-28 12:45:44").toDate(),
-        country: "Bahrain",
         location: "Bahrain/Unja",
-        flag: "flag_bahrain",
-        iso: "bh",
         ip: "38.54.2.172",
         username: "ubuntu",
         password: "(C[3Sz{WB8",
+
+        created: moment("2022-12-28 12:45:44").toDate(),
+        country: "Bahrain",
+        flag: "flag_bahrain",
+        iso: "bh",
         domain: "bh01.ezvpn.co",
         deleted: false,
     }
@@ -50,7 +52,7 @@ const ManagementServers = (bot: MyBot) => {
         })
 
         keyboard
-            .switchInlineCurrent("➕ افزودن سرور جدید", "management:servers:add")
+            .switchInlineCurrent("➕ افزودن سرور جدید", "management:servers:add:Germany-07(Description)Germany/Frankfurt:ip username password")
             .row()
             .text("↪️", "management")
             .text("🏠", "mainMenu")
@@ -77,6 +79,33 @@ const ManagementServers = (bot: MyBot) => {
 
         await ctx.editMessageText(_text, { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
+    });
+
+    bot.inlineQuery(/management:servers:add:(.*)\((.*)\)(.*)\/(.*):(.*) (.*) (.*)/, async (ctx) => {
+        const mm = ctx.match;
+        await ctx.reply("Hello" + JSON.stringify(mm))
+        await ctx.answerInlineQuery(
+            [
+                {
+                    type: "article",
+                    id: "grammy-website",
+                    title: "grammY",
+                    input_message_content: {
+                        message_text:
+                            "<b>grammY</b> is the best way to create your own Telegram bots. \
+They even have a pretty website! 👇",
+                        parse_mode: "HTML",
+                    },
+                    reply_markup: new InlineKeyboard().url(
+                        "grammY website",
+                        "https://grammy.dev/",
+                    ),
+                    url: "https://grammy.dev/",
+                    description: "The Telegram Bot Framework.",
+                },
+            ],
+            { cache_time: 30 * 24 * 3600 }, // one month in seconds
+        );
     });
 
     bot.inlineQuery(/management:servers:add /, async (ctx) => {
