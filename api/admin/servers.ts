@@ -28,6 +28,7 @@ const getFlagEmoji = (country: string) => {
 const tempServers: serverType[] = []
 const addTempServer = (server: serverType) => {
     tempServers.push(server)
+    return tempServers.length - 1
 }
 
 const serversList: serverType[] = [
@@ -123,15 +124,15 @@ const ManagementServers = (bot: MyBot) => {
     bot.inlineQuery(/management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/, async (ctx) => {
         try {
             const server = extractServer(ctx.match!);
-            const bellow_keyboard = new InlineKeyboard()
-                // .url("✅ تایید", "management:servers:add:confirm")
-                .text("❌ لغو", "management:servers:add:cancel")
-
+            const tempID = addTempServer(server)
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
 <code><span class="tg-spoiler">${server.username}@${server.ip}:${server.password}</span></code>
 ${server.country} | ${server.iso}
 <b>Domain:</b> <code>${server.domain}</code>
-<pre>${server.description}</pre>`
+<pre>${server.description}</pre>
+
+<code>management:servers:add:${tempID}</code>
+`
             await ctx.answerInlineQuery(
                 [
                     {
@@ -142,7 +143,6 @@ ${server.country} | ${server.iso}
                             message_text: _text,
                             parse_mode: "HTML",
                         },
-                        reply_markup: bellow_keyboard,
                         url: server.domain,
                         description: `${server.username}@${server.ip}\n` + ctx.emoji`${server.flag}` + ` ${server.country} | ${server.iso}`,
                     },
@@ -156,8 +156,15 @@ ${server.country} | ${server.iso}
 
     });
 
-    bot.on("message", (ctx, _next) => {
-        if (!ctx.message.via_bot) return _next()
+    bot.hears(/(management:servers:add:)\d{1,}/g, (ctx, _next) => {
+        if (!ctx?.message?.via_bot) return _next()
+        else {
+            const tempIndex = parseInt(ctx.match.toString().replace("management:servers:add:", ""));
+            const bellow_keyboard = new InlineKeyboard()
+                .url("✅ تایید", "tg://user?id=" + ctx.me.id)
+
+            ctx.reply("Hello", { reply_markup: bellow_keyboard })
+        }
     });
 
     // bot.callbackQuery(regAdd, async (ctx) => {
@@ -167,14 +174,6 @@ ${server.country} | ${server.iso}
     //     await ctx.editMessageReplyMarkup({ reply_markup: keys });
     //     await ctx.answerCallbackQuery("✅ ثبت شد");
     // });
-
-
-
-    bot.callbackQuery("management:servers:add:cancel", async (ctx) => {
-        const keys = new InlineKeyboard().text("❌ لغو شد")
-        await ctx.editMessageReplyMarkup({ reply_markup: keys });
-        await ctx.answerCallbackQuery("❌ لغو شد");
-    });
 };
 
 export default ManagementServers;
