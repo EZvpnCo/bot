@@ -13,8 +13,8 @@ const Prices = (bot: Bot) => {
         .text("صفحه اصلی 🏠", "mainMenu");
 
     // Handle the /prices command.
-    bot.command("prices", (ctx) => {
-        ctx.reply(text, { reply_markup: keyboard });
+    bot.command("prices", async (ctx) => {
+        await ctx.reply(text, { reply_markup: keyboard });
     });
 
     // prices
@@ -54,8 +54,8 @@ const Prices = (bot: Bot) => {
         await ctx.answerCallbackQuery();
     });
     // Handle the /prices@daily command.
-    bot.command("prices@daily", (ctx) => {
-        ctx.reply(dailyText, { reply_markup: back_keyboard });
+    bot.command("prices@daily", async (ctx) => {
+        await ctx.reply(dailyText, { reply_markup: back_keyboard });
     });
 
 
@@ -83,8 +83,8 @@ const Prices = (bot: Bot) => {
         await ctx.answerCallbackQuery();
     });
     // Handle the /prices@trade command.
-    bot.command("prices@trade", (ctx) => {
-        ctx.reply(tradeText, { reply_markup: back_keyboard });
+    bot.command("prices@trade", async (ctx) => {
+        await ctx.reply(tradeText, { reply_markup: back_keyboard });
     });
 
     // ===> game
@@ -111,8 +111,8 @@ const Prices = (bot: Bot) => {
         await ctx.answerCallbackQuery();
     });
     // Handle the /prices@game command.
-    bot.command("prices@game", (ctx) => {
-        ctx.reply(gameText, { reply_markup: back_keyboard });
+    bot.command("prices@game", async (ctx) => {
+        await ctx.reply(gameText, { reply_markup: back_keyboard });
     });
 };
 

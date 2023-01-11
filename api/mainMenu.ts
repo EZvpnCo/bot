@@ -19,8 +19,8 @@ const MainMenu = (bot: Bot) => {
         .url("💬 پشتیبانی", "EZvpnAdmin.t.me");
 
     // Handle the /menu command.
-    bot.command("menu", (ctx) => {
-        ctx.reply(text, { reply_markup: keyboard });
+    bot.command("menu", async (ctx) => {
+        await ctx.reply(text, { reply_markup: keyboard });
     });
 
     // mainMenu
