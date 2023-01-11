@@ -119,6 +119,7 @@ const ManagementServers = (bot: MyBot) => {
     bot.inlineQuery(regAdd, async (ctx) => {
         try {
             const server = extractServer(ctx.match!);
+            console.log(ctx.match![0])
             const bellow_keyboard = new InlineKeyboard()
                 .text("✅ تایید", "ctx.match![0]")
                 .text("❌ لغو", "management:servers:add:cancel")
