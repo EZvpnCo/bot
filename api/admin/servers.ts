@@ -142,7 +142,7 @@ ${server.country} | ${server.iso}
 <b>Domain:</b> <code>${server.domain}</code>
 <pre>${server.description}</pre>
 ========================
-<span class="tg-spoiler">management:servers:add:${ctx.inlineQuery.query.replace("\n", "|")}</span>
+<span class="tg-spoiler">${ctx.inlineQuery.query.replace(/(\r\n|\n|\r)/gm, ";;")}</span>
 `
             await ctx.answerInlineQuery(
                 [
@@ -167,7 +167,7 @@ ${server.country} | ${server.iso}
 
     });
 
-    bot.hears(/management:servers:add:\|(.*)-(.*)\|(.*)\|(.*)\|(.*)\|(.*)/, async (ctx, _next) => {
+    bot.hears(/management:servers:add:;;(.*)-(.*);;(.*);;(.*);;(.*);;(.*)/, async (ctx, _next) => {
         if (!ctx?.message?.via_bot) return _next()
         else {
             const server = extractServer(ctx.match!);
