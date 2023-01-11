@@ -175,18 +175,29 @@ ${server.country} | ${server.iso}
             const bellow_keyboard = new InlineKeyboard()
                 .text("✅ تایید", "management:servers:add:confirm" + tempID)
 
-            await ctx.reply("تایید می کنید؟", { reply_markup: bellow_keyboard, reply_to_message_id: ctx.message.message_id })
+            const cttx = await ctx.reply("تایید می کنید؟", { reply_markup: bellow_keyboard, reply_to_message_id: ctx.message.message_id })
+            setTimeout(() => {
+                const server = getTempServer(tempID)
+                if (server) {
+                    const bellow_keyboard = new InlineKeyboard().text("❌ لغو شد")
+                    ctx.api.editMessageReplyMarkup(cttx.chat.id, cttx.message_id, { reply_markup: bellow_keyboard })
+                    removeTempServer(tempID)
+                }
 
+            }, 5000)
         }
     });
 
     bot.callbackQuery(/(management:servers:add:confirm)\d{1,}/g, async (ctx) => {
         const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm", ""));
-        const server = getTempServer(tempID)!
+        const server = getTempServer(tempID)
+        if (!server) {
+            await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
+            return
+        }
+        removeTempServer(tempID)
 
         await createServer(server)
-
-        removeTempServer(tempID)
 
         const keys = new InlineKeyboard().text("✅ ثبت شد")
         await ctx.editMessageReplyMarkup({ reply_markup: keys });
