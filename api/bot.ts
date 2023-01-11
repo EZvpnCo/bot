@@ -1,4 +1,5 @@
 import { Bot } from "grammy";
+import Admin from "./admin";
 
 import Diagnosis from "./diagnosis";
 import Downloads from "./downloads";
@@ -11,14 +12,17 @@ import Tutorials from "./tutorials";
 
 const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
 
+const admins = [115025624];
+
 // Handle the /start command.
 bot.command("start", (ctx) => {
-  const text = `سلام به EZvpn خوش اومدید :)
+  const text = `*${ctx.msg.from?.first_name}* عزیز\\! سلام
+به *EZvpn* خوش اومدید :)
 جهت استفاده از ربات بر روی /menu کلیک کنید`;
-  ctx.reply(text);
+  ctx.reply(text, { parse_mode: 'MarkdownV2' });
 });
 
-MainMenu(bot);
+MainMenu(bot, admins);
 Prices(bot);
 Downloads(bot);
 Tutorials(bot);
@@ -26,6 +30,8 @@ Faq(bot);
 Diagnosis(bot);
 Servers(bot);
 PingPong(bot);
+
+Admin(bot);
 
 
 // Handle other messages.

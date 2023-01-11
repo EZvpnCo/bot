@@ -1,6 +1,6 @@
 import { Bot, } from "grammy";
 
-const PingPong = (bot: Bot) => {
+const Admin = (bot: Bot) => {
 
     // Handle the /ping command.
     bot.command("ping", async (ctx) => {
@@ -12,4 +12,4 @@ const PingPong = (bot: Bot) => {
     });
 };
 
-export default PingPong;
+export default Admin;
