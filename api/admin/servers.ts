@@ -2,16 +2,34 @@ import { Bot, InlineKeyboard, } from "grammy";
 import { Admins as admins } from "../config";
 import moment from "moment";
 import { MyBot, MyContext } from "../bot";
+import { EmojiName } from "@grammyjs/emoji/out/emoji"
 
+type server = {
+    id: number,
+    name: string,
+    description: string,
+    created: Date,
+    country: string,
+    location: string,
+    flag: EmojiName,
+    iso: string,
+    ip: string,
+    username: string,
+    password: string,
+    domain: string,
+    deleted: false,
+}
 
-const serversList = [
+const serversList: server[] = [
     {
         id: 1,
         name: "Bahrain-01",
         description: "description",
         created: moment("2022-12-28 12:45:44").toDate(),
         country: "Bahrain",
-        flag: "bh",
+        location: "Bahrain/Unja",
+        flag: "flag_bahrain",
+        iso: "bh",
         ip: "38.54.2.172",
         username: "ubuntu",
         password: "(C[3Sz{WB8",
@@ -29,7 +47,7 @@ const AdminServers = (bot: MyBot) => {
 
         serversList.forEach((v, i) => {
             keyboard
-                .text(ctx.emoji`Welcome! ${"smiling_face_with_sunglasses"}`, "hello")
+                .text(v.name + ctx.emoji` ${v.flag}`, "hello")
                 .row()
         })
 

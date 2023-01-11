@@ -7,8 +7,8 @@ import AdminServers from "./servers";
 const Admin = (bot: MyBot) => {
 
     const keyboard = new InlineKeyboard()
-        .text("📡 سرورها", "management:servers")
         .text("📟 نودها", "management:nodes")
+        .text("📡 سرورها", "management:servers")
         .row()
         .text("👥 کاربران", "management:users")
         .row()
