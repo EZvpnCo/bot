@@ -68,7 +68,7 @@ const AdminServers = (bot: MyBot) => {
             _text = `شما دسترسی های لازم رو نداری 🚫`
         }
         else {
-            _text = `به بخش مدیریت خوش اومدی\nچیکار میتونم انجام بدم برات؟`
+            _text = "📡 مدیریت سرورها"
             _keyboard = genKeyboard(ctx)
         }
         await ctx.editMessageText(_text, { reply_markup: _keyboard });
