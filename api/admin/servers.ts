@@ -19,7 +19,7 @@ type serverType = {
     password: string,
     domain: string,
     deleted: false | null,
-}
+} | null
 
 const getFlagEmoji = (country: string) => {
     return flagCountryList[country] || 'bug';
@@ -29,6 +29,14 @@ const tempServers: serverType[] = []
 const addTempServer = (server: serverType) => {
     tempServers.push(server)
     return tempServers.length - 1
+}
+
+const getTempServer = (id: number) => {
+    return tempServers[id]
+}
+
+const removeTempServer = (id: number) => {
+    tempServers[id] = null
 }
 
 const serversList: serverType[] = [
@@ -57,7 +65,7 @@ const ManagementServers = (bot: MyBot) => {
 
         serversList.forEach((v, i) => {
             keyboard
-                .text(v.name + ctx.emoji` ${v.flag}`, "management:servers:" + v.id)
+                .text(v!.name + ctx.emoji` ${v!.flag}`, "management:servers:" + v!.id)
                 .row()
         })
 
@@ -159,21 +167,23 @@ ${server.country} | ${server.iso}
     bot.hears(/(management:servers:add:)\d{1,}/g, (ctx, _next) => {
         if (!ctx?.message?.via_bot) return _next()
         else {
-            const tempIndex = parseInt(ctx.match.toString().replace("management:servers:add:", ""));
+            const tempID = parseInt(ctx.match.toString().replace("management:servers:add:", ""));
             const bellow_keyboard = new InlineKeyboard()
-                .url("✅ تایید", "tg://user?id=" + ctx.me.id)
+                .text("✅ تایید", "management:servers:add:confirm" + tempID)
 
-            ctx.reply("Hello", { reply_markup: bellow_keyboard })
+            ctx.reply("تایید می کنید؟", { reply_markup: bellow_keyboard })
         }
     });
 
-    // bot.callbackQuery(regAdd, async (ctx) => {
-    //     const server = extractServer(ctx.match!);
-    //     // save in db
-    //     const keys = new InlineKeyboard().text("✅ ثبت شد")
-    //     await ctx.editMessageReplyMarkup({ reply_markup: keys });
-    //     await ctx.answerCallbackQuery("✅ ثبت شد");
-    // });
+    bot.callbackQuery(/(management:servers:add:confirm)\d{1,}/g, async (ctx) => {
+        const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm", ""));
+        const server = getTempServer(tempID)
+        removeTempServer(tempID)
+        // save in db
+        const keys = new InlineKeyboard().text("✅ ثبت شد")
+        await ctx.editMessageReplyMarkup({ reply_markup: keys });
+        await ctx.answerCallbackQuery(server?.name + "✅ ثبت شد");
+    });
 };
 
 export default ManagementServers;
