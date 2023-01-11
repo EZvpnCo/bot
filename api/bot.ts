@@ -42,6 +42,8 @@ Admin(bot);
 
 // Handle other messages.
 bot.on("message", (ctx) => ctx.reply("میفهمم اما متوجه نمیشم :("));
+bot.on("inline_query", (ctx) => ctx.answerInlineQuery([]));
+bot.on("callback_query", (ctx) => ctx.answerCallbackQuery("اطلاعی ندارم :("));
 
 // Start the bot.
 bot.start();

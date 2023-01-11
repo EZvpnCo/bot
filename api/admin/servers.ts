@@ -50,10 +50,10 @@ const ManagementServers = (bot: MyBot) => {
         })
 
         keyboard
-            .text("➕ افزودن سرور جدید", "management:servers:add")
+            .switchInlineCurrent("➕ افزودن سرور جدید", "management:servers:add")
             .row()
-            .text("برگشت ↪️", "management")
-            .text("صفحه اصلی 🏠", "mainMenu")
+            .text("↪️", "management")
+            .text("🏠", "mainMenu")
 
         return keyboard;
     }
@@ -70,15 +70,55 @@ const ManagementServers = (bot: MyBot) => {
     bot.callbackQuery(/(management:servers:)\d{1,}/g, async (ctx) => {
         const id = parseInt(ctx.match.toString().replace("management:servers:", ""));
         const _text = "server " + id
-        await ctx.editMessageText(_text);
+        const _keyboard = new InlineKeyboard()
+            .text("↪️", "management:servers")
+            .text("🏠", "mainMenu")
+            .text("🎛", "management")
+
+        await ctx.editMessageText(_text, { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
     });
 
-    bot.callbackQuery("management:servers:add", async (ctx) => {
-        const _text = "add server"
-        await ctx.editMessageText(_text);
-        await ctx.answerCallbackQuery();
+    bot.inlineQuery(/management:servers:add /, async (ctx) => {
+        await ctx.answerInlineQuery(
+            [
+                {
+                    type: "article",
+                    id: "grammy-website",
+                    title: "grammY",
+                    input_message_content: {
+                        message_text:
+                            "<b>grammY</b> is the best way to create your own Telegram bots. \
+They even have a pretty website! 👇",
+                        parse_mode: "HTML",
+                    },
+                    reply_markup: new InlineKeyboard().url(
+                        "grammY website",
+                        "https://grammy.dev/",
+                    ),
+                    url: "https://grammy.dev/",
+                    description: "The Telegram Bot Framework.",
+                },
+            ],
+            { cache_time: 30 * 24 * 3600 }, // one month in seconds
+        );
     });
+
+    // bot.callbackQuery("management:servers:add", async (ctx) => {
+    //     const _text = `❕برای افزودن سرور به شکل زیر دستور را وارد کنید: 
+
+
+    //     `
+    //     const _keyboard = new InlineKeyboard()
+    //         .switchInlineCurrent("")
+    //         .row()
+    //         .text("↪️", "management:servers")
+    //         .text("🏠", "mainMenu")
+    //         .text("🎛", "management")
+
+    //     await ctx.editMessageText(_text, { parse_mode: 'MarkdownV2', reply_markup: _keyboard });
+    //     await ctx.answerCallbackQuery();
+    // });
 
 
 };
