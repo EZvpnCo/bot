@@ -117,34 +117,40 @@ const ManagementServers = (bot: MyBot) => {
         return server;
     }
     bot.inlineQuery(regAdd, async (ctx) => {
-        const server = extractServer(ctx.match!);
-        const bellow_keyboard = new InlineKeyboard()
-            .text("✅ تایید", ctx.match![0])
-            .text("❌ لغو", "management:servers:add:cancel")
+        try {
+            const server = extractServer(ctx.match!);
+            const bellow_keyboard = new InlineKeyboard()
+                .text("✅ تایید", ctx.match![0])
+                .text("❌ لغو", "management:servers:add:cancel")
 
-        const _text = ctx.emoji`${server.flag}` + ` *${server.name}*
+            const _text = ctx.emoji`${server.flag}` + ` *${server.name}*
 ${server.username}@${server.ip}:${server.password}
 ${server.country} | ${server.iso}
 *Domain:* ${server.domain}
 _${server.description}_
 `
-        await ctx.answerInlineQuery(
-            [
-                {
-                    type: "article",
-                    id: server.name.toLowerCase(),
-                    title: server.name,
-                    input_message_content: {
-                        message_text: _text,
-                        parse_mode: "MarkdownV2",
+            await ctx.answerInlineQuery(
+                [
+                    {
+                        type: "article",
+                        id: server.name.toLowerCase(),
+                        title: server.name,
+                        input_message_content: {
+                            message_text: _text,
+                            parse_mode: "MarkdownV2",
+                        },
+                        reply_markup: bellow_keyboard,
+                        url: server.domain,
+                        description: `${server.username}@${server.ip}\n` + ctx.emoji`${server.flag}` + ` ${server.country} | ${server.iso}`,
                     },
-                    reply_markup: bellow_keyboard,
-                    url: server.domain,
-                    description: `${server.username}@${server.ip}\n` + ctx.emoji`${server.flag}` + ` ${server.country} | ${server.iso}`,
-                },
-            ],
-            { cache_time: 100 },
-        );
+                ],
+                { cache_time: 100 },
+            );
+        }
+        catch (e) {
+            console.log(e)
+        }
+
     });
 
     bot.callbackQuery(regAdd, async (ctx) => {
