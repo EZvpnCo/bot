@@ -1,7 +1,7 @@
 import { Bot, InlineKeyboard } from "grammy";
+import { Admins as admins } from "./config";
 
-const MainMenu = (bot: Bot, admins: number[]) => {
-
+const MainMenu = (bot: Bot) => {
     // text
     const text = "🔻 از منوی زیر انتخاب کنید:";
 
@@ -23,13 +23,15 @@ const MainMenu = (bot: Bot, admins: number[]) => {
 
     // Handle the /menu command.
     bot.command("menu", async (ctx) => {
-        if (admins.includes(ctx.msg.from?.id!)) keyboard.text("🎛 مدیریت", "management")
+        ctx.reply("fff" + JSON.stringify(ctx) + "fff")
+        // if (admins.includes(ctx.msg.from?.id)) keyboard.text("🎛 مدیریت", "management")
         await ctx.reply(text, { reply_markup: keyboard });
     });
 
     // mainMenu
     bot.callbackQuery("mainMenu", async (ctx) => {
-        if (admins.includes(ctx.callbackQuery.from?.id!)) keyboard.text("🎛 مدیریت", "management")
+        ctx.reply("mmm" + JSON.stringify(ctx) + "mmm")
+        // if (admins.includes(ctx.from.id)) keyboard.text("🎛 مدیریت", "management")
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
     });

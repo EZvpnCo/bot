@@ -1,4 +1,6 @@
 import { Bot } from "grammy";
+import { BotToken } from "./config"
+
 import Admin from "./admin";
 
 import Diagnosis from "./diagnosis";
@@ -10,9 +12,7 @@ import Prices from "./prices";
 import Servers from "./servers";
 import Tutorials from "./tutorials";
 
-const bot = new Bot("5817494017:AAE--FH-fCndLpZzrBDg_quJxuRa29SVVzc");
-
-const admins = [115025624];
+const bot = new Bot(BotToken);
 
 // Handle the /start command.
 bot.command("start", (ctx) => {
@@ -22,7 +22,7 @@ bot.command("start", (ctx) => {
   ctx.reply(text, { parse_mode: 'MarkdownV2' });
 });
 
-MainMenu(bot, admins);
+MainMenu(bot);
 Prices(bot);
 Downloads(bot);
 Tutorials(bot);
