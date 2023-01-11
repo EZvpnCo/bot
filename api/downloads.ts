@@ -12,7 +12,7 @@ const Downloads = (bot: Bot) => {
         .text("Windows", "downloads:windows")
         .text("macOS", "downloads:macos")
         .row()
-        .text("صفحه اصلی", "mainMenu");
+        .text("صفحه اصلی 🏠", "mainMenu");
 
     // Handle the /downloads command.
     bot.command("downloads", (ctx) => {
@@ -46,8 +46,8 @@ const AndroidDownload = (bot: Bot) => {
         .row()
         .text("OpenVPN", "downloads:android:openvpn")
         .row()
-        .text("برگشت", "downloads")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "downloads")
+        .text("صفحه اصلی 🏠", "mainMenu");
     bot.callbackQuery("downloads:android", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
@@ -99,8 +99,8 @@ const IOSDownload = (bot: Bot) => {
     const keyboard = new InlineKeyboard()
         .text("OneClick", "downloads:ios:oneclick")
         .row()
-        .text("برگشت", "downloads")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "downloads")
+        .text("صفحه اصلی 🏠", "mainMenu");
     bot.callbackQuery("downloads:ios", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
@@ -125,8 +125,8 @@ const WindowsDownload = (bot: Bot) => {
         .text("EZvpn", "downloads:windows:ezvpn")
         .text("v2rayN", "downloads:windows:v2rayn")
         .row()
-        .text("برگشت", "downloads")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "downloads")
+        .text("صفحه اصلی 🏠", "mainMenu");
     bot.callbackQuery("downloads:windows", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
@@ -156,8 +156,8 @@ const MacOSDownload = (bot: Bot) => {
 
     // ===> macos
     const keyboard = new InlineKeyboard()
-        .text("برگشت", "downloads")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "downloads")
+        .text("صفحه اصلی 🏠", "mainMenu");
     bot.callbackQuery("downloads:macos", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
