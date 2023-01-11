@@ -7,7 +7,7 @@ const PingPong = (bot: Bot) => {
         const text = `*Pong\\!*
 *ChatID:* ${ctx.chat.id}
 *ChatType:* ${ctx.chat.type}
-*UserID:* ${ctx.msg.from?.id}`
+*UserID:* ${ctx?.from?.id}`
         await ctx.reply(text, { parse_mode: 'MarkdownV2', reply_to_message_id: ctx.msg.message_id });
     });
 };
