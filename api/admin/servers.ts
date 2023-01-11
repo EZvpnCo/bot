@@ -195,7 +195,7 @@ ${server.country} | ${server.iso}
     });
 
     bot.callbackQuery(/(management:servers:add:confirm:)\d{1,}/g, async (ctx) => {
-        const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm", ""));
+        const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm:", ""));
         const server = getTempServer(tempID)
         if (!server) {
             await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
@@ -211,7 +211,7 @@ ${server.country} | ${server.iso}
     });
 
     bot.callbackQuery(/(management:servers:add:cancel:)\d{1,}/g, async (ctx) => {
-        const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm", ""));
+        const tempID = parseInt(ctx.match.toString().replace("management:servers:add:cancel:", ""));
         const server = getTempServer(tempID)
         if (!server) {
             await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
