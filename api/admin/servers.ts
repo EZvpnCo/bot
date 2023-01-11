@@ -128,12 +128,9 @@ const ManagementServers = (bot: MyBot) => {
                             "https://grammy.dev/",
                         ),
                     url: server.domain,
-                    description: `
-${server.description}
-${server.username}@${server.ip}:${server.password}
-${server.country} | ${server.flag} | ${server.iso}
-`,
-                    thumb_url: "https://www.gravatar.com/avatar/322405c4c096af649a8e96d718b7fefa?s=64&d=identicon&r=PG",
+                    description: `${server.username}@${server.ip}:${server.password}
+${server.country} | ${server.flag} | ${server.iso}`,
+                    thumb_url: "https://cdn.jsdelivr.net/gh/mt-theme/metron-assets@3.0.2/metron/media/flags/1x1/nl.svg",
                 },
             ],
             { cache_time: 30 * 24 * 3600 }, // one month in seconds
