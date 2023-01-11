@@ -83,7 +83,7 @@ const ManagementServers = (bot: MyBot) => {
 
     bot.inlineQuery(/management:servers:add:(.*)\((.*)\)(.*)\/(.*):(.*) (.*) (.*)/, async (ctx) => {
         const mm = ctx.match;
-        await ctx.reply("Hello" + JSON.stringify(mm))
+        await ctx.api.sendMessage(ctx.from.id, "Hello" + JSON.stringify(mm))
         await ctx.answerInlineQuery(
             [
                 {
