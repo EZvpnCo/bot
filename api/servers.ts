@@ -6,6 +6,11 @@ const Servers = (bot: Bot) => {
             text: "You can see Servers list :)",
         });
     });
+
+    // Handle the /servers command.
+    bot.command("servers", (ctx) => {
+        ctx.reply("Servers");
+    });
 };
 
 export default Servers;
