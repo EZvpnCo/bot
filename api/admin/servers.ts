@@ -85,10 +85,15 @@ const ManagementServers = (bot: MyBot) => {
 
 
     bot.callbackQuery("management:servers", async (ctx) => {
-        const _text = "📡 مدیریت سرورها"
-        const _keyboard = genServersListKeyboard(ctx)
-        await ctx.editMessageText(_text, { reply_markup: _keyboard });
-        await ctx.answerCallbackQuery();
+        try {
+            const _text = `📡 مدیریت سرورها
+تعداد: ${serversList.length}`
+            const _keyboard = genServersListKeyboard(ctx)
+            await ctx.editMessageText(_text, { reply_markup: _keyboard });
+            await ctx.answerCallbackQuery();
+        } catch (error) {
+            console.log(error)
+        }
     });
 
 
