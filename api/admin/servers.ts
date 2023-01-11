@@ -1,5 +1,5 @@
 import { Bot, InlineKeyboard, } from "grammy";
-import { Admins as admins } from "../config";
+import { Admins as admins, flagCountryList } from "../config";
 import moment from "moment";
 import { MyBot, MyContext } from "../bot";
 import { EmojiName } from "@grammyjs/emoji/out/emoji"
@@ -19,6 +19,10 @@ type serverType = {
     password: string,
     domain: string,
     deleted: false | null,
+}
+
+const getFlagEmoji = (country: string) => {
+    return flagCountryList[country] || 'bug';
 }
 
 const serversList: serverType[] = [
@@ -81,37 +85,49 @@ const ManagementServers = (bot: MyBot) => {
         await ctx.answerCallbackQuery();
     });
 
-    bot.inlineQuery(/management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/, async (ctx) => {
-        const mch = ctx.match!;
 
-        const code = mch[2]
-        const iso = countries.getAlpha2Code(mch[1], "en").toLowerCase()
+    // ====> add server
+    const regAdd = /management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/
+    const extractServer = (match: string | RegExpMatchArray) => {
+        const code = match[2]
+        const iso = countries.getAlpha2Code(match[1], "en").toLowerCase()
         const domain = iso + code + ".ezvpn.co"
-        const flag = `flag_${mch[1].toLowerCase()}`
-        const country = mch[1]
-        const name = mch[1] + "-" + code
+        const country = match[1]
+        const name = match[1] + "-" + code
+        let flag: EmojiName = getFlagEmoji(country.toLowerCase())
+
         const server: serverType = {
             id: null,
             name,
-            description: mch![6],
+            description: match![6],
 
             created: moment().toDate(),
             country,
 
-            ip: mch![3],
-            username: mch[4],
-            password: mch[5],
+            ip: match![3],
+            username: match[4],
+            password: match[5],
             domain,
 
-            // @ts-ignore
             flag,
             iso,
 
-
             deleted: false
         }
+        return server;
+    }
+    bot.inlineQuery(regAdd, async (ctx) => {
+        const server = extractServer(ctx.match!);
+        const bellow_keyboard = new InlineKeyboard()
+            .text("✅ تایید", ctx.match![0])
+            .text("❌ لغو", "management:servers:add:cancel")
 
-
+        const _text = ctx.emoji`${server.flag}` + ` *${server.name}*
+${server.username}@${server.ip}:${server.password}
+${server.country} | ${server.iso}
+*Domain:* ${server.domain}
+_${server.description}_
+`
         await ctx.answerInlineQuery(
             [
                 {
@@ -119,25 +135,30 @@ const ManagementServers = (bot: MyBot) => {
                     id: server.name.toLowerCase(),
                     title: server.name,
                     input_message_content: {
-                        message_text: "Hello",
+                        message_text: _text,
                         parse_mode: "MarkdownV2",
                     },
-                    reply_markup: new InlineKeyboard()
-                        .url(
-                            "grammY website",
-                            "https://grammy.dev/",
-                        ),
+                    reply_markup: bellow_keyboard,
                     url: server.domain,
-                    description: `${server.username}@${server.ip}` +
-                        ctx.emoji`${server.flag}` + ` ${server.country} | ${server.iso}`,
-                    thumb_url: "https://cdn.jsdelivr.net/gh/mt-theme/metron-assets@3.0.2/metron/media/flags/1x1/nl.svg",
+                    description: `${server.username}@${server.ip}\n` + ctx.emoji`${server.flag}` + ` ${server.country} | ${server.iso}`,
                 },
             ],
             { cache_time: 100 },
         );
     });
 
+    bot.callbackQuery(regAdd, async (ctx) => {
+        const server = extractServer(ctx.match!);
+        const _text = ctx.message?.text + "\n ✅ ثبت شد"
+        await ctx.editMessageText(_text);
+        await ctx.answerCallbackQuery("✅ ثبت شد");
+    });
 
+    bot.callbackQuery("management:servers:add:cancel", async (ctx) => {
+        const _text = ctx.message?.text + "\n ❌ لغو شد"
+        await ctx.editMessageText(_text);
+        await ctx.answerCallbackQuery("❌ لغو شد");
+    });
 };
 
 export default ManagementServers;
