@@ -10,7 +10,7 @@ type serverType = {
     id: number | null,
     name: string,
     description: string,
-    created: Date,
+    created: Date | null,
     country: string,
     flag: EmojiName,
     iso: string,
@@ -23,6 +23,11 @@ type serverType = {
 
 const getFlagEmoji = (country: string) => {
     return flagCountryList[country] || 'bug';
+}
+
+const tempServers: serverType[] = []
+const addTempServer = (server: serverType) => {
+    tempServers.push(server)
 }
 
 const serversList: serverType[] = [
@@ -100,7 +105,7 @@ const ManagementServers = (bot: MyBot) => {
             name,
             description: match![6],
 
-            created: moment().toDate(),
+            created: null,
             country,
 
             ip: match![3],
@@ -116,11 +121,10 @@ const ManagementServers = (bot: MyBot) => {
         return server;
     }
     bot.inlineQuery(/management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/, async (ctx) => {
-        console.log(ctx.inlineQuery.query)
         try {
             const server = extractServer(ctx.match!);
             const bellow_keyboard = new InlineKeyboard()
-                .switchInline("✅ تایید", ctx.inlineQuery.query)
+                // .url("✅ تایید", "management:servers:add:confirm")
                 .text("❌ لغو", "management:servers:add:cancel")
 
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
@@ -152,7 +156,9 @@ ${server.country} | ${server.iso}
 
     });
 
-    bot.on("message", (ctx) => ctx.reply(JSON.stringify(ctx)));
+    bot.on("message", (ctx, _next) => {
+        if (!ctx.message.via_bot) return _next()
+    });
 
     // bot.callbackQuery(regAdd, async (ctx) => {
     //     const server = extractServer(ctx.match!);
