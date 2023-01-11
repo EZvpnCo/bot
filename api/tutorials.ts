@@ -14,7 +14,7 @@ const Tutorials = (bot: Bot) => {
         .text("Windows", "tutorials:windows")
         .text("macOS", "tutorials:macos")
         .row()
-        .text("صفحه اصلی", "mainMenu");
+        .text("صفحه اصلی 🏠", "mainMenu");
 
     // Handle the /tutorials command.
     bot.command("tutorials", (ctx) => {
@@ -42,8 +42,8 @@ const AgentPanelTutorials = (bot: Bot) => {
 
     // ===> macos
     const keyboard = new InlineKeyboard()
-        .text("برگشت", "tutorials")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "tutorials")
+        .text("صفحه اصلی 🏠", "mainMenu");
     bot.callbackQuery("tutorials:agent_panel", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
@@ -61,16 +61,16 @@ const AndroidTutorials = (bot: Bot) => {
         .text("L2tp", "tutorials:android:l2tp")
         .text("OpenVPN", "tutorials:android:openvpn")
         .row()
-        .text("برگشت", "tutorials")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "tutorials")
+        .text("صفحه اصلی 🏠", "mainMenu");
     bot.callbackQuery("tutorials:android", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
     });
 
     const android_back_keyboard = new InlineKeyboard()
-        .text("برگشت", "tutorials:android")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "tutorials:android")
+        .text("صفحه اصلی 🏠", "mainMenu");
 
     // ===> android:surfboard
     const android_surfboard_tutorial = "http://dl.ezvpn.co/tutorials/android/Surfboard.mp4";
@@ -115,16 +115,16 @@ const IOSTutorials = (bot: Bot) => {
         .text("OneClick", "tutorials:ios:oneclick")
         .text("L2tp", "tutorials:ios:l2tp")
         .row()
-        .text("برگشت", "tutorials")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "tutorials")
+        .text("صفحه اصلی 🏠", "mainMenu");
     bot.callbackQuery("tutorials:ios", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
     });
 
     const ios_back_keyboard = new InlineKeyboard()
-        .text("برگشت", "tutorials:ios")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "tutorials:ios")
+        .text("صفحه اصلی 🏠", "mainMenu");
 
     // ===> ios:oneclick
     const ios_oneclick_tutorial = "http://dl.ezvpn.co/tutorials/ios/OneClick.mp4";
@@ -154,16 +154,16 @@ const WindowsTutorials = (bot: Bot) => {
         .row()
         .text("L2tp", "tutorials:windows:l2tp")
         .row()
-        .text("برگشت", "tutorials")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "tutorials")
+        .text("صفحه اصلی 🏠", "mainMenu");
     bot.callbackQuery("tutorials:windows", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
     });
 
     const windows_back_keyboard = new InlineKeyboard()
-        .text("برگشت", "tutorials:windows")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "tutorials:windows")
+        .text("صفحه اصلی 🏠", "mainMenu");
 
     // ===> windows:ezvpn
     const windows_ezvpn_tutorial = "http://dl.ezvpn.co/tutorials/windows/EZvpn.mp4";
@@ -196,8 +196,8 @@ const MacOSTutorials = (bot: Bot) => {
 
     // ===> macos
     const keyboard = new InlineKeyboard()
-        .text("برگشت", "tutorials")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "tutorials")
+        .text("صفحه اصلی 🏠", "mainMenu");
     bot.callbackQuery("tutorials:macos", async (ctx) => {
         await ctx.editMessageText(text, { reply_markup: keyboard });
         await ctx.answerCallbackQuery();
