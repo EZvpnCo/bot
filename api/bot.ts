@@ -4,6 +4,7 @@ import Diagnosis from "./diagnosis";
 import Downloads from "./downloads";
 import Faq from "./faq";
 import MainMenu from "./mainMenu";
+import PingPong from "./pingpong";
 import Prices from "./prices";
 import Servers from "./servers";
 import Tutorials from "./tutorials";
@@ -24,6 +25,8 @@ Tutorials(bot);
 Faq(bot);
 Diagnosis(bot);
 Servers(bot);
+PingPong(bot);
+
 
 // Handle other messages.
 bot.on("message", (ctx) => ctx.reply("میفهمم اما متوجه نمیشم :("));
