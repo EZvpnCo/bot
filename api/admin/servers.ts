@@ -119,7 +119,7 @@ const ManagementServers = (bot: MyBot) => {
     bot.inlineQuery(regAdd, async (ctx) => {
         try {
             const server = extractServer(ctx.match!);
-            console.log(ctx.match![0])
+            console.log(ctx.match![0].replace("\n", "%"))
             const bellow_keyboard = new InlineKeyboard()
                 .text("✅ تایید", "ctx.match![0]")
                 .text("❌ لغو", "management:servers:add:cancel")
@@ -162,7 +162,8 @@ ${server.country} | ${server.iso}
     });
 
     bot.callbackQuery("management:servers:add:cancel", async (ctx) => {
-        const _text = ctx.message?.text + "\n ❌ لغو شد"
+        console.log(ctx)
+        const _text = ctx.message?.text + "\n\n ❌ لغو شد"
         await ctx.editMessageText(_text);
         await ctx.answerCallbackQuery("❌ لغو شد");
     });
