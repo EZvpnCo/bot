@@ -10,7 +10,7 @@ const Prices = (bot: Bot) => {
         .text("Trade", "prices:trade")
         .text("Game", "prices:game")
         .row()
-        .text("صفحه اصلی", "mainMenu");
+        .text("صفحه اصلی 🏠", "mainMenu");
 
     // Handle the /prices command.
     bot.command("prices", (ctx) => {
@@ -26,8 +26,8 @@ const Prices = (bot: Bot) => {
 
     // ========> sub menu
     const back_keyboard = new InlineKeyboard()
-        .text("برگشت", "prices")
-        .text("صفحه اصلی", "mainMenu");
+        .text("برگشت ↪️", "prices")
+        .text("صفحه اصلی 🏠", "mainMenu");
 
     // ===> daily
     const dailyText = `
