@@ -242,7 +242,7 @@ ${server.country} | ${server.iso}
         await ctx.answerCallbackQuery(server.name + " ✅ ثبت شد");
     });
 
-    bot.callbackQuery(/^management:servers:add:cancel:([0-9]+)$/g, async (ctx) => {
+    bot.callbackQuery(/^management:servers:add:cancel:([0-9]+)$/, async (ctx) => {
         const tempID = parseInt(ctx.match[1]);
         const server = getTempServer(tempID)
         if (!server) {
