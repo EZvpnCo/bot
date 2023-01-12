@@ -184,6 +184,7 @@ __ <pre>${server.description}</pre>`
 
 <code>management:servers:${serverID}:ssh:exec:your_command</code>`;
             await ctx.reply(text, { parse_mode: 'HTML' })
+            await ctx.answerCallbackQuery();
         }
         else await ctx.answerCallbackQuery("متصل نشد ❌");
     });
@@ -197,7 +198,7 @@ __ <pre>${server.description}</pre>`
                 return
             }
             const command = ctx.match[2]
-            let responseMessageID = 0
+            let responseMessageID = (await ctx.reply('Checking...')).message_id
             const canConnect = await liveSSH(
                 {
                     host: server.ip,
@@ -209,11 +210,13 @@ __ <pre>${server.description}</pre>`
                 [],
                 '',
                 (result) => {
-                    if (responseMessageID) ctx.api.editMessageText(ctx.chat.id, responseMessageID, result)
+                    if (responseMessageID) {
+                        ctx.api.editMessageText(ctx.chat.id, responseMessageID, 'Response:\n\n' + result)
+                    }
                 }
             )
             if (canConnect) {
-                responseMessageID = (await ctx.reply('RESPONSE:\n\n')).message_id
+
             }
             else await ctx.answerCallbackQuery("متصل نشد ❌");
         } catch (error) {
