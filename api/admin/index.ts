@@ -25,15 +25,15 @@ const Admin = (bot: MyBot) => {
         }
     })
 
-    bot.inlineQuery(/(management.*)/g, async (ctx, _next) => {
-        if (!admins.includes(ctx?.from?.id!)) {
-            const _text = `شما دسترسی های لازم رو نداری 🚫`
-            await ctx.answerCallbackQuery(_text);
-        }
-        else {
-            return _next();
-        }
-    })
+    // bot.inlineQuery(/(management.*)/g, async (ctx, _next) => {
+    //     if (!admins.includes(ctx?.from?.id!)) {
+    //         const _text = `شما دسترسی های لازم رو نداری 🚫`
+    //         await ctx.answerCallbackQuery(_text);
+    //     }
+    //     else {
+    //         return _next();
+    //     }
+    // })
 
     bot.callbackQuery("management", async (ctx) => {
         let _text, _keyboard
