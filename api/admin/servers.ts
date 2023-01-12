@@ -198,7 +198,7 @@ __ <pre>${server.description}</pre>`
                 return
             }
             const command = ctx.match[2]
-            let responseMessageID = (await ctx.reply('Connection...', { reply_to_message_id: ctx.message?.message_id })).message_id
+            let responseMessageID = (await ctx.reply('Connecting...', { reply_to_message_id: ctx.message?.message_id })).message_id
             const canConnect = await liveSSH(
                 {
                     host: server.ip,
