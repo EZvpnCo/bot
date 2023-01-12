@@ -172,7 +172,6 @@ __ <pre>${server.description}</pre>`
     }
     bot.inlineQuery(/^management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)$/, async (ctx) => {
         try {
-            console.log(ctx.match)
             const server = extractServer(ctx.match!);
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
 <code>${server.username}@${server.ip}:${server.password}</code>
@@ -227,6 +226,7 @@ ${server.country} | ${server.iso}
     });
 
     bot.callbackQuery(/^management:servers:add:confirm:([0-9]+)$/g, async (ctx) => {
+        console.log("%%%", ctx.match)
         const tempID = parseInt(ctx.match[1]);
         const server = getTempServer(tempID)
         if (!server) {
