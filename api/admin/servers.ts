@@ -205,7 +205,7 @@ ${server.country} | ${server.iso}
 
     });
 
-    bot.hears(/^management:servers:add:;;(.*)-(.*);;(.*);;(.*);;(.*);;(.*)$/, async (ctx, _next) => {
+    bot.hears(/management:servers:add:;;(.*)-(.*);;(.*);;(.*);;(.*);;(.*)$/, async (ctx, _next) => {
         if (!ctx?.message?.via_bot) return _next()
         else {
             const server = extractServer(ctx.match!);
