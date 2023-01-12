@@ -199,7 +199,7 @@ __ <pre>${server.description}</pre>`
             }
             const cwd = ctx.match[2]
             const command = ctx.match[3]
-            const serverDisplay = ctx.emoji`${server.flag}` + server.name
+            const serverDisplay = ctx.emoji`${server.flag} ` + server.name
             let responseMessageID = (await ctx.reply(serverDisplay + '\nConnecting...', { reply_to_message_id: ctx.message?.message_id })).message_id
             const canConnect = await liveSSH(
                 {

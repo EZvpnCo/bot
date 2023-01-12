@@ -24,7 +24,11 @@ export const liveSSH = async (config: Config, command: string, parameters: strin
                     callback('stdout:\n' + chunk.toString('utf8'))
                 },
                 onStderr: (chunk) => {
-                    callback('stderr:\n' + chunk.toString('utf8'))
+                    try {
+                        callback('stderr:\n' + chunk.toString('utf8'))
+                    } catch (error) {
+                        console.log("EE", error)
+                    }
                 },
             })
             resolve(true)
