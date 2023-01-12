@@ -170,7 +170,7 @@ __ <pre>${server.description}</pre>`
         }
         return server;
     }
-    bot.inlineQuery(/^management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)$/g, async (ctx) => {
+    bot.inlineQuery(/management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/, async (ctx) => {
         try {
             console.log(ctx.match)
             const server = extractServer(ctx.match!);
