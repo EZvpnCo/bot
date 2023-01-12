@@ -107,7 +107,7 @@ const ManagementServers = (bot: MyBot) => {
             return
         }
         const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
-<b>ip:</b> <code>${server.ip}</code>
+<b>IP:</b> <code>${server.ip}</code>
 <b>Username:</b> <code>${server.username}</code>
 <b>Password:</b> <code>${server.password}</code>
 <b>Port:</b> <code>${server.port}</code>
