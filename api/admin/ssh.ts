@@ -21,10 +21,18 @@ export const liveSSH = async (config: Config, command: string, callback: { (resu
             ssh.execCommand(command, {
                 cwd: '',
                 onStdout: (chunk) => {
-                    callback('StdOut:\n' + chunk.toString('utf8'))
+                    try {
+                        callback('StdOut:\n' + chunk.toString('utf8'))
+                    } catch (error) {
+                        callback('StdOut:\n' + '~')
+                    }
                 },
                 onStderr: (chunk) => {
-                    callback('StdErr:\n' + chunk.toString('utf8'))
+                    try {
+                        callback('StdErr:\n' + chunk.toString('utf8'))
+                    } catch (error) {
+                        callback('StdErr:\n' + '~')
+                    }
                 },
             })
             resolve(true)
