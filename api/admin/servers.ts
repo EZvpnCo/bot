@@ -229,6 +229,8 @@ __ <pre>${server.description}</pre>`
             ctx.msg.reply_to_message?.from?.id === ctx.me.id
             &&
             ctx?.msg?.reply_to_message?.text?.includes("#ssh_session #ssh_server_")
+            &&
+            admins.includes(ctx?.from?.id!)
         if (!g) return _next()
         await ctx.reply(JSON.stringify(ctx.message?.reply_to_message))
     });
