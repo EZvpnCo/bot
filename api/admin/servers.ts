@@ -189,19 +189,19 @@ __ <pre>${server.description}</pre>`
         else await ctx.answerCallbackQuery("متصل نشد ❌");
     });
 
-    bot.hears(/^management:servers:([0-9]+):ssh:exec:(.*)$/s, async (ctx, _next) => {
+    const sshCommand = async (ctx: MyContext, serverID: number, command: string) => {
         try {
-            const serverID = parseInt(ctx.match[1]);
             const server = await getServer(serverID)
             if (!server) {
-                await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
+                await ctx.reply("خطا در یافتن اطلاعات");
                 return
             }
-            const command = ctx.match[2]
+
             const serverDisplay = ctx.emoji`${server.flag} ` + `<b>${server.name}</b>\n`
             const sshSession = `<span class="tg-spoiler">#ssh_session #ssh_server_${serverID}</span>\n`
+            const _header = sshSession + serverDisplay
             const responseMessageID = (await ctx.reply(serverDisplay + '\n<i>Connecting...</i>', { reply_to_message_id: ctx.message?.message_id, parse_mode: 'HTML' })).message_id
-            const canConnect = await liveSSH(
+            const _ssh = await liveSSH(
                 {
                     host: server.ip,
                     port: server.port,
@@ -211,15 +211,21 @@ __ <pre>${server.description}</pre>`
                 command,
                 (result) => {
                     if (responseMessageID) {
-                        ctx.api.editMessageText(ctx.chat.id, responseMessageID, sshSession + serverDisplay + '<b>Response:</b>\n\n' + '<code>' + result + '</code>', { parse_mode: 'HTML' })
+                        ctx.api.editMessageText(ctx!.chat!.id, responseMessageID, _header + '<b>Response:</b>\n' + '<code>' + result + '</code>', { parse_mode: 'HTML' })
                     }
                 }
             )
-            if (canConnect) ctx.api.editMessageText(ctx.chat.id, responseMessageID, sshSession + serverDisplay + '<b>Response:</b>\n\n', { parse_mode: 'HTML' })
-            else await ctx.answerCallbackQuery("متصل نشد ❌");
+            if (_ssh) ctx.api.editMessageText(ctx!.chat!.id, responseMessageID, _header + '<b>Connected:</b>', { parse_mode: 'HTML' })
+            else ctx.api.editMessageText(ctx!.chat!.id, responseMessageID, _header + '<b>Can\'t connected:</b>', { parse_mode: 'HTML' })
         } catch (error) {
             console.log("TC@@@", error)
         }
+    }
+
+    bot.hears(/^management:servers:([0-9]+):ssh:exec:(.*)$/s, async (ctx, _next) => {
+        const command = ctx.match[2]
+        const serverID = parseInt(ctx.match[1]);
+        await sshCommand(ctx, serverID, command)
     });
 
 
@@ -232,7 +238,12 @@ __ <pre>${server.description}</pre>`
             &&
             admins.includes(ctx?.from?.id!)
         if (!g) return _next()
-        await ctx.reply(JSON.stringify(ctx.message?.reply_to_message))
+        const _t = ctx?.msg?.reply_to_message?.text!
+        const regex = /#ssh_session #ssh_server_([0-9]+)/;
+        const _p = _t.match(regex)
+        const command = ctx.message.text!
+        const serverID = parseInt(_p![1]);
+        await sshCommand(ctx, serverID, command)
     });
 
 

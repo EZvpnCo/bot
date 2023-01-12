@@ -35,7 +35,7 @@ export const liveSSH = async (config: Config, command: string, callback: { (resu
                     }
                 },
             })
-            resolve(true)
+            resolve(ssh)
         } catch (error) {
             resolve(false)
         }
