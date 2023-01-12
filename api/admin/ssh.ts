@@ -18,13 +18,13 @@ export const liveSSH = async (config: Config, command: string, parameters: strin
     return new Promise(async (resolve, reject) => {
         try {
             await ssh.connect(config)
-            ssh.exec(command, parameters, {
+            ssh.execCommand(command, {
                 cwd,
                 onStdout: (chunk) => {
-                    callback('stdout:\n' + chunk.toString('utf8'))
+                    callback('Stdout:\n' + chunk.toString('utf8'))
                 },
                 onStderr: (chunk) => {
-                    callback('stderr:\n' + chunk.toString('utf8'))
+                    callback('Stderr:\n' + chunk.toString('utf8'))
                 },
             })
             resolve(true)
