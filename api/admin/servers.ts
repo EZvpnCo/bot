@@ -182,14 +182,14 @@ __ <pre>${server.description}</pre>`
 ✅ با موفقیت متصل شد
 برای اجرای دستورات به شکل زیر دستور را وارد کنید:
 
-<code>management:servers:${serverID}:ssh:exec:path:command</code>`;
+<code>management:servers:${serverID}:ssh:exec:command</code>`;
             await ctx.reply(text, { parse_mode: 'HTML' })
             await ctx.answerCallbackQuery();
         }
         else await ctx.answerCallbackQuery("متصل نشد ❌");
     });
 
-    bot.hears(/^management:servers:([0-9]+):ssh:exec:(.*):(.*)$/s, async (ctx, _next) => {
+    bot.hears(/^management:servers:([0-9]+):ssh:exec:(.*)$/s, async (ctx, _next) => {
         try {
             const serverID = parseInt(ctx.match[1]);
             const server = await getServer(serverID)
@@ -197,7 +197,7 @@ __ <pre>${server.description}</pre>`
                 await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
                 return
             }
-            const cwd = ctx.match[2]
+            // const cwd = ctx.match[2]
             const command = ctx.match[3]
             const serverDisplay = ctx.emoji`${server.flag} ` + server.name
             let responseMessageID = (await ctx.reply(serverDisplay + '\nConnecting...', { reply_to_message_id: ctx.message?.message_id })).message_id
@@ -209,8 +209,6 @@ __ <pre>${server.description}</pre>`
                     password: server.password,
                 },
                 command,
-                [],
-                cwd,
                 (result) => {
                     if (responseMessageID) {
                         ctx.api.editMessageText(ctx.chat.id, responseMessageID, serverDisplay + '\nResponse:\n\n' + result)

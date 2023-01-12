@@ -14,17 +14,17 @@ export const checkConnection = async (config: Config) => {
 }
 
 
-export const liveSSH = async (config: Config, command: string, parameters: string[], cwd: string | undefined, callback: { (result: any): void; (arg0: string): void }) => {
+export const liveSSH = async (config: Config, command: string, callback: { (result: any): void; (arg0: string): void }) => {
     return new Promise(async (resolve, reject) => {
         try {
             await ssh.connect(config)
             ssh.execCommand(command, {
-                cwd,
+                cwd: '',
                 onStdout: (chunk) => {
-                    callback('Stdout:\n' + chunk.toString('utf8'))
+                    callback('StdOut:\n' + chunk.toString('utf8'))
                 },
                 onStderr: (chunk) => {
-                    callback('Stderr:\n' + chunk.toString('utf8'))
+                    callback('StdErr:\n' + chunk.toString('utf8'))
                 },
             })
             resolve(true)
