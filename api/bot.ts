@@ -1,4 +1,4 @@
-import { Bot, Context } from "grammy";
+import { Bot, Context, GrammyError, HttpError } from "grammy";
 import { BotToken } from "./config"
 
 import Admin from "./admin";
@@ -45,6 +45,19 @@ bot.command("start", (ctx) => {
 bot.on("message", (ctx) => ctx.reply("میفهمم اما متوجه نمیشم :("));
 bot.on("inline_query", (ctx) => ctx.answerInlineQuery([]));
 bot.on("callback_query", (ctx) => ctx.answerCallbackQuery("اطلاعی ندارم :("));
+
+bot.catch((err) => {
+  const ctx = err.ctx;
+  console.error(`Error while handling update ${ctx.update.update_id}:`);
+  const e = err.error;
+  if (e instanceof GrammyError) {
+    console.error("Error in request:", e.description);
+  } else if (e instanceof HttpError) {
+    console.error("Could not contact Telegram:", e);
+  } else {
+    console.error("Unknown error:", e);
+  }
+});
 
 // Start the bot.
 bot.start();
