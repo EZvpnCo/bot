@@ -27,7 +27,6 @@ const Admin = (bot: MyBot) => {
 
     bot.inlineQuery(/(management.*)/g, async (ctx, _next) => {
         if (!admins.includes(ctx?.from?.id!)) {
-            const _text = `شما دسترسی های لازم رو نداری 🚫`
             await ctx.answerInlineQuery([])
         }
         else {
