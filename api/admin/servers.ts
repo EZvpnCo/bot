@@ -199,7 +199,7 @@ __ <pre>${server.description}</pre>`
             }
             const command = ctx.match[2]
             const serverDisplay = ctx.emoji`${server.flag} ` + `<b>${server.name}</b>`
-            const sshSession = `<span class="tg-spoiler">SSH_SESSION:SERVER:${serverID}</span>`
+            const sshSession = `<span class="tg-spoiler">#ssh_session #server_${serverID}</span>\n`
             const responseMessageID = (await ctx.reply(serverDisplay + '\n<i>Connecting...</i>', { reply_to_message_id: ctx.message?.message_id, parse_mode: 'HTML' })).message_id
             const canConnect = await liveSSH(
                 {
@@ -211,11 +211,11 @@ __ <pre>${server.description}</pre>`
                 command,
                 (result) => {
                     if (responseMessageID) {
-                        ctx.api.editMessageText(ctx.chat.id, responseMessageID, serverDisplay + '\n<b>Response:</b>\n\n' + result + sshSession, { parse_mode: 'HTML' })
+                        ctx.api.editMessageText(ctx.chat.id, responseMessageID, sshSession + serverDisplay + '\n<b>Response:</b>\n\n' + result, { parse_mode: 'HTML' })
                     }
                 }
             )
-            if (canConnect) ctx.api.editMessageText(ctx.chat.id, responseMessageID, serverDisplay + '\n<b>Response:</b>\n\n' + sshSession, { parse_mode: 'HTML' })
+            if (canConnect) ctx.api.editMessageText(ctx.chat.id, responseMessageID, sshSession + serverDisplay + '\n<b>Response:</b>\n\n', { parse_mode: 'HTML' })
             else await ctx.answerCallbackQuery("متصل نشد ❌");
         } catch (error) {
             console.log("TC@@@", error)
