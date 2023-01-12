@@ -17,6 +17,7 @@ type serverType = {
     ip: string,
     username: string,
     password: string,
+    port: number,
     domain: string,
     deleted: false | null,
 }
@@ -47,6 +48,8 @@ const serversList: serverType[] = [
         ip: "38.54.2.172",
         username: "ubuntu",
         password: "(C[3Sz{WB8",
+
+        port: 22,
 
         created: moment("2022-12-28 12:45:44").toDate(),
         country: "Bahrain",
@@ -107,6 +110,7 @@ const ManagementServers = (bot: MyBot) => {
 <b>ip:</b> <code>${server.ip}</code>
 <b>Username:</b> <code>${server.username}</code>
 <b>Password:</b> <code>${server.password}</code>
+<b>Port:</b> <code>${server.port}</code>
 <b>Domain:</b> <code>${server.domain}</code>
 <b>Created:</b> <code>${moment(server.created).format("YYYY-MM-DD HH:mm:ss")}</code>
 
@@ -166,7 +170,8 @@ __ <pre>${server.description}</pre>`
             flag,
             iso,
 
-            deleted: false
+            deleted: false,
+            port: 22
         }
         return server;
     }
@@ -174,7 +179,8 @@ __ <pre>${server.description}</pre>`
         try {
             const server = extractServer(ctx.match!);
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
-<code>${server.username}@${server.ip}:${server.password}</code>
+<code>${server.username}@${server.ip} -p ${server.port}</code>
+<b>Password:</b> <span class="tg-spoiler">${server.password}</span>
 ${server.country} | ${server.iso}
 <b>Domain:</b> <code>${server.domain}</code>
 <pre>${server.description}</pre>
@@ -192,7 +198,7 @@ ${server.country} | ${server.iso}
                             parse_mode: "HTML",
                         },
                         url: server.domain,
-                        description: `${server.username}@${server.ip}\n` + ctx.emoji`${server.flag}` + ` ${server.country} | ${server.iso}`,
+                        description: `${server.username}@${server.ip} -p ${server.port} \n` + ctx.emoji`${server.flag}` + ` ${server.country} | ${server.iso}`,
                     },
                 ],
                 { cache_time: 0, },
