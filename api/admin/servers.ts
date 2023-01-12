@@ -96,7 +96,7 @@ const ManagementServers = (bot: MyBot) => {
     });
 
     // ==================================================================================> manage a server
-    bot.callbackQuery(/^management:servers:([1-9]+)$/, async (ctx) => {
+    bot.callbackQuery(/^management:servers:([0-9]+)$/, async (ctx) => {
         const id = parseInt(ctx.match[1]);
         const server = await getServer(id)
         if (!server) {
@@ -170,7 +170,7 @@ __ <pre>${server.description}</pre>`
         }
         return server;
     }
-    bot.inlineQuery(/management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)$/, async (ctx) => {
+    bot.inlineQuery(/^management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)$/, async (ctx) => {
         try {
             console.log(ctx.match)
             const server = extractServer(ctx.match!);
@@ -205,7 +205,7 @@ ${server.country} | ${server.iso}
 
     });
 
-    bot.hears(/^management:servers:add:;;(.*)-(.*);;(.*);;(.*);;(.*);;(.*)$/g, async (ctx, _next) => {
+    bot.hears(/^management:servers:add:;;(.*)-(.*);;(.*);;(.*);;(.*);;(.*)$/, async (ctx, _next) => {
         if (!ctx?.message?.via_bot) return _next()
         else {
             const server = extractServer(ctx.match!);
@@ -226,7 +226,7 @@ ${server.country} | ${server.iso}
         }
     });
 
-    bot.callbackQuery(/^management:servers:add:confirm:([1-9]+)$/g, async (ctx) => {
+    bot.callbackQuery(/^management:servers:add:confirm:([0-9]+)$/g, async (ctx) => {
         const tempID = parseInt(ctx.match[1]);
         const server = getTempServer(tempID)
         if (!server) {
@@ -242,7 +242,7 @@ ${server.country} | ${server.iso}
         await ctx.answerCallbackQuery(server.name + " ✅ ثبت شد");
     });
 
-    bot.callbackQuery(/^management:servers:add:cancel:([1-9]+)$/g, async (ctx) => {
+    bot.callbackQuery(/^management:servers:add:cancel:([0-9]+)$/g, async (ctx) => {
         const tempID = parseInt(ctx.match[1]);
         const server = getTempServer(tempID)
         if (!server) {
