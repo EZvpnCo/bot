@@ -223,6 +223,14 @@ __ <pre>${server.description}</pre>`
     });
 
 
+    bot.on("msg:text", (ctx) => {
+        ctx.reply(JSON.stringify(ctx.message?.reply_to_message))
+    })
+    // .filter((ctx) => {
+    //     return ctx.message?.reply_to_message?.entities
+    // })
+
+
 
 
     // =========================================================================================> add server
