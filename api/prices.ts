@@ -54,10 +54,6 @@ const Prices = (bot: MyBot) => {
         await ctx.editMessageText(dailyText, { reply_markup: back_keyboard });
         await ctx.answerCallbackQuery();
     });
-    // Handle the /prices@daily command.
-    bot.command("prices@daily", async (ctx) => {
-        await ctx.reply(dailyText, { reply_markup: back_keyboard });
-    });
 
 
     // ===> trade
@@ -83,10 +79,6 @@ const Prices = (bot: MyBot) => {
         await ctx.editMessageText(tradeText, { reply_markup: back_keyboard });
         await ctx.answerCallbackQuery();
     });
-    // Handle the /prices@trade command.
-    bot.command("prices@trade", async (ctx) => {
-        await ctx.reply(tradeText, { reply_markup: back_keyboard });
-    });
 
     // ===> game
     const gameText = `
@@ -110,10 +102,6 @@ const Prices = (bot: MyBot) => {
     bot.callbackQuery("prices:game", async (ctx) => {
         await ctx.editMessageText(gameText, { reply_markup: back_keyboard });
         await ctx.answerCallbackQuery();
-    });
-    // Handle the /prices@game command.
-    bot.command("prices@game", async (ctx) => {
-        await ctx.reply(gameText, { reply_markup: back_keyboard });
     });
 };
 

@@ -96,8 +96,8 @@ const ManagementServers = (bot: MyBot) => {
     });
 
     // ==================================================================================> manage a server
-    bot.callbackQuery(/(management:servers:)\d{1,}/g, async (ctx) => {
-        const id = parseInt(ctx.match.toString().replace("management:servers:", ""));
+    bot.callbackQuery(/^management:servers:([1-9]+)$/, async (ctx) => {
+        const id = parseInt(ctx.match[1]);
         const server = await getServer(id)
         if (!server) {
             await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
@@ -111,8 +111,6 @@ const ManagementServers = (bot: MyBot) => {
 <b>Created:</b> <code>${moment(server.created).format("YYYY-MM-DD HH:mm:ss")}</code>
 
 __ <pre>${server.description}</pre>`
-
-        console.log("management:servers:" + id + ":delete")
 
         const _keyboard = new InlineKeyboard()
             .text("❌ Delete", "management:servers:" + id + ":delete")
@@ -172,7 +170,7 @@ __ <pre>${server.description}</pre>`
         }
         return server;
     }
-    bot.inlineQuery(/management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)/, async (ctx) => {
+    bot.inlineQuery(/^management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)$/g, async (ctx) => {
         try {
             const server = extractServer(ctx.match!);
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
@@ -206,7 +204,7 @@ ${server.country} | ${server.iso}
 
     });
 
-    bot.hears(/management:servers:add:;;(.*)-(.*);;(.*);;(.*);;(.*);;(.*)/, async (ctx, _next) => {
+    bot.hears(/^management:servers:add:;;(.*)-(.*);;(.*);;(.*);;(.*);;(.*)$/g, async (ctx, _next) => {
         if (!ctx?.message?.via_bot) return _next()
         else {
             const server = extractServer(ctx.match!);
@@ -227,8 +225,8 @@ ${server.country} | ${server.iso}
         }
     });
 
-    bot.callbackQuery(/(management:servers:add:confirm:)\d{1,}/g, async (ctx) => {
-        const tempID = parseInt(ctx.match.toString().replace("management:servers:add:confirm:", ""));
+    bot.callbackQuery(/^management:servers:add:confirm:([1-9]+)$/g, async (ctx) => {
+        const tempID = parseInt(ctx.match[1]);
         const server = getTempServer(tempID)
         if (!server) {
             await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
@@ -243,8 +241,8 @@ ${server.country} | ${server.iso}
         await ctx.answerCallbackQuery(server.name + " ✅ ثبت شد");
     });
 
-    bot.callbackQuery(/(management:servers:add:cancel:)\d{1,}/g, async (ctx) => {
-        const tempID = parseInt(ctx.match.toString().replace("management:servers:add:cancel:", ""));
+    bot.callbackQuery(/^management:servers:add:cancel:([1-9]+)$/g, async (ctx) => {
+        const tempID = parseInt(ctx.match[1]);
         const server = getTempServer(tempID)
         if (!server) {
             await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
