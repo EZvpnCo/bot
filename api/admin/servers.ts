@@ -68,26 +68,22 @@ const getServer = async (_id: number): Promise<serverType | null> => {
 
 const ManagementServers = (bot: MyBot) => {
 
+    // ==================================================================================> servers list
     const genServersListKeyboard = (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
-
         serversList.forEach((v, i) => {
             keyboard
                 .text(v!.name + ctx.emoji` ${v!.flag}`, "management:servers:" + v!.id)
                 .row()
         })
-
         keyboard
             .switchInlineCurrent("➕ افزودن سرور جدید", "management:servers:add:\nGermany-07\n38.54.2.172\nusername\npassword\nDescription")
             .row()
             .text("↪️", "management")
             .text("🔄", "management:servers")
             .text("🏠", "mainMenu")
-
         return keyboard;
     }
-
-
     bot.callbackQuery("management:servers", async (ctx) => {
         try {
             const _text = `📡 مدیریت سرورها\nتعداد: ${serversList.length}`
@@ -99,7 +95,7 @@ const ManagementServers = (bot: MyBot) => {
         }
     });
 
-
+    // ==================================================================================> manage a server
     bot.callbackQuery(/(management:servers:)\d{1,}/g, async (ctx) => {
         const id = parseInt(ctx.match.toString().replace("management:servers:", ""));
         const server = await getServer(id)
@@ -117,11 +113,24 @@ const ManagementServers = (bot: MyBot) => {
 __ <pre>${server.description}</pre>`
 
         const _keyboard = new InlineKeyboard()
-            .text("Install XrayR", "management:servers:" + id + ":install_xrayr")
+            .text("❌ Delete", "management:servers:" + id + ":delete")
+            .text("💤 Inactive", "management:servers:" + id + ":inactive")
             .row()
-            .text("Config XrayR", "management:servers:" + id + ":config_xrayr")
+            .text("🕹 Connect SSH", "management:servers:" + id + ":ssh")
             .row()
-            .text("Restart XrayR", "management:servers:" + id + ":restart_xrayr")
+            .text("✏️ ip", "management:servers:" + id + ":edit:ip")
+            .text("✏️ user", "management:servers:" + id + ":edit:user")
+            .text("✏️ pswd", "management:servers:" + id + ":edit:pswd")
+            .row()
+            .text("✏️ dmin", "management:servers:" + id + ":edit:dmin")
+            .text("✏️ port", "management:servers:" + id + ":edit:port")
+            .text("✏️ dscp", "management:servers:" + id + ":edit:dscp")
+            .row()
+            .text("Install XrayR", "management:servers:" + id + ":xrayr:install")
+            .row()
+            .text("Config XrayR", "management:servers:" + id + ":xrayr:config")
+            .row()
+            .text("Restart XrayR", "management:servers:" + id + ":xrayr:restart")
             .row()
             .text("↪️", "management:servers")
             .text("🏠", "mainMenu")
