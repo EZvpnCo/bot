@@ -223,12 +223,12 @@ __ <pre>${server.description}</pre>`
     });
 
 
-    bot.on("msg:text", async (ctx, _next) => {
-        const g = ctx.senderChat!.type === "private"
+    bot.on("message", async (ctx, _next) => {
+        const g = ctx.chat.type === "private"
             &&
-            ctx.msg.reply_to_message!.from!.id === ctx.me.id
+            ctx.msg.reply_to_message?.from?.id === ctx.me.id
             &&
-            ctx!.msg!.reply_to_message!.text!.includes("#ssh_session #ssh_server_")
+            ctx?.msg?.reply_to_message?.text?.includes("#ssh_session #ssh_server_")
         if (!g) return _next()
         await ctx.reply(JSON.stringify(ctx.message?.reply_to_message))
     });
