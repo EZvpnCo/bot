@@ -199,7 +199,7 @@ __ <pre>${server.description}</pre>`
             }
             const command = ctx.match[2]
             const serverDisplay = ctx.emoji`${server.flag} ` + `<b>${server.name}</b>\n`
-            const sshSession = `<span class="tg-spoiler">#ssh_session #server_${serverID}</span>\n`
+            const sshSession = `<span class="tg-spoiler">#ssh_session #ssh_server_${serverID}</span>\n`
             const responseMessageID = (await ctx.reply(serverDisplay + '\n<i>Connecting...</i>', { reply_to_message_id: ctx.message?.message_id, parse_mode: 'HTML' })).message_id
             const canConnect = await liveSSH(
                 {
@@ -223,18 +223,15 @@ __ <pre>${server.description}</pre>`
     });
 
 
-    bot.on("msg:text").filter(
-        (ctx) => {
-            return ctx.senderChat!.type === "private"
-                &&
-                ctx.msg.reply_to_message!.from!.id === ctx.me.id
-                &&
-                ctx!.msg!.reply_to_message!.text!.includes("#ssh_session")
-        },
-        (ctx) => {
-            ctx.reply(JSON.stringify(ctx.message?.reply_to_message))
-        }
-    );
+    bot.on("msg:text", async (ctx, _next) => {
+        const g = ctx.senderChat!.type === "private"
+            &&
+            ctx.msg.reply_to_message!.from!.id === ctx.me.id
+            &&
+            ctx!.msg!.reply_to_message!.text!.includes("#ssh_session #ssh_server_")
+        if (!g) return _next()
+        await ctx.reply(JSON.stringify(ctx.message?.reply_to_message))
+    });
 
 
 
