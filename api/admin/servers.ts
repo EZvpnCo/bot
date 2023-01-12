@@ -172,6 +172,7 @@ __ <pre>${server.description}</pre>`
     }
     bot.inlineQuery(/^management:servers:add:\n(.*)-(.*)\n(.*)\n(.*)\n(.*)\n(.*)$/g, async (ctx) => {
         try {
+            console.log(ctx.match)
             const server = extractServer(ctx.match!);
             const _text = ctx.emoji`${server.flag}` + ` <b>${server.name}</b>
 <code>${server.username}@${server.ip}:${server.password}</code>
