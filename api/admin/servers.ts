@@ -215,10 +215,7 @@ __ <pre>${server.description}</pre>`
                     }
                 }
             )
-            if (canConnect) {
-
-            }
-            else await ctx.answerCallbackQuery("متصل نشد ❌");
+            if (!canConnect) await ctx.answerCallbackQuery("متصل نشد ❌");
         } catch (error) {
             console.log("TC@@@", error)
         }
