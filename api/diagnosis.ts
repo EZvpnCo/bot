@@ -99,8 +99,8 @@ const Diagnosis = (bot: MyBot) => {
     });
 
     // diagnosis answer
-    bot.callbackQuery(/^diagnosis:([1-9]+)$/, async (ctx) => {
-        const q = parseInt(ctx.match[0]) - 1;
+    bot.callbackQuery(/^diagnosis:([0-9]+)$/g, async (ctx) => {
+        const q = parseInt(ctx.match[1]) - 1;
         const keyboard = new InlineKeyboard()
             .text("برگشت ↩️", "diagnosis")
             .text("صفحه اصلی 🏠", "mainMenu");

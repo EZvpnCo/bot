@@ -72,7 +72,7 @@ const Faq = (bot: MyBot) => {
     });
 
     // faq answer
-    bot.callbackQuery(/^faq:([1-9]+)$/, async (ctx) => {
+    bot.callbackQuery(/^faq:([0-9]+)$/g, async (ctx) => {
         const q = parseInt(ctx.match[1]) - 1;
         const keyboard = new InlineKeyboard()
             .text("برگشت ↩️", "faq")
