@@ -5,7 +5,7 @@ import { MyBot, MyContext } from "../bot";
 import { EmojiName } from "@grammyjs/emoji/out/emoji"
 
 import * as countries from "i18n-iso-countries"
-import { checkConnection } from "./ssh";
+import { checkConnection, liveSSH } from "./ssh";
 
 type serverType = {
     id: number | null,
@@ -177,8 +177,48 @@ __ <pre>${server.description}</pre>`
             username: server.username,
             password: server.password,
         })
-        if (canConnect) await ctx.answerCallbackQuery("با موفقیت متصل شد ✅");
+        if (canConnect) {
+            const text = `
+✅ با موفقیت متصل شد
+برای اجرای دستورات به شکل زیر دستور را وارد کنید:
+
+<code>management:servers:${serverID}:ssh:exec:your_command</code>`;
+            await ctx.reply(text, { parse_mode: 'HTML' })
+        }
         else await ctx.answerCallbackQuery("متصل نشد ❌");
+    });
+
+    bot.hears(/^management:servers:([0-9]+):ssh:exec:(.*)$/s, async (ctx, _next) => {
+        try {
+            const serverID = parseInt(ctx.match[1]);
+            const server = await getServer(serverID)
+            if (!server) {
+                await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
+                return
+            }
+            const command = ctx.match[2]
+            let responseMessageID = 0
+            const canConnect = await liveSSH(
+                {
+                    host: server.ip,
+                    port: server.port,
+                    username: server.username,
+                    password: server.password,
+                },
+                command,
+                [],
+                '',
+                (result) => {
+                    if (responseMessageID) ctx.api.editMessageText(ctx.chat.id, responseMessageID, result)
+                }
+            )
+            if (canConnect) {
+                responseMessageID = (await ctx.reply('RESPONSE:\n\n')).message_id
+            }
+            else await ctx.answerCallbackQuery("متصل نشد ❌");
+        } catch (error) {
+            console.log("TC@@@", error)
+        }
     });
 
 

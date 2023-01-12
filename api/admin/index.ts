@@ -34,6 +34,16 @@ const Admin = (bot: MyBot) => {
         }
     })
 
+    bot.hears(/(management.*)/g, async (ctx, _next) => {
+        if (!admins.includes(ctx?.from?.id!)) {
+            const _text = `شما دسترسی های لازم رو نداری 🚫`
+            await ctx.reply(_text, { reply_to_message_id: ctx.message?.message_id })
+        }
+        else {
+            return _next();
+        }
+    })
+
     bot.callbackQuery("management", async (ctx) => {
         let _text, _keyboard
 
