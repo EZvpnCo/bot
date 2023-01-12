@@ -112,6 +112,8 @@ const ManagementServers = (bot: MyBot) => {
 
 __ <pre>${server.description}</pre>`
 
+        console.log("management:servers:" + id + ":delete")
+
         const _keyboard = new InlineKeyboard()
             .text("❌ Delete", "management:servers:" + id + ":delete")
             .text("💤 Inactive", "management:servers:" + id + ":inactive")
