@@ -5,6 +5,7 @@ import { MyBot, MyContext } from "../bot";
 import { EmojiName } from "@grammyjs/emoji/out/emoji"
 
 import * as countries from "i18n-iso-countries"
+import { checkConnection } from "./ssh";
 
 type serverType = {
     id: number | null,
@@ -120,7 +121,8 @@ __ <pre>${server.description}</pre>`
             .text("❌ Delete", "management:servers:" + id + ":delete")
             .text("💤 Inactive", "management:servers:" + id + ":inactive")
             .row()
-            .text("🕹 Connect SSH", "management:servers:" + id + ":ssh")
+            .text("🕹 Check SSH", "management:servers:" + id + ":ssh:check")
+            .text("🕹 Exec SSH", "management:servers:" + id + ":ssh:exec")
             .row()
             .text("✏️ ip", "management:servers:" + id + ":edit:ip")
             .text("✏️ user", "management:servers:" + id + ":edit:user")
@@ -143,6 +145,43 @@ __ <pre>${server.description}</pre>`
         await ctx.editMessageText(_text, { reply_markup: _keyboard, parse_mode: "HTML", });
         await ctx.answerCallbackQuery();
     });
+
+    bot.callbackQuery(/^management:servers:([0-9]+):ssh:check$/, async (ctx) => {
+        const serverID = parseInt(ctx.match[1]);
+        const server = await getServer(serverID)
+        if (!server) {
+            await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
+            return
+        }
+        const canConnect = await checkConnection({
+            host: server.ip,
+            port: server.port,
+            username: server.username,
+            password: server.password,
+        })
+        if (canConnect) await ctx.answerCallbackQuery("با موفقیت متصل شد ✅");
+        else await ctx.answerCallbackQuery("متصل نشد ❌");
+    });
+
+
+    bot.callbackQuery(/^management:servers:([0-9]+):ssh:exec$/, async (ctx) => {
+        const serverID = parseInt(ctx.match[1]);
+        const server = await getServer(serverID)
+        if (!server) {
+            await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
+            return
+        }
+        const canConnect = await checkConnection({
+            host: server.ip,
+            port: server.port,
+            username: server.username,
+            password: server.password,
+        })
+        if (canConnect) await ctx.answerCallbackQuery("با موفقیت متصل شد ✅");
+        else await ctx.answerCallbackQuery("متصل نشد ❌");
+    });
+
+
 
 
     // =========================================================================================> add server
