@@ -1,4 +1,4 @@
-import { Bot, InlineKeyboard, } from "grammy";
+import { Bot, Context, InlineKeyboard, } from "grammy";
 import { Admins as admins, flagCountryList } from "../config";
 import moment from "moment";
 import { MyBot, MyContext } from "../bot";
@@ -223,12 +223,18 @@ __ <pre>${server.description}</pre>`
     });
 
 
-    bot.on("msg:text", (ctx) => {
-        ctx.reply(JSON.stringify(ctx.message?.reply_to_message))
-    })
-    // .filter((ctx) => {
-    //     return ctx.message?.reply_to_message?.entities
-    // })
+    bot.on("msg:text").filter(
+        (ctx) => {
+            return ctx.senderChat!.type === "private"
+                &&
+                ctx.msg.reply_to_message!.from!.id === ctx.me.id
+                &&
+                ctx!.msg!.reply_to_message!.text!.includes("#ssh_session")
+        },
+        (ctx) => {
+            ctx.reply(JSON.stringify(ctx.message?.reply_to_message))
+        }
+    );
 
 
 
