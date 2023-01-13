@@ -5,7 +5,9 @@ import { MyBot, MyContext } from "../bot";
 import { EmojiName } from "@grammyjs/emoji/out/emoji"
 
 import * as countries from "i18n-iso-countries"
-import { checkConnection, liveSSH } from "./ssh";
+import EZssh from "./ssh";
+import { ClientChannel } from "ssh2";
+// import { checkConnection, liveSSH } from "./ssh";
 
 type serverType = {
     id: number | null,
@@ -121,8 +123,8 @@ __ <pre>${server.description}</pre>`
             .text("❌ Delete", "management:servers:" + id + ":delete")
             .text("💤 Inactive", "management:servers:" + id + ":inactive")
             .row()
-            .text("🕹 Check SSH", "management:servers:" + id + ":ssh:check")
-            .text("🕹 Exec SSH", "management:servers:" + id + ":ssh:exec")
+            .text("🕹 Check Connect", "management:servers:" + id + ":ssh:check")
+            .text("🕹 Open Shell", "management:servers:" + id + ":ssh:shell")
             .row()
             .text("✏️ ip", "management:servers:" + id + ":edit:ip")
             .text("✏️ user", "management:servers:" + id + ":edit:user")
@@ -153,79 +155,68 @@ __ <pre>${server.description}</pre>`
             await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
             return
         }
-        const canConnect = await checkConnection({
+        const ssh = new EZssh({
             host: server.ip,
             port: server.port,
             username: server.username,
             password: server.password,
         })
+        await ssh.connect()
+        const canConnect = ssh.isConnected()
         if (canConnect) await ctx.answerCallbackQuery("با موفقیت متصل شد ✅");
         else await ctx.answerCallbackQuery("متصل نشد ❌");
     });
 
 
-    bot.callbackQuery(/^management:servers:([0-9]+):ssh:exec$/, async (ctx) => {
+    let _shellMID = 0
+    let _sshClient: EZssh | null
+    const getResponseMID = async () => {
+        return _shellMID
+    }
+    const getSSHClient = async () => {
+        return _sshClient
+    }
+    const generateResponse = async (server: serverType, result: string) => {
+        const serverDisplay = `<b>${server.name}</b> 🟢\n`
+        const sshSession = `<span class="tg-spoiler">#ssh_session #ssh_server_${server.id}</span>\n`
+        const _header = sshSession + serverDisplay
+        const text = `${_header}${result}`;
+        return text;
+    }
+    bot.callbackQuery(/^management:servers:([0-9]+):ssh:shell$/, async (ctx) => {
         const serverID = parseInt(ctx.match[1]);
         const server = await getServer(serverID)
         if (!server) {
             await ctx.answerCallbackQuery("خطا در یافتن اطلاعات");
             return
         }
-        const canConnect = await checkConnection({
+        const ssh = new EZssh({
             host: server.ip,
             port: server.port,
             username: server.username,
             password: server.password,
         })
+        await ssh.connect()
+        const canConnect = ssh.isConnected()
         if (canConnect) {
-            const text = `
-✅ با موفقیت متصل شد
-برای اجرای دستورات به شکل زیر دستور را وارد کنید:
+            const text = await generateResponse(server, `<b>Connecting...</b>`)
+            _shellMID = (await ctx.reply(text, { parse_mode: 'HTML' })).message_id
 
-<code>management:servers:${serverID}:ssh:exec:command</code>`;
-            await ctx.reply(text, { parse_mode: 'HTML' })
-            await ctx.answerCallbackQuery();
+            const _keyboard = new InlineKeyboard()
+                .text("Crtl + C", "cancel_command")
+
+            _sshClient = await ssh.openShell(async (data) => {
+                ctx.api.editMessageText(
+                    ctx!.chat!.id,
+                    await getResponseMID(),
+                    await generateResponse(server, `<b>Response:</b>\n<code>${data}</code>`),
+                    { parse_mode: 'HTML', reply_markup: _keyboard }
+                )
+            })
+
+            await ctx.answerCallbackQuery("✅ شل ایجاد شد");
         }
-        else await ctx.answerCallbackQuery("متصل نشد ❌");
-    });
-
-    const sshCommand = async (ctx: MyContext, serverID: number, command: string) => {
-        try {
-            const server = await getServer(serverID)
-            if (!server) {
-                await ctx.reply("خطا در یافتن اطلاعات");
-                return
-            }
-
-            const serverDisplay = ctx.emoji`${server.flag} ` + `<b>${server.name}</b>\n`
-            const sshSession = `<span class="tg-spoiler">#ssh_session #ssh_server_${serverID}</span>\n`
-            const _header = sshSession + serverDisplay
-            const responseMessageID = (await ctx.reply(serverDisplay + '\n<i>Connecting...</i>', { reply_to_message_id: ctx.message?.message_id, parse_mode: 'HTML' })).message_id
-            const _ssh = await liveSSH(
-                {
-                    host: server.ip,
-                    port: server.port,
-                    username: server.username,
-                    password: server.password,
-                },
-                command,
-                (result) => {
-                    if (responseMessageID) {
-                        ctx.api.editMessageText(ctx!.chat!.id, responseMessageID, _header + '<b>Response:</b>\n' + '<code>' + result + '</code>', { parse_mode: 'HTML' })
-                    }
-                }
-            )
-            if (_ssh) ctx.api.editMessageText(ctx!.chat!.id, responseMessageID, _header + '<b>Connected:</b>', { parse_mode: 'HTML' })
-            else ctx.api.editMessageText(ctx!.chat!.id, responseMessageID, _header + '<b>Can\'t connected:</b>', { parse_mode: 'HTML' })
-        } catch (error) {
-            console.log("TC@@@", error)
-        }
-    }
-
-    bot.hears(/^management:servers:([0-9]+):ssh:exec:(.*)$/s, async (ctx, _next) => {
-        const command = ctx.match[2]
-        const serverID = parseInt(ctx.match[1]);
-        await sshCommand(ctx, serverID, command)
+        else await ctx.answerCallbackQuery("❌ متصل نشد");
     });
 
 
@@ -241,9 +232,14 @@ __ <pre>${server.description}</pre>`
         const _t = ctx?.msg?.reply_to_message?.text!
         const regex = /#ssh_session #ssh_server_([0-9]+)/;
         const _p = _t.match(regex)
-        const command = ctx.message.text!
         const serverID = parseInt(_p![1]);
-        await sshCommand(ctx, serverID, command)
+        const server = await getServer(serverID)
+        const text = await generateResponse(server!, `<b>Connecting...</b>`)
+        _shellMID = (await ctx.reply(text, { parse_mode: 'HTML' })).message_id
+
+        const command = ctx.message.text!
+        const _mySSH = await getSSHClient()
+        _mySSH?.writeCommand(command)
     });
 
 
