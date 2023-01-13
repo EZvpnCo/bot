@@ -2,6 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@grammyjs/emoji': ^1.1.0
+  '@types/node': ^18.11.18
+  '@types/ssh2': ^1.11.7
   grammy: ^1.13.0
   i18n-iso-countries: ^7.5.0
   moment: ^2.29.4
@@ -16,6 +18,8 @@ dependencies:
   node-ssh: 13.0.0
 
 devDependencies:
+  '@types/node': 18.11.18
+  '@types/ssh2': 1.11.7
   typescript: 4.9.4
 
 packages:
@@ -31,6 +35,16 @@ packages:
   /@grammyjs/types/2.11.0:
     resolution: {integrity: sha512-x3Q1ngj89Sxu4bsLLPPAzAhAn+dqtaVtRPGXagVCZO7MJFbiWKdhs0aJKtC+HNaSlEhCS1unBOVde0ecAh9MZQ==}
     dev: false
+
+  /@types/node/18.11.18:
+    resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
+    dev: true
+
+  /@types/ssh2/1.11.7:
+    resolution: {integrity: sha512-MaVSlZOiekRUHnxL2NAmDkcU3+bTwz+ZRktLygjQCnxhLjDzN+XnsG6JUdoocmfxatMiqFo/6eb48uVqFaxBsg==}
+    dependencies:
+      '@types/node': 18.11.18
+    dev: true
 
   /abort-controller/3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
