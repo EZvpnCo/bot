@@ -14,6 +14,7 @@
 	"scripts": {
 		"start": "node build/bot.js",
 		"build": "npx tsc",
-		"auto": "git pull; npx tsc; node build/bot.js"
+		"pull": "git pull",
+		"auto": "npm run pull & npm run build & npm run start"
 	}
 }

@@ -1,5 +1,5 @@
 import { Bot, Context, GrammyError, HttpError } from "grammy";
-import { BotToken } from "./config"
+import { BotToken, SuperAdmin } from "./config"
 
 import Admin from "./admin";
 
@@ -13,6 +13,7 @@ import Servers from "./servers";
 import Tutorials from "./tutorials";
 
 import { EmojiFlavor, emojiParser } from "@grammyjs/emoji";
+import { UserFromGetMe } from "grammy/out/types";
 
 export type MyContext = EmojiFlavor<Context>;
 export type MyBot = Bot<MyContext>
@@ -60,4 +61,9 @@ bot.catch((err) => {
 });
 
 // Start the bot.
-bot.start();
+bot.start({
+  onStart: async (info: UserFromGetMe) => {
+    let _text = `<b>${info.first_name}(@${info.username})</b> is running ...\n`
+    bot.api.sendMessage(SuperAdmin, _text, { parse_mode: 'HTML' })
+  }
+});

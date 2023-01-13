@@ -332,7 +332,6 @@ ${server.country} | ${server.iso}
     });
 
     bot.callbackQuery(/^management:servers:add:confirm:([0-9]+)$/, async (ctx) => {
-        console.log("%%%", ctx.match)
         const tempID = parseInt(ctx.match[1]);
         const server = getTempServer(tempID)
         if (!server) {
