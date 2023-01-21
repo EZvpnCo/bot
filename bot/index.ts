@@ -89,7 +89,7 @@ bot.use(i18n);
 // Handle the /start command.
 bot.command("start", (ctx) => {
   const isNew = true
-  const text = isNew ? ctx.t("welcome", { name: "hello" }) : ctx.t("welcome-back");
+  const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
   ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
 });
 
