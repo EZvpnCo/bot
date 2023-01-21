@@ -96,7 +96,7 @@ bot.command("start", (ctx) => {
 
 bot.command("language", async (ctx) => {
   if (ctx.match === "") {
-    return await ctx.reply(ctx.t("language-specify-a-locale"));
+    return await ctx.reply(ctx.t("login-input.placeholder"));
   }
 
   // `i18n.locales` contains all the locales that have been registered
