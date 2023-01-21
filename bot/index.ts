@@ -61,8 +61,8 @@ bot.use(session({ initial }));
 // Create an `I18n` instance.
 // Continue reading to find out how to configure the instance.
 const i18n = new I18n<MyContext>({
-  defaultLocale: "en", // see below for more information
-  directory: "locales", // Load all translation files from locales/.
+  defaultLocale: "fa",
+  directory: "locales",
   useSession: true,
 });
 

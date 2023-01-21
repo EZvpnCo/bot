@@ -1,2 +1,8 @@
-start-new-user = سلام کاربر حالت چطوره؟
-start-old-user = سلام کاربر خوش برگشتی
+start-new-user = سلام { $user }!
+به *EZvpn* خوش اومدی
+جهت استفاده از ربات بر روی /menu کلیک کنید
+
+start-old-user = سلام { $user }!
+جهت استفاده از ربات بر روی /menu کلیک کنید
+
+language.specify-a-locale = یک زبان را مشخص کنید
