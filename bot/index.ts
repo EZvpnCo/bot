@@ -113,6 +113,7 @@ bot.catch((err) => {
 // Start the bot.
 bot.start({
   onStart: async (info: UserFromGetMe) => {
+    console.log("Starting ...")
     let _text = `<b>${info.first_name}(@${info.username})</b> is running ...\n`
     bot.api.sendMessage(SuperAdmin, _text, { parse_mode: 'HTML' })
   }
