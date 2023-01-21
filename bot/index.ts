@@ -97,21 +97,21 @@ bot.command("start", (ctx) => {
 
 bot.command("language", async (ctx) => {
   if (ctx.match === "") {
-    return await ctx.reply(ctx.t("language.specify-a-locale"));
+    return await ctx.reply(ctx.t("language-specify-a-locale"));
   }
 
   // `i18n.locales` contains all the locales that have been registered
   if (!i18n.locales.includes(ctx.match)) {
-    return await ctx.reply(ctx.t("language.invalid-locale"));
+    return await ctx.reply(ctx.t("language-invalid-locale"));
   }
 
   // `ctx.i18n.getLocale` returns the locale currently using.
   if ((await ctx.i18n.getLocale()) === ctx.match) {
-    return await ctx.reply(ctx.t("language.already-set"));
+    return await ctx.reply(ctx.t("language-already-set"));
   }
 
   await ctx.i18n.setLocale(ctx.match);
-  await ctx.reply(ctx.t("language.language-set"));
+  await ctx.reply(ctx.t("language-language-set"));
 });
 
 // Handle other messages.
