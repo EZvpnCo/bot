@@ -112,7 +112,7 @@ bot.command("language", async (ctx) => {
 });
 
 // Handle other messages.
-bot.on("message", (ctx) => ctx.reply("Hi4"));
+bot.on("message", (ctx) => ctx.reply("Hi5"));
 bot.on("inline_query", (ctx) => ctx.answerInlineQuery([]));
 bot.on("callback_query", (ctx) => ctx.answerCallbackQuery("Sorry, data:" + ctx.callbackQuery.data));
 
