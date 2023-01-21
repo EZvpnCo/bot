@@ -63,6 +63,9 @@ const i18n = new I18n<MyContext>({
   defaultLocale: "fa",
   directory: "locales",
   useSession: true,
+  globalTranslationContext(ctx) {
+    return { name: ctx.from?.first_name ?? "" };
+  },
 });
 
 
