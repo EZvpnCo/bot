@@ -1,18 +1,18 @@
 {
 	"devDependencies": {
 		"@types/node": "^18.11.18",
-		"@types/ssh2": "^1.11.7",
 		"typescript": "^4.9.4"
 	},
 	"dependencies": {
 		"@grammyjs/emoji": "^1.1.0",
+		"@grammyjs/i18n": "^1.0.1",
 		"grammy": "^1.13.0",
 		"i18n-iso-countries": "^7.5.0",
 		"moment": "^2.29.4",
-		"node-ssh": "^13.0.0"
+		"sequelize": "^6.28.0"
 	},
 	"scripts": {
-		"start": "node build/bot.js",
+		"start": "node build/index.js",
 		"build": "npx tsc",
 		"pull": "git pull",
 		"auto": "npm run pull & npm run build & npm run start"
