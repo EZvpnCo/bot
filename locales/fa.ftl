@@ -1,5 +1,5 @@
-welcome = WelcomeEEuuuyyyyyyyynnn { $name }
-fdgfdhdffh { $value }
+welcome = Welcome { $name }
+    fdgfdhdffh { $value }
 
 language
     .specify-a-locale = email@example.com
