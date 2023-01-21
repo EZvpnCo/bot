@@ -1,5 +1,4 @@
 import { Bot, GrammyError, session, HttpError, Context, SessionFlavor } from "grammy";
-import { EmojiFlavor, emojiParser } from "@grammyjs/emoji";
 import { UserFromGetMe } from "grammy/out/types";
 import { I18n, I18nFlavor } from "@grammyjs/i18n";
 
@@ -84,14 +83,14 @@ bot.use(i18n);
 
 // Handle the /start command.
 bot.command("start", (ctx) => {
-  const text = ctx.t("start-new-user");
+  const text = ctx.t("start-new-user", { user: ctx.from!.first_name! });
   ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
 });
 
 
 bot.command("language", async (ctx) => {
   if (ctx.match === "") {
-    return await ctx.reply(ctx.t("language.specify-a-locale"));
+    return await ctx.reply(ctx.t("language-specify-a-locale"));
   }
 
   // `i18n.locales` contains all the locales that have been registered
