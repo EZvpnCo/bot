@@ -1,1 +1,1 @@
-language.specify-a-locale = یک زبان را مشخص کنید
+specify-a-locale = یک زبان را مشخص کنید
