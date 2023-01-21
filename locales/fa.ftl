@@ -1,7 +1,7 @@
 -bot-name = EZvpn
 
 
-welcome = Welcome { -bot-name } { $name }
+welcome = Welcome *{ -bot-name }* { $name }
     fdgfdhdffh { $value }
 
 language-specify-a-locale = email@example.com

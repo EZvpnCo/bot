@@ -87,7 +87,6 @@ bot.use(i18n);
 // Handle the /start command.
 bot.command("start", (ctx) => {
   const text = ctx.t("welcome", {
-    name: "TYHYTUTI",
     value: 123.456,
     applesCount: 1,
   });
