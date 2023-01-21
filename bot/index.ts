@@ -64,7 +64,9 @@ const i18n = new I18n<MyContext>({
   directory: "locales",
   useSession: true,
   globalTranslationContext(ctx) {
-    return { name: ctx.from?.first_name ?? "" };
+    return {
+      name: ctx.from?.first_name ?? "",
+    };
   },
 });
 
@@ -86,37 +88,35 @@ bot.use(i18n);
 
 // Handle the /start command.
 bot.command("start", (ctx) => {
-  const text = ctx.t("welcome", {
-    value: 123.456,
-    applesCount: 1,
-  });
+  const isNew = true
+  const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
   ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
 });
 
 
 bot.command("language", async (ctx) => {
   if (ctx.match === "") {
-    return await ctx.reply(ctx.t("login-input.placeholder"));
+    return await ctx.reply(ctx.t("language.specify-a-locale"));
   }
 
   // `i18n.locales` contains all the locales that have been registered
   if (!i18n.locales.includes(ctx.match)) {
-    return await ctx.reply(ctx.t("language-invalid-locale"));
+    return await ctx.reply(ctx.t("language.invalid-locale"));
   }
 
   // `ctx.i18n.getLocale` returns the locale currently using.
   if ((await ctx.i18n.getLocale()) === ctx.match) {
-    return await ctx.reply(ctx.t("language-already-set"));
+    return await ctx.reply(ctx.t("language.already-set"));
   }
 
   await ctx.i18n.setLocale(ctx.match);
-  await ctx.reply(ctx.t("language-language-set"));
+  await ctx.reply(ctx.t("language.language-set"));
 });
 
 // Handle other messages.
-bot.on("message", (ctx) => ctx.reply("Hi6"));
+bot.on("message", (ctx) => ctx.reply("🤫😕"));
 bot.on("inline_query", (ctx) => ctx.answerInlineQuery([]));
-bot.on("callback_query", (ctx) => ctx.answerCallbackQuery("Sorry, data:" + ctx.callbackQuery.data));
+bot.on("callback_query", (ctx) => ctx.answerCallbackQuery("🤫 " + ctx.callbackQuery.data));
 
 
 

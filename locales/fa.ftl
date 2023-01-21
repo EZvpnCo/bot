@@ -1,16 +1,15 @@
 -bot-name = EZvpn
 
+welcome = سلام { $name } عزیز!
+    به *{ -bot-name }* خوش اومدید
+    جهت استفاده از ربات بر روی /menu کلیک کنید
 
-welcome = Welcome *{ -bot-name }* { $name }
-    fdgfdhdffh { $value }
+welcome-back = کاربر { $name } عزیز!
+    جهت استفاده از ربات بر روی /menu کلیک کنید
 
-language-specify-a-locale = email@example.com
-language-invalid-locale = Login input value
-language-already-set = Type your login email
-language-language-set = fdhdfhfdhd
+language = انتخاب زبان
+    .specify-a-locale = لطفا یک زبان را انتخاب کنید
+    .invalid-locale = زبان وارد شده نامعتبر است
+    .already-set = این زبان از قبل ست شده است
+    .language-set = ✅ زبان شما با موفقیت به { $lang } تغییر یافت
 
-
-login-input = Predefined value
-    .placeholder = email@example.commmmm
-    .aria-label = Login input value
-    .title = Type your login email
