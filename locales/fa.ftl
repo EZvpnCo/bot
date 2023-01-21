@@ -1,4 +1,4 @@
-welcome = WelcomeEE
+welcome = WelcomeEEuuu
 
 language
     .specify-a-locale = email@example.com
