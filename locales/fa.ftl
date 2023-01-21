@@ -5,4 +5,3 @@ start-new-user = سلام { $user }!
 start-old-user = سلام { $user }!
 جهت استفاده از ربات بر روی /menu کلیک کنید
 
-language.specify-a-locale = یک زبان را مشخص کنید
