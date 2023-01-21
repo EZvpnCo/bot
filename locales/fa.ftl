@@ -1,8 +1,6 @@
 -bot-name = EZvpn
 
 welcome = سلام { $name } عزیز!
-    به *{ -bot-name }* خوش اومدید
-    جهت استفاده از ربات بر روی /menu کلیک کنید
 
 welcome-back = کاربر { $name } عزیز!
     جهت استفاده از ربات بر روی /menu کلیک کنید
