@@ -11,6 +11,6 @@ language-language-set = fdhdfhfdhd
 
 
 login-input = Predefined value
-    .placeholder = email@example.com
+    .placeholder = email@example.commmmm
     .aria-label = Login input value
     .title = Type your login email
