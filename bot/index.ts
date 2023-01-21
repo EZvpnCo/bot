@@ -83,7 +83,11 @@ bot.use(i18n);
 
 // Handle the /start command.
 bot.command("start", (ctx) => {
-  const text = ctx.t("start-new-user", { user: ctx.from!.first_name! });
+  const text = ctx.t("welcome", {
+    name: ctx.from!.first_name!,
+    value: 123.456,
+    applesCount: 1,
+  });
   ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
 });
 
@@ -108,7 +112,7 @@ bot.command("language", async (ctx) => {
 });
 
 // Handle other messages.
-bot.on("message", (ctx) => ctx.reply("Hi3"));
+bot.on("message", (ctx) => ctx.reply("Hi4"));
 bot.on("inline_query", (ctx) => ctx.answerInlineQuery([]));
 bot.on("callback_query", (ctx) => ctx.answerCallbackQuery("Sorry, data:" + ctx.callbackQuery.data));
 
