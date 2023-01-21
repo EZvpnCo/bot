@@ -27,6 +27,7 @@ interface InputState {
 
 // Define the shape of our session.
 interface SessionData {
+  __language_code?: string;
   // user: User | null;
   isNew: boolean;
   inputState: InputState | null;
@@ -39,9 +40,11 @@ export type MyContext = Context & SessionFlavor<SessionData> & I18nFlavor;
 // Install session middleware, and define the initial session value.
 function initial(): SessionData {
   return {
+    __language_code: "fa",
     // user: null,
     isNew: true,
     inputState: null,
+
   };
 }
 
@@ -60,6 +63,7 @@ bot.use(session({ initial }));
 const i18n = new I18n<MyContext>({
   defaultLocale: "en", // see below for more information
   directory: "locales", // Load all translation files from locales/.
+  useSession: true,
 });
 
 
@@ -80,12 +84,29 @@ bot.use(i18n);
 
 // Handle the /start command.
 bot.command("start", (ctx) => {
-  const text = `سلام *${ctx?.from?.first_name}* عزیز\\!
-به *EZvpn* خوش hhh
-جهت استفاده از ربات بر روی /menu کلیک کنید`;
+  const text = ctx.t("start-new-user");
   ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
 });
 
+
+bot.command("language", async (ctx) => {
+  if (ctx.match === "") {
+    return await ctx.reply(ctx.t("language.specify-a-locale"));
+  }
+
+  // `i18n.locales` contains all the locales that have been registered
+  if (!i18n.locales.includes(ctx.match)) {
+    return await ctx.reply(ctx.t("language.invalid-locale"));
+  }
+
+  // `ctx.i18n.getLocale` returns the locale currently using.
+  if ((await ctx.i18n.getLocale()) === ctx.match) {
+    return await ctx.reply(ctx.t("language.already-set"));
+  }
+
+  await ctx.i18n.setLocale(ctx.match);
+  await ctx.reply(ctx.t("language.language-set"));
+});
 
 // Handle other messages.
 bot.on("message", (ctx) => ctx.reply("🤫"));
