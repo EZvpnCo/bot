@@ -90,7 +90,7 @@ bot
     //   } catch (error) {
     //     _text += `<b>Database:</b>\nUnable to connect (${error})`
     //   }
-    //  await  bot.api.sendMessage(SuperAdmin, _text, { parse_mode: 'HTML' })
+    await ctx.reply("Hello", { parse_mode: 'HTML' })
   });
 
 
