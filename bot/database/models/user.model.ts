@@ -47,7 +47,7 @@ User.init(
             allowNull: false
         },
         panel_id: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             allowNull: true
         },
     },
