@@ -1,4 +1,4 @@
-import { Bot, GrammyError, session, HttpError, Context, SessionFlavor } from "grammy";
+import { Bot, GrammyError, session, HttpError, Context, SessionFlavor, InlineKeyboard } from "grammy";
 import { UserFromGetMe } from "grammy/out/types";
 import { I18n, I18nFlavor } from "@grammyjs/i18n";
 import { BotToken, SuperAdmin } from "./config"
@@ -8,6 +8,8 @@ import User from "./database/models/bot_user.model";
 import MenuService from "./services/menu";
 import PingPongService from "./services/pingpong";
 import FaqService from "./services/faq";
+import DiagnosisService from "./services/diagnosis";
+import PricesService from "./services/prices";
 
 
 
@@ -113,17 +115,26 @@ bot.command("start", (ctx) => {
 });
 
 
+export const backKeyboards = (ctx: MyContext, keyboard: InlineKeyboard, backLevel: string) => {
+  keyboard
+    .text(ctx.t("back-btn"), backLevel)
+    .text(ctx.t("back-to-home-btn"), "menu")
+  return keyboard
+}
+
+
+
+
 new MenuService(bot).run()
 new PingPongService(bot).run()
 new FaqService(bot).run()
+new DiagnosisService(bot).run()
+new PricesService(bot).run()
 
-// Prices(bot);
+
+
 // Downloads(bot);
 // Tutorials(bot);
-// Faq(bot);
-// Diagnosis(bot);
-// Servers(bot);
-// PingPong(bot);
 
 // Admin(bot);
 

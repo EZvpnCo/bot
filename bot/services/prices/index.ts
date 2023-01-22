@@ -1,38 +1,37 @@
 import { Bot, InlineKeyboard } from "grammy";
 import { backKeyboards, MyContext } from "../..";
-import Faq from "../../database/models/bot_faq.model";
 
-class FaqService {
+class PricesService {
     private bot;
     constructor(bot: Bot<MyContext>) {
         this.bot = bot;
     }
 
     public run() {
-        this.bot.command("faq", this.response)
-        this.bot.callbackQuery("faq", this.response)
-        this.bot.callbackQuery(/^faq:([0-9]+)$/g, this.getContent)
+        this.bot.command("prices", this.response)
+        this.bot.callbackQuery("prices", this.response)
+        this.bot.callbackQuery(/^prices:(daily|trade|game)$/g, this.getContent)
     }
 
     // ############################
-    private query: { rows: Faq[]; count: number; } | undefined;
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        this.query?.rows.forEach((q, i) => {
-            keyboard.text(q.subject, "faq:" + q.id).row();
-        });
+        keyboard
+            .text("Daily", "prices:daily")
+            .text("Trade", "prices:trade")
+            .text("Game", "prices:game")
+            .row()
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu");
         return keyboard
     }
 
     private text = async (ctx: MyContext) => {
-        return ctx.t("faq")
+        return ctx.t("prices")
     }
 
     private response = async (ctx: MyContext) => {
-        this.query = await Faq.findAndCountAll({ where: { lang: ctx.session.__language_code } })
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
                 await this.text(ctx),
@@ -49,16 +48,12 @@ class FaqService {
 
 
     private getContent = async (ctx: MyContext) => {
-        const q = parseInt(ctx.match![1]);
-        const fContent = await Faq.findByPk(q)
-        await ctx.editMessageText(
-            `❓ ${fContent?.subject}\n\n💭 ${fContent?.content}`,
-            { reply_markup: backKeyboards(ctx, new InlineKeyboard(), "faq") }
-        );
+        const q = ctx.match![1];
+        await ctx.editMessageText(ctx.t("prices." + q), { reply_markup: backKeyboards(ctx, new InlineKeyboard(), "prices") });
         await ctx.answerCallbackQuery();
     }
 
 }
 
 
-export default FaqService
+export default PricesService
