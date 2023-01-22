@@ -12,7 +12,7 @@ class DiagnosisService {
     public run() {
         this.bot.command("diagnosis", this.response)
         this.bot.callbackQuery("diagnosis", this.response)
-        this.bot.callbackQuery(/^diagnosis:([0-9]+)$/g, this.getContent)
+        this.bot.callbackQuery(/^diagnosis:([0-9]+)$/, this.getContent)
     }
 
     // ############################

@@ -11,7 +11,7 @@ class FaqService {
     public run() {
         this.bot.command("faq", this.response)
         this.bot.callbackQuery("faq", this.response)
-        this.bot.callbackQuery(/^faq:([0-9]+)$/g, this.getContent)
+        this.bot.callbackQuery(/^faq:([0-9]+)$/, this.getContent)
     }
 
     // ############################
@@ -50,7 +50,6 @@ class FaqService {
 
     private getContent = async (ctx: MyContext) => {
         const q = parseInt(ctx.match![1]);
-        await ctx.reply(JSON.stringify(ctx.match))
         const fContent = await Faq.findByPk(q)
         if (!fContent) return await ctx.answerCallbackQuery("❌");
         await ctx.editMessageText(
