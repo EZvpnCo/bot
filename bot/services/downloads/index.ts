@@ -25,6 +25,7 @@ class DownloadsService {
             .row()
             .text("Windows", "downloads:windows")
             .text("macOS", "downloads:macos")
+            .row()
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu")
         return keyboard
@@ -52,17 +53,17 @@ class DownloadsService {
 
     private getContent = async (ctx: MyContext) => {
         const cat = ctx.match![1];
-        const query = await Downloads.findAndCountAll({ where: { category: cat } })
 
         const keyboard = new InlineKeyboard()
 
-        query.rows.forEach(ssx => {
-            keyboard.text(ssx.title, "downloads:" + ssx.id).row()
-        });
+        // const query = await Downloads.findAndCountAll({ where: { category: cat } })
+        // query.rows.forEach(ssx => {
+        //     keyboard.text(ssx.title, "downloads:" + ssx.id).row()
+        // });
 
         const _keyboard = backKeyboards(ctx, keyboard, "downloads")
 
-        await ctx.editMessageText(ctx.t("downloads"), { reply_markup: _keyboard });
+        await ctx.editMessageText(ctx.t("downloads") + cat, { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
     }
 
