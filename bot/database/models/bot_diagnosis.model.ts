@@ -16,11 +16,11 @@ Diagnosis.init(
             primaryKey: true
         },
         subject: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         content: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         lang: {

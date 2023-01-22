@@ -50,7 +50,9 @@ class FaqService {
 
     private getContent = async (ctx: MyContext) => {
         const q = parseInt(ctx.match![1]);
+        await ctx.reply(JSON.stringify(ctx.match))
         const fContent = await Faq.findByPk(q)
+        if (!fContent) return await ctx.answerCallbackQuery("❌");
         await ctx.editMessageText(
             `❓ ${fContent?.subject}\n\n💭 ${fContent?.content}`,
             { reply_markup: backKeyboards(ctx, new InlineKeyboard(), "faq") }

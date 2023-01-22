@@ -55,6 +55,7 @@ class DiagnosisService {
     private getContent = async (ctx: MyContext) => {
         const q = parseInt(ctx.match![1]);
         const fContent = await Diagnosis.findByPk(q)
+        if (!fContent) return await ctx.answerCallbackQuery("❌");
         await ctx.editMessageText(
             `🛠 ${fContent?.subject}\n\n💭 ${fContent?.content}`,
             { reply_markup: backKeyboards(ctx, new InlineKeyboard(), "diagnosis") }

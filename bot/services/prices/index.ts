@@ -10,7 +10,7 @@ class PricesService {
     public run() {
         this.bot.command("prices", this.response)
         this.bot.callbackQuery("prices", this.response)
-        this.bot.callbackQuery(/^prices:(daily|trade|game)$/g, this.getContent)
+        this.bot.callbackQuery(/^prices:(daily|trade|game)$/, this.getContent)
     }
 
     // ############################
