@@ -63,7 +63,7 @@ class DownloadsService {
 
         const _keyboard = backKeyboards(ctx, keyboard, "downloads")
 
-        await ctx.editMessageText(ctx.t("downloads") + cat, { reply_markup: _keyboard });
+        await ctx.editMessageText(ctx.t("downloads") + JSON.stringify(ctx.match), { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
     }
 
