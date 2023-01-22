@@ -78,19 +78,18 @@ bot.use(i18n);
 bot
   .filter(ctx => ctx.from?.id === SuperAdmin)
   .command("update", async (ctx) => {
-    console.log("****4444*******")
-
-
-    //   const info = ctx.me;
-    //   let _text = `<b>${info.first_name}(@${info.username}):</b> Updated & lunched\n`
-    //   try {
-    //     await sequelize.authenticate()
-    //     await sequelize.sync()
-    //     _text += `<b>Database:</b> Connected & synced`
-    //   } catch (error) {
-    //     _text += `<b>Database:</b>\nUnable to connect (${error})`
-    //   }
-    await ctx.reply("Hello", { parse_mode: 'HTML' })
+    console.log("****4444***mmmm****")
+    const info = ctx.me;
+    let _text = `<b>${info.first_name}(@${info.username}):</b> Updated & lunched\n`
+    try {
+      await sequelize.authenticate()
+      await sequelize.sync()
+      _text += `<b>Database:</b> Connected & synced`
+    } catch (error) {
+      _text += `<b>Database:</b>\nUnable to connect (${error})`
+      console.log("MMMMMMMMMMMMMMMm")
+    }
+    await ctx.reply(_text, { parse_mode: 'HTML' })
   });
 
 
