@@ -52,7 +52,7 @@ User.init(
         },
     },
     {
-        tableName: 'users_bot',
+        tableName: 'bot_user',
         createdAt: 'created_at',
         deletedAt: 'deleted_at',
         updatedAt: 'updated_at',

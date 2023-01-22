@@ -4,8 +4,10 @@ import { I18n, I18nFlavor } from "@grammyjs/i18n";
 import { BotToken, SuperAdmin } from "./config"
 import sequelize from "./database";
 import Authentication from "./middleware/authentication";
-import User from "./database/models/user.model";
+import User from "./database/models/bot_user.model";
 import MenuService from "./services/menu";
+import PingPongService from "./services/pingpong";
+import FaqService from "./services/faq";
 
 
 
@@ -112,10 +114,9 @@ bot.command("start", (ctx) => {
 
 
 new MenuService(bot).run()
+new PingPongService(bot).run()
+new FaqService(bot).run()
 
-
-
-// MainMenu(bot);
 // Prices(bot);
 // Downloads(bot);
 // Tutorials(bot);

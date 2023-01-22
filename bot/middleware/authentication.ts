@@ -1,6 +1,6 @@
 import { NextFunction } from "grammy";
 import { MyContext } from "..";
-import User from "../database/models/user.model";
+import User from "../database/models/bot_user.model";
 
 async function Authentication(ctx: MyContext, next: NextFunction) {
     const user = ctx.from!

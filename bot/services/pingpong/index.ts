@@ -1,8 +1,7 @@
-import { Bot, InlineKeyboard } from "grammy";
-import { Op } from "sequelize";
+import { Bot } from "grammy";
 import { MyContext } from "../..";
 
-class MenuService {
+class PingPongService {
     private bot;
     constructor(bot: Bot<MyContext>) {
         this.bot = bot;
@@ -29,4 +28,4 @@ class MenuService {
 }
 
 
-export default MenuService
+export default PingPongService
