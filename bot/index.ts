@@ -4,6 +4,7 @@ import { I18n, I18nFlavor } from "@grammyjs/i18n";
 
 import { BotToken, SuperAdmin } from "./config"
 import Authentication from "./middleware/authentication";
+import sequelize from "./database";
 
 // import Admin from "./admin";
 
@@ -50,12 +51,6 @@ function initial(): SessionData {
 
 const bot = new Bot<MyContext>(BotToken);
 
-bot.use(session({ initial }));
-// bot
-//   .filter((ctx) => ctx.message !== undefined || ctx.callbackQuery !== undefined)
-//   .use(Authentication);
-
-
 
 // Create an `I18n` instance.
 // Continue reading to find out how to configure the instance.
@@ -73,6 +68,33 @@ const i18n = new I18n<MyContext>({
 
 
 bot.use(i18n);
+
+
+
+// #############################################
+
+
+// Handle the /update command.
+bot
+  .filter(ctx => ctx.from?.id === SuperAdmin)
+  .command("update", async (ctx) => {
+    const info = ctx.me;
+    let _text = `<b>${info.first_name}(@${info.username}):</b> Updated & lunched\n`
+    try {
+      await sequelize.authenticate()
+      await sequelize.sync()
+      _text += `<b>Database:</b> Connected & synced`
+    } catch (error) {
+      _text += `<b>Database:</b>\nUnable to connect (${error})`
+    }
+    bot.api.sendMessage(SuperAdmin, _text, { parse_mode: 'HTML' })
+  });
+
+
+bot.use(session({ initial }));
+// bot
+//   .filter((ctx) => ctx.message !== undefined || ctx.callbackQuery !== undefined)
+//   .use(Authentication);
 
 // MainMenu(bot);
 // Prices(bot);

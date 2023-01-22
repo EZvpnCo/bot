@@ -9,6 +9,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare is_bot: boolean;
     declare is_premium: boolean;
     declare is_active: boolean;
+    declare panelID: CreationOptional<number> | null;
 }
 
 User.init(
@@ -45,9 +46,13 @@ User.init(
             defaultValue: 1,
             allowNull: false
         },
+        panelID: {
+            type: DataTypes.NUMBER,
+            allowNull: true
+        },
     },
     {
-        tableName: 'users',
+        tableName: 'users_bot',
         createdAt: 'created_at',
         deletedAt: 'deleted_at',
         updatedAt: 'updated_at',
