@@ -1,10 +1,9 @@
 import { Bot, GrammyError, session, HttpError, Context, SessionFlavor } from "grammy";
 import { UserFromGetMe } from "grammy/out/types";
 import { I18n, I18nFlavor } from "@grammyjs/i18n";
-
 import { BotToken, SuperAdmin } from "./config"
-import Authentication from "./middleware/authentication";
-import sequelize from "./database";
+
+
 
 // import Admin from "./admin";
 
@@ -75,26 +74,40 @@ bot.use(i18n);
 
 
 // Handle the /update command.
-bot
-  .filter(ctx => ctx.from?.id === SuperAdmin)
-  .command("update", async (ctx) => {
-    const info = ctx.me;
-    let _text = `<b>${info.first_name}(@${info.username}):</b> Updated & lunched\n`
-    try {
-      await sequelize.authenticate()
-      await sequelize.sync()
-      _text += `<b>Database:</b> Connected & synced`
-    } catch (error) {
-      _text += `<b>Database:</b>\nUnable to connect (${error})`
-    }
-    bot.api.sendMessage(SuperAdmin, _text, { parse_mode: 'HTML' })
-  });
+// bot
+//   .filter(ctx => ctx.from?.id === SuperAdmin)
+//   .command("update", async (ctx) => {
+//     const info = ctx.me;
+//     let _text = `<b>${info.first_name}(@${info.username}):</b> Updated & lunched\n`
+//     try {
+//       await sequelize.authenticate()
+//       await sequelize.sync()
+//       _text += `<b>Database:</b> Connected & synced`
+//     } catch (error) {
+//       _text += `<b>Database:</b>\nUnable to connect (${error})`
+//     }
+//     bot.api.sendMessage(SuperAdmin, _text, { parse_mode: 'HTML' })
+//   });
 
 
 bot.use(session({ initial }));
 // bot
 //   .filter((ctx) => ctx.message !== undefined || ctx.callbackQuery !== undefined)
 //   .use(Authentication);
+
+
+
+// Handle the /start command.
+bot.command("start", (ctx) => {
+  const isNew = true
+  const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
+  ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
+});
+
+
+
+
+
 
 // MainMenu(bot);
 // Prices(bot);
@@ -108,14 +121,13 @@ bot.use(session({ initial }));
 // Admin(bot);
 
 
-// Handle the /start command.
-bot.command("start", (ctx) => {
-  const isNew = true
-  const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
-  ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
-});
 
 
+
+
+
+
+// Handle language
 bot.command("language", async (ctx) => {
   if (ctx.match === "") {
     return await ctx.reply(ctx.t("language.specify-a-locale"));
@@ -134,6 +146,9 @@ bot.command("language", async (ctx) => {
   await ctx.i18n.setLocale(ctx.match);
   await ctx.reply(ctx.t("language.language-set"));
 });
+
+
+
 
 // Handle other messages.
 bot.on("message", (ctx) => ctx.reply("🤫😕"));
