@@ -1,9 +1,9 @@
 import { Sequelize, } from 'sequelize';
 
 const sequelize = new Sequelize(
-    'ezshell',
-    'ezshell',
-    'FdG6FTH2aHkF5BTX',
+    'ezvpn_panel',
+    'ezvpn_panel',
+    'BFadSaFNpefXh75b',
     {
         host: 'localhost',
         dialect: 'mysql'
