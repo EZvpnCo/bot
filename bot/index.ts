@@ -5,6 +5,7 @@ import { BotToken, SuperAdmin } from "./config"
 import sequelize from "./database";
 import Authentication from "./middleware/authentication";
 import User from "./database/models/user.model";
+import MenuService from "./services/menu";
 
 
 
@@ -18,6 +19,8 @@ import User from "./database/models/user.model";
 // import Prices from "./service/prices/prices";
 // import Servers from "./service/servers/servers";
 // import Tutorials from "./service/prices/tutorials";
+
+
 
 interface InputState {
   category: string;
@@ -108,7 +111,7 @@ bot.command("start", (ctx) => {
 });
 
 
-
+new MenuService(bot).run()
 
 
 
