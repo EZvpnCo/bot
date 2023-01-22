@@ -11,8 +11,8 @@ class DownloadsService {
     public run() {
         this.bot.command("downloads", this.response)
         this.bot.callbackQuery("downloads", this.response)
-        this.bot.callbackQuery(/^downloads:(android|ios|windows|macos)$/g, this.getContent)
-        this.bot.callbackQuery(/^downloads:([0-9]+)$/g, this.getItem)
+        this.bot.callbackQuery(/^downloads:(android|ios|windows|macos)$/, this.getContent)
+        this.bot.callbackQuery(/^downloads:([0-9]+)$/, this.getItem)
     }
 
     // ############################
@@ -63,7 +63,7 @@ class DownloadsService {
 
         const _keyboard = backKeyboards(ctx, keyboard, "downloads")
 
-        await ctx.editMessageText(ctx.t("downloads") + JSON.stringify(ctx.match), { reply_markup: _keyboard });
+        await ctx.editMessageText(ctx.t("downloads") + "**" + JSON.stringify(ctx.match), { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
     }
 
