@@ -5,7 +5,6 @@ class Downloads extends Model<InferAttributes<Downloads>, InferCreationAttribute
     declare id: CreationOptional<number>;
     declare category: string;
     declare title: string;
-    declare slug: string;
     declare download: [];
     declare file: string | null
 }
@@ -22,10 +21,6 @@ Downloads.init(
             allowNull: false,
         },
         title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        slug: {
             type: DataTypes.STRING,
             allowNull: false,
         },
