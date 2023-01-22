@@ -82,8 +82,8 @@ bot
     const info = ctx.me;
     let _text = `<b>${info.first_name}(@${info.username}):</b> Updated & lunched\n`
     try {
-      await sequelize.authenticate()
-      await sequelize.sync()
+      // await sequelize.authenticate()
+      // await sequelize.sync()
       _text += `<b>Database:</b> Connected & synced`
     } catch (error) {
       _text += `<b>Database:</b>\nUnable to connect (${error})`
