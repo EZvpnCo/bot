@@ -2,6 +2,7 @@ import { Bot, GrammyError, session, HttpError, Context, SessionFlavor } from "gr
 import { UserFromGetMe } from "grammy/out/types";
 import { I18n, I18nFlavor } from "@grammyjs/i18n";
 import { BotToken, SuperAdmin } from "./config"
+import sequelize from "./database";
 
 
 
@@ -74,20 +75,20 @@ bot.use(i18n);
 
 
 // Handle the /update command.
-// bot
-//   .filter(ctx => ctx.from?.id === SuperAdmin)
-//   .command("update", async (ctx) => {
-//     const info = ctx.me;
-//     let _text = `<b>${info.first_name}(@${info.username}):</b> Updated & lunched\n`
-//     try {
-//       await sequelize.authenticate()
-//       await sequelize.sync()
-//       _text += `<b>Database:</b> Connected & synced`
-//     } catch (error) {
-//       _text += `<b>Database:</b>\nUnable to connect (${error})`
-//     }
-//     bot.api.sendMessage(SuperAdmin, _text, { parse_mode: 'HTML' })
-//   });
+bot
+  .filter(ctx => ctx.from?.id === SuperAdmin)
+  .command("update", async (ctx) => {
+    const info = ctx.me;
+    let _text = `<b>${info.first_name}(@${info.username}):</b> Updated & lunched\n`
+    try {
+      await sequelize.authenticate()
+      await sequelize.sync()
+      _text += `<b>Database:</b> Connected & synced`
+    } catch (error) {
+      _text += `<b>Database:</b>\nUnable to connect (${error})`
+    }
+    bot.api.sendMessage(SuperAdmin, _text, { parse_mode: 'HTML' })
+  });
 
 
 bot.use(session({ initial }));
