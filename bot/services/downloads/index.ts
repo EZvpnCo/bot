@@ -73,18 +73,17 @@ class DownloadsService {
 
         if (!query) return await ctx.answerCallbackQuery("❌");
 
-        const down = query.download
-
-        await ctx.reply("GGGG" + typeof down)
-
-
-        // const _keyboard = new InlineKeyboard()
-        //     .url('دانلود از ' + down, 'https://apps.apple.com/us/app/oneclick-safe-easy-fast/id1545555197')
-
-
-        // const _file = ""
-        // const _text = ""
-        // await ctx.replyWithDocument(_file, { caption: _text, reply_markup: _keyboard });
+        const _keyboard = new InlineKeyboard()
+        query.download.forEach(({ url, name }) => {
+            _keyboard.url('دانلود از ' + name, url)
+        });
+        const _text = query.title
+        if (query.file) {
+            await ctx.replyWithDocument(query.file, { caption: _text, reply_markup: _keyboard });
+        }
+        else {
+            await ctx.reply(_text, { reply_markup: _keyboard })
+        }
         await ctx.answerCallbackQuery();
     }
 }
