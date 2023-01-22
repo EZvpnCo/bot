@@ -19,13 +19,12 @@ class DownloadsService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        keyboard
-            .text("Android", "downloads:android")
-            .text("iOS", "downloads:ios")
-            .row()
-            .text("Windows", "downloads:windows")
-            .text("macOS", "downloads:macos")
-            .row()
+        const groups = await Downloads.findAll({ group: "category" })
+
+        groups.forEach(({ category }) => {
+            keyboard
+                .text(category.toUpperCase(), "downloads:" + category).row()
+        })
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu")
         return keyboard
