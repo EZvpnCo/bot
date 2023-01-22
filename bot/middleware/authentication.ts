@@ -11,7 +11,7 @@ async function Authentication(ctx: MyContext, next: NextFunction) {
             last_name: user.last_name,
             username: user.username,
         })
-        // if (ctx.session) ctx.session.isNew = false
+        if (ctx.session) ctx.session.isNew = false
     } else {
         _user = await User.create({
             id: user.id,
@@ -22,9 +22,9 @@ async function Authentication(ctx: MyContext, next: NextFunction) {
             is_premium: user.is_premium || false,
             is_active: true,
         })
-        // if (ctx.session) ctx.session.isNew = true
+        if (ctx.session) ctx.session.isNew = true
     }
-    // if (ctx.session) ctx.session.user = _user;
+    if (ctx.session) ctx.session.user = _user;
     await next();
 }
 

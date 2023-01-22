@@ -3,6 +3,8 @@ import { UserFromGetMe } from "grammy/out/types";
 import { I18n, I18nFlavor } from "@grammyjs/i18n";
 import { BotToken, SuperAdmin } from "./config"
 import sequelize from "./database";
+import Authentication from "./middleware/authentication";
+import User from "./database/models/user.model";
 
 
 
@@ -28,7 +30,7 @@ interface InputState {
 // Define the shape of our session.
 interface SessionData {
   __language_code?: string;
-  // user: User | null;
+  user: User | null;
   isNew: boolean;
   inputState: InputState | null;
 }
@@ -41,7 +43,7 @@ export type MyContext = Context & SessionFlavor<SessionData> & I18nFlavor;
 function initial(): SessionData {
   return {
     __language_code: "fa",
-    // user: null,
+    user: null,
     isNew: true,
     inputState: null,
 
@@ -92,15 +94,15 @@ bot
 
 
 bot.use(session({ initial }));
-// bot
-//   .filter((ctx) => ctx.message !== undefined || ctx.callbackQuery !== undefined)
-//   .use(Authentication);
+bot
+  .filter((ctx) => ctx.message !== undefined || ctx.callbackQuery !== undefined)
+  .use(Authentication);
 
 
 
 // Handle the /start command.
 bot.command("start", (ctx) => {
-  const isNew = true
+  const isNew = ctx.session.isNew
   const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
   ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
 });
