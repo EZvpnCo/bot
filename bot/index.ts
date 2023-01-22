@@ -78,7 +78,7 @@ bot.use(i18n);
 bot
   .filter(ctx => ctx.from?.id === SuperAdmin)
   .command("update", async (ctx) => {
-    console.log("***********")
+    console.log("****4444*******")
 
 
     //   const info = ctx.me;
