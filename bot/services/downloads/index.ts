@@ -56,14 +56,14 @@ class DownloadsService {
 
         const keyboard = new InlineKeyboard()
 
-        // const query = await Downloads.findAndCountAll({ where: { category: cat } })
-        // query.rows.forEach(ssx => {
-        //     keyboard.text(ssx.title, "downloads:" + ssx.id).row()
-        // });
+        const query = await Downloads.findAndCountAll({ where: { category: cat } })
+        query.rows.forEach(ssx => {
+            keyboard.text(ssx.title, "downloads:" + ssx.id).row()
+        });
 
         const _keyboard = backKeyboards(ctx, keyboard, "downloads")
 
-        await ctx.editMessageText(ctx.t("downloads") + "**" + JSON.stringify(ctx.match), { reply_markup: _keyboard });
+        await ctx.editMessageText(ctx.t("downloads"), { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
     }
 
@@ -72,10 +72,12 @@ class DownloadsService {
         const q = parseInt(ctx.match![1]);
         const query = await Downloads.findByPk(q)
 
+        if (!query) return await ctx.answerCallbackQuery("❌");
+
         const keyboard = new InlineKeyboard()
 
 
-        const _keyboard = backKeyboards(ctx, keyboard, "downloads")
+        const _keyboard = backKeyboards(ctx, keyboard, "downloads:" + query?.category)
 
         await ctx.editMessageText(ctx.t("downloads"), { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
