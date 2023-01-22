@@ -75,7 +75,7 @@ class DownloadsService {
 
         const _keyboard = new InlineKeyboard()
         query.download.forEach(({ url, name }) => {
-            _keyboard.url('دانلود از ' + name, url)
+            _keyboard.url('دانلود از ' + name, url).row()
         });
         const _text = query.title
         if (query.file) {
