@@ -1,29 +1,29 @@
 import { Bot, InlineKeyboard } from "grammy";
 import { backKeyboards, MyContext } from "../..";
-import Downloads from "../../database/models/bot_downloads.model";
+import Tutorials from "../../database/models/bot_tutorials.model";
 
-class DownloadsService {
+class TutorialsService {
     private bot;
     constructor(bot: Bot<MyContext>) {
         this.bot = bot;
     }
 
     public run() {
-        this.bot.command("downloads", this.response)
-        this.bot.callbackQuery("downloads", this.response)
-        this.bot.callbackQuery(/^downloads:(android|ios|windows|macos)$/, this.getContent)
-        this.bot.callbackQuery(/^downloads:([0-9]+)$/, this.getItem)
+        this.bot.command("tutorials", this.response)
+        this.bot.callbackQuery("tutorials", this.response)
+        this.bot.callbackQuery(/^tutorials:(agent panel|android|ios|windows|macos)$/, this.getContent)
+        this.bot.callbackQuery(/^tutorials:([0-9]+)$/, this.getItem)
     }
 
     // ############################
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        const groups = await Downloads.findAll({ group: "category" })
+        const groups = await Tutorials.findAll({ group: "category" })
 
         groups.forEach(({ category }) => {
             keyboard
-                .text(category.toUpperCase(), "downloads:" + category).row()
+                .text(category.toUpperCase(), "tutorials:" + category).row()
         })
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu")
@@ -31,7 +31,7 @@ class DownloadsService {
     }
 
     private text = async (ctx: MyContext) => {
-        return ctx.t("downloads")
+        return ctx.t("tutorials")
     }
 
     private response = async (ctx: MyContext) => {
@@ -55,33 +55,31 @@ class DownloadsService {
 
         const keyboard = new InlineKeyboard()
 
-        const query = await Downloads.findAndCountAll({ where: { category: cat } })
+        const query = await Tutorials.findAndCountAll({ where: { category: cat } })
         query.rows.forEach(ssx => {
-            keyboard.text(ssx.title, "downloads:" + ssx.id).row()
+            keyboard.text(ssx.title, "tutorials:" + ssx.id).row()
         });
 
-        const _keyboard = backKeyboards(ctx, keyboard, "downloads")
+        const _keyboard = backKeyboards(ctx, keyboard, "tutorials")
 
-        await ctx.editMessageText(ctx.t("downloads"), { reply_markup: _keyboard });
+        await ctx.editMessageText(ctx.t("tutorials"), { reply_markup: _keyboard });
         await ctx.answerCallbackQuery();
     }
 
 
     private getItem = async (ctx: MyContext) => {
         const q = parseInt(ctx.match![1]);
-        const query = await Downloads.findByPk(q)
+        const query = await Tutorials.findByPk(q)
 
         if (!query) return await ctx.answerCallbackQuery("❌");
 
         const _keyboard = new InlineKeyboard()
-        query.download.forEach(({ url, name }) => {
-            _keyboard.url('دانلود از ' + name, url).row()
-        });
         let _text = `${query.category.toUpperCase()} - ${query.title}`
-        if (query.file) {
-            await ctx.replyWithDocument(query.file, { caption: _text, reply_markup: _keyboard });
+        if (query.video) {
+            await ctx.replyWithVideo(query.video, { caption: _text, reply_markup: _keyboard });
         }
         else {
+            _text += `\n\n${query.url}`
             await ctx.reply(_text, { reply_markup: _keyboard })
         }
         await ctx.answerCallbackQuery();
@@ -89,4 +87,4 @@ class DownloadsService {
 }
 
 
-export default DownloadsService
+export default TutorialsService

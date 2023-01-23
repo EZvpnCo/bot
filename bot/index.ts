@@ -11,6 +11,7 @@ import FaqService from "./services/faq";
 import DiagnosisService from "./services/diagnosis";
 import PricesService from "./services/prices";
 import DownloadsService from "./services/downloads";
+import TutorialsService from "./services/tutorials";
 
 
 
@@ -132,16 +133,7 @@ new FaqService(bot).run()
 new DiagnosisService(bot).run()
 new PricesService(bot).run()
 new DownloadsService(bot).run()
-
-
-// Downloads(bot);
-// Tutorials(bot);
-
-// Admin(bot);
-
-
-
-
+new TutorialsService(bot).run()
 
 
 
