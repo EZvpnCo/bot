@@ -15,19 +15,6 @@ import TutorialsService from "./services/tutorials";
 
 
 
-// import Admin from "./admin";
-
-// import Diagnosis from "./service/diagnosis/diagnosis";
-// import Downloads from "./service/downloads/downloads";
-// import Faq from "./service/faq/faq";
-// import MainMenu from "./service/menu/mainMenu";
-// import PingPong from "./service/pingpong/pingpong";
-// import Prices from "./service/prices/prices";
-// import Servers from "./service/servers/servers";
-// import Tutorials from "./service/prices/tutorials";
-
-
-
 interface InputState {
   category: string;
   subID: number,
