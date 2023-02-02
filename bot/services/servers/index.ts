@@ -21,6 +21,7 @@ class ServersService {
 
     private data: ServerType[] = []
     private page = 0
+    private perPage = 50
     public run() {
         this.bot.command("servers", this.response)
         this.bot.callbackQuery(["servers", /^servers:([0-9]+)$/], this.response)
@@ -30,9 +31,10 @@ class ServersService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        if (this.page > 1) keyboard.text("◀️", "servers:" + (this.page - 1))
+        if (this.page >= 1) keyboard.text("◀️", "servers:" + (this.page - 1))
         else keyboard.text("🚫", "servers:prev")
-        keyboard.text("▶️", "servers:" + (this.page + 1))
+        if (this.page < this.data.length / this.perPage) keyboard.text("▶️", "servers:" + (this.page + 1))
+        else keyboard.text("🚫", "servers:next")
         keyboard.row()
 
 
@@ -42,7 +44,7 @@ class ServersService {
 
     private text = async (ctx: MyContext) => {
         let _ser = ''
-        for (let i = (this.page * 50); i < ((this.page + 1) * 50); i++) {
+        for (let i = (this.page * this.perPage); i < ((this.page + 1) * this.perPage); i++) {
             const { name, online, online_user, traffic_limit, traffic_used, class: node_class, sort } = this.data[i]
             let emj = "⚪️"
             if (traffic_limit != 0 && traffic_used >= traffic_limit) emj = "🟡"
