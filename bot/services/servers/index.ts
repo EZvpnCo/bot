@@ -27,10 +27,15 @@ class ServersService {
     }
 
     private response = async (ctx: MyContext) => {
-        this.data = await (await apiService.GET()("servers")).data.servers
-        for (let i = 0; i < this.data.length; i++) {
-            await ctx.reply(JSON.stringify(this.data[i]))
+        try {
+            this.data = await (await apiService.GET()("servers")).data.servers
+            for (let i = 0; i < this.data.length; i++) {
+                await ctx.reply(JSON.stringify(this.data[i]))
+            }
+        } catch (error) {
+            await ctx.reply("Error:" + error)
         }
+
         // await ctx.reply(
         //     await this.text(ctx),
         //     { parse_mode: "MarkdownV2" }
