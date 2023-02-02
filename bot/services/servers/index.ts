@@ -10,14 +10,17 @@ class ServersService {
         this.bot = bot;
     }
 
-    private data = {}
+    private data = []
     public run() {
         this.bot.command("servers", this.response)
         this.bot.callbackQuery("servers", this.response)
     }
 
     private text = async (ctx: MyContext) => {
-        console.table(this.data)
+        // for (let i = 0; i < this.data.length; i++) {
+
+        // }
+        console.log(this.data)
         return `*Pong\\!*
 *ChatID:* ${ctx.chat!.id}
 *ChatType:* ${ctx.chat!.type}
@@ -26,7 +29,7 @@ class ServersService {
     }
 
     private response = async (ctx: MyContext) => {
-        this.data = await apiService.GET()("servers")
+        this.data = await (await apiService.GET()("servers")).data
 
         await ctx.reply(
             await this.text(ctx),
