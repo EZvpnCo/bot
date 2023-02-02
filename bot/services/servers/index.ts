@@ -30,8 +30,9 @@ class ServersService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        keyboard.text(ctx.t("prev-page"), "servers:" + (this.page > 1 ? this.page - 1 : 0))
-        keyboard.text(ctx.t("next-page"), "servers:" + (this.page + 1))
+        if (this.page > 1) keyboard.text("◀️", "servers:" + (this.page - 1))
+        else keyboard.text("🚫", "servers:prev")
+        keyboard.text("▶️", "servers:" + (this.page + 1))
         keyboard.row()
 
 
@@ -41,7 +42,7 @@ class ServersService {
 
     private text = async (ctx: MyContext) => {
         let _ser = ''
-        for (let i = this.page * 50; i < (this.page + 1) * 50; i++) {
+        for (let i = (this.page * 50); i < ((this.page + 1) * 50); i++) {
             const { name, online, online_user, traffic_limit, traffic_used, class: node_class, sort } = this.data[i]
             let emj = "⚪️"
             if (traffic_limit != 0 && traffic_used >= traffic_limit) emj = "🟡"
@@ -57,6 +58,7 @@ class ServersService {
         if (ctx.match && ctx.match[1]) {
             this.page = parseInt(ctx.match[1])
         }
+        if (!this.page) this.page = 0
         try {
             const response = await apiService.GET()("servers")
             this.data = response.data.servers
