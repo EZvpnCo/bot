@@ -33,7 +33,7 @@ class ServersService {
 
         if (this.page >= 1) keyboard.text("◀️", "servers:" + (this.page - 1))
         else keyboard.text("🚫", "servers:prev")
-        if (this.page < this.data.length / this.perPage) keyboard.text("▶️", "servers:" + (this.page + 1))
+        if (this.page < Math.ceil(this.data.length / this.perPage)) keyboard.text("▶️", "servers:" + (this.page + 1))
         else keyboard.text("🚫", "servers:next")
         keyboard.row()
 
