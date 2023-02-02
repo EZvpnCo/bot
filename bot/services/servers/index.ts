@@ -53,8 +53,8 @@ class ServersService {
 
     private response = async (ctx: MyContext) => {
         try {
-            const data = await apiService.GET()("servers")
-            console.log(data)
+            const response = await apiService.GET()("servers")
+            console.log(response.data)
             if (ctx.callbackQuery) {
                 await ctx.editMessageText(
                     await this.text(ctx),
