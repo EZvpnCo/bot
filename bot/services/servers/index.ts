@@ -17,9 +17,7 @@ class ServersService {
     }
 
     private text = async (ctx: MyContext) => {
-        // for (let i = 0; i < this.data.length; i++) {
 
-        // }
         console.log(this.data)
         return `*Pong\\!*
 *ChatID:* ${ctx.chat!.id}
@@ -29,12 +27,14 @@ class ServersService {
     }
 
     private response = async (ctx: MyContext) => {
-        this.data = await (await apiService.GET()("servers")).data
-
-        await ctx.reply(
-            await this.text(ctx),
-            { parse_mode: "MarkdownV2" }
-        );
+        this.data = await (await apiService.GET()("servers")).data.servers
+        for (let i = 0; i < this.data.length; i++) {
+            await ctx.reply(JSON.stringify(this.data[i]))
+        }
+        // await ctx.reply(
+        //     await this.text(ctx),
+        //     { parse_mode: "MarkdownV2" }
+        // );
     }
 
 }
