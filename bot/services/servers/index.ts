@@ -51,21 +51,26 @@ class ServersService {
 
 ${_ser}
 `
-
     }
 
     private response = async (ctx: MyContext) => {
         try {
             this.data = await (await apiService.GET()("servers")).data.servers as ServerType[]
+            if (ctx.callbackQuery) {
+                await ctx.editMessageText(
+                    await this.text(ctx),
+                    { parse_mode: "MarkdownV2", reply_markup: await this.keyboard(ctx) }
+                );
+                await ctx.answerCallbackQuery();
+                return
+            }
             await ctx.reply(
                 await this.text(ctx),
-                { parse_mode: "MarkdownV2" }
+                { parse_mode: "MarkdownV2", reply_markup: await this.keyboard(ctx) }
             );
         } catch (error) {
             await ctx.reply("Error:" + error)
         }
-
-
     }
 
 }
