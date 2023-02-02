@@ -45,9 +45,9 @@ class ServersService {
             else if (online === 1) emj = "🟢"
             else if (online === 0) emj = "🟠"
             else emj = "🔴"
-            _ser += `${emj} *${name}* \(${online_user}\) \[${node_class}\]`
+            _ser += `${emj} *${name}* \(${online_user}) [${node_class}]`
         }
-        return `*لیست سرورها \(${this.data.length}\):*
+        return `*لیست سرورها \(${this.data.length}):*
 
 ${_ser}
 `
@@ -69,7 +69,7 @@ ${_ser}
                 { parse_mode: "MarkdownV2", reply_markup: await this.keyboard(ctx) }
             );
         } catch (error) {
-            await ctx.reply("Error:" + error)
+            await ctx.reply("Error: " + error)
         }
     }
 
