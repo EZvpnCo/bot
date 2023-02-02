@@ -45,9 +45,11 @@ class ServersService {
             else if (online === 1) emj = "🟢"
             else if (online === 0) emj = "🟠"
             else emj = "🔴"
-            _ser += `${emj} *${name}* ${online_user} ${node_class}`
+            _ser += `${emj} *${name}* ${online_user} ${node_class}<br/>`
         }
-        return `*لیست سرورها (${this.data.length}:*`
+        return `🔻 <b>لیست سرورها (${this.data.length}):</b>
+
+${_ser}`
     }
 
     private response = async (ctx: MyContext) => {
@@ -56,14 +58,14 @@ class ServersService {
             if (ctx.callbackQuery) {
                 await ctx.editMessageText(
                     await this.text(ctx),
-                    { parse_mode: "MarkdownV2", reply_markup: await this.keyboard(ctx) }
+                    { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
                 );
                 await ctx.answerCallbackQuery();
                 return
             }
             await ctx.reply(
                 await this.text(ctx),
-                { parse_mode: "MarkdownV2", reply_markup: await this.keyboard(ctx) }
+                { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
             );
         } catch (error) {
             await ctx.reply("Error => " + error)
