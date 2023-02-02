@@ -20,18 +20,20 @@ class ServersService {
 
 
     private data: ServerType[] = []
+    private page = 0
     public run() {
         this.bot.command("servers", this.response)
-        this.bot.callbackQuery("servers", this.response)
+        this.bot.callbackQuery(["servers", /^servers:([0-9]+)$/], this.response)
     }
 
 
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        // this.query?.rows.forEach((q, i) => {
-        //     keyboard.text(q.subject, "faq:" + q.id).row();
-        // });
+        keyboard.text(ctx.t("prev-page"), "servers:" + (this.page > 1 ? this.page - 1 : 0))
+        keyboard.text(ctx.t("next-page"), "servers:" + (this.page + 1))
+        keyboard.row()
+
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu");
         return keyboard
@@ -39,7 +41,7 @@ class ServersService {
 
     private text = async (ctx: MyContext) => {
         let _ser = ''
-        for (let i = 0; i < 50; i++) {
+        for (let i = this.page * 50; i < (this.page + 1) * 50; i++) {
             const { name, online, online_user, traffic_limit, traffic_used, class: node_class, sort } = this.data[i]
             let emj = "⚪️"
             if (traffic_limit != 0 && traffic_used >= traffic_limit) emj = "🟡"
@@ -52,10 +54,12 @@ class ServersService {
     }
 
     private response = async (ctx: MyContext) => {
+        if (ctx.match && ctx.match[1]) {
+            this.page = parseInt(ctx.match[1])
+        }
         try {
             const response = await apiService.GET()("servers")
             this.data = response.data.servers
-            console.log(this.data)
             if (ctx.callbackQuery) {
                 await ctx.editMessageText(
                     await this.text(ctx),
