@@ -19,7 +19,7 @@ class ServersService {
     }
 
 
-    private data: ServerType[] = []
+    private data = null
     public run() {
         this.bot.command("servers", this.response)
         this.bot.callbackQuery("servers", this.response)
@@ -39,21 +39,22 @@ class ServersService {
 
     private text = async (ctx: MyContext) => {
         let _ser = ''
-        for (let i = 0; i < this.data.length; i++) {
-            const { name, online, online_user, traffic_limit, traffic_used, node_class, sort } = this.data[i]
-            let emj = "⚪️"
-            if (traffic_limit != 0 && traffic_used >= traffic_limit) emj = "🟡"
-            else if (online === 1) emj = "🟢"
-            else if (online === 0) emj = "🟠"
-            else emj = "🔴"
-            _ser += `${emj} <b>${name}:</b>(${online_user}) ${sort} - <pre>${node_class}</pre>\n`
-        }
-        return `🔻 <b>لیست سرورها (${this.data.length}):</b>\n\n${_ser}`
+        // for (let i = 0; i < this.data.length; i++) {
+        //     const { name, online, online_user, traffic_limit, traffic_used, node_class, sort } = this.data[i]
+        //     let emj = "⚪️"
+        //     if (traffic_limit != 0 && traffic_used >= traffic_limit) emj = "🟡"
+        //     else if (online === 1) emj = "🟢"
+        //     else if (online === 0) emj = "🟠"
+        //     else emj = "🔴"
+        //     _ser += `${emj} <b>${name}:</b>(${online_user}) ${sort} - <pre>${node_class}</pre>\n`
+        // }
+        return `🔻 <b>لیست سرورها :</b>\n\n${_ser}`
     }
 
     private response = async (ctx: MyContext) => {
         try {
-            this.data = await (await apiService.GET()("servers")).data.servers as ServerType[]
+            const data = await apiService.GET()("servers")
+            console.log(data)
             if (ctx.callbackQuery) {
                 await ctx.editMessageText(
                     await this.text(ctx),
