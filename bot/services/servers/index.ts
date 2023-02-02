@@ -47,10 +47,7 @@ class ServersService {
             else emj = "🔴"
             _ser += `${emj} *${name}* ${online_user} ${node_class}`
         }
-        return `*لیست سرورها ${this.data.length}:*
-
-${_ser}
-`
+        return `*لیست سرورها ${this.data.length}:*`
     }
 
     private response = async (ctx: MyContext) => {
@@ -69,7 +66,7 @@ ${_ser}
                 { parse_mode: "MarkdownV2", reply_markup: await this.keyboard(ctx) }
             );
         } catch (error) {
-            await ctx.reply("Error: " + error)
+            await ctx.reply("Error => " + error)
         }
     }
 
