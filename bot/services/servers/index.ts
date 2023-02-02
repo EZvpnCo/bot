@@ -46,7 +46,7 @@ class ServersService {
             else if (online === 1) emj = "🟢"
             else if (online === 0) emj = "🟠"
             else emj = "🔴"
-            _ser += `${emj} <b>${name}</b>\n👥 ${online_user} 🎲 ${sort} 🌟 ${node_class}\n`
+            _ser += `${emj} <b>${name}</b>\n👥 ${online_user}\n🎲 ${sort}\n🌟 ${node_class}\n\n`
         }
         return `🔻 <b>لیست سرورها (${this.data.length}):</b>\n\n${_ser}`
     }
