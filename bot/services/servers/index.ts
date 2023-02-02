@@ -9,7 +9,8 @@ interface ServerType {
     online_user: number,
     traffic_limit: number,
     traffic_used: number,
-    node_class: string
+    node_class: string,
+    sort: string
 }
 class ServersService {
     private bot;
@@ -39,17 +40,15 @@ class ServersService {
     private text = async (ctx: MyContext) => {
         let _ser = ''
         for (let i = 0; i < this.data.length; i++) {
-            const { name, online, online_user, traffic_limit, traffic_used, node_class } = this.data[i]
+            const { name, online, online_user, traffic_limit, traffic_used, node_class, sort } = this.data[i]
             let emj = "⚪️"
             if (traffic_limit != 0 && traffic_used >= traffic_limit) emj = "🟡"
             else if (online === 1) emj = "🟢"
             else if (online === 0) emj = "🟠"
             else emj = "🔴"
-            _ser += `${emj} *${name}* ${online_user} ${node_class}<br/>`
+            _ser += `${emj} <b>${name}:</b>(${online_user}) ${sort} - <pre>${node_class}<pre>\n`
         }
-        return `🔻 <b>لیست سرورها (${this.data.length}):</b>
-
-${_ser}`
+        return `🔻 <b>لیست سرورها (${this.data.length}):</b>\n\n${_ser}`
     }
 
     private response = async (ctx: MyContext) => {
