@@ -21,7 +21,7 @@ class ServersService {
 
     private data: ServerType[] = []
     private page = 0
-    private perPage = 20
+    private perPage = 15
     public run() {
         this.bot.command("servers", this.response)
         this.bot.callbackQuery(["servers", /^servers:([0-9]+)$/], this.response)
