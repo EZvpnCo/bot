@@ -47,7 +47,7 @@ class ServersService {
             else emj = "🔴"
             _ser += `${emj} *${name}* ${online_user} ${node_class}`
         }
-        return `Hello`
+        return `*لیست سرورها ${this.data.length}:*`
     }
 
     private response = async (ctx: MyContext) => {
