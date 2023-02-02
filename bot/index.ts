@@ -115,12 +115,7 @@ export const backKeyboards = (ctx: MyContext, keyboard: InlineKeyboard, backLeve
 
 
 new MenuService(bot).run()
-new PingPongService(bot).run()
-new FaqService(bot).run()
-new DiagnosisService(bot).run()
-new PricesService(bot).run()
-new DownloadsService(bot).run()
-new TutorialsService(bot).run()
+
 
 
 
