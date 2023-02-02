@@ -44,7 +44,8 @@ class ServersService {
 
     private text = async (ctx: MyContext) => {
         let _ser = ''
-        for (let i = (this.page * this.perPage); i < ((this.page + 1) * this.perPage); i++) {
+        const m = ((this.page + 1) * this.perPage) < this.data.length ? ((this.page + 1) * this.perPage) : this.data.length
+        for (let i = (this.page * this.perPage); i < m; i++) {
             const { name, online, online_user, traffic_limit, traffic_used, class: node_class, sort } = this.data[i]
             let emj = "⚪️"
             if (traffic_limit != 0 && traffic_used >= traffic_limit) emj = "🟡"
