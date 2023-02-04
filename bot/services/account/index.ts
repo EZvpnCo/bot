@@ -2,32 +2,32 @@ import { Bot } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
 
-class MyAccountService {
+class AccountService {
     private bot;
     constructor(bot: Bot<MyContext>) {
         this.bot = bot;
     }
 
     public run() {
-        this.bot.command("myaccount", this.response)
-        this.bot.callbackQuery("myaccount", this.response)
+        this.bot.command("account", this.response)
+        this.bot.callbackQuery("account", this.response)
     }
 
     private data = {}
     private text = async (ctx: MyContext) => {
-        return `Hello ${this.data}`
+        return `Hello ${JSON.stringify(this.data)}`
     }
 
     private response = async (ctx: MyContext) => {
         const response = await apiService.GET()("me")
-        this.data = response.data.servers
+        this.data = response.data
         await ctx.reply(
             await this.text(ctx),
-            { parse_mode: "MarkdownV2" }
+            { parse_mode: "HTML" }
         );
     }
 
 }
 
 
-export default MyAccountService
+export default AccountService

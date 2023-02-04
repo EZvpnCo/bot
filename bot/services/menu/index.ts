@@ -1,6 +1,7 @@
 import { Bot, InlineKeyboard } from "grammy";
 import { Op } from "sequelize";
 import { MyContext } from "../..";
+
 import DiagnosisService from "../diagnosis";
 import DownloadsService from "../downloads";
 import FaqService from "../faq";
@@ -8,6 +9,9 @@ import PingPongService from "../pingpong";
 import PricesService from "../prices";
 import ServersService from "../servers";
 import TutorialsService from "../tutorials";
+import AccountService from "../account";
+import AgencyService from "../agency";
+
 
 class MenuService {
     private bot;
@@ -26,6 +30,9 @@ class MenuService {
         new DownloadsService(this.bot).run()
         new TutorialsService(this.bot).run()
         new ServersService(this.bot).run()
+
+        new AccountService(this.bot).run()
+        new AgencyService(this.bot).run()
     }
 
     // ############################
