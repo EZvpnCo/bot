@@ -44,7 +44,7 @@ class AccountService {
             );
             await ctx.answerCallbackQuery();
         } catch (error) {
-            await ctx.answerCallbackQuery("❌ هنوز ثبت نام نکرده اید");
+            await ctx.answerCallbackQuery({ show_alert: true, text: "❌ هنوز ثبت نام نکرده اید", });
         }
     }
 
