@@ -50,7 +50,7 @@ class AccountService {
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
             );
         } catch (error) {
-            await ctx.reply(JSON.stringify(error));
+            await ctx.reply("Error => " + error);
         }
     }
 
