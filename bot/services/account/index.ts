@@ -29,9 +29,9 @@ class AccountService {
     private text = async (ctx: MyContext) => {
         const a = this.account!
         return `👤 <b>${a.user_name}</b>
-📧 ${a.email}
+📧 <pre>${a.email}</pre>
 🧩 ${a.node_group}
-🎲 ${a.class}
+⭐️ ${a.class}
 
 ⌛️ Expire: ${a.class_expire}
 📤 Traffic: 9.4TB / 10TB
