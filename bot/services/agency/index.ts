@@ -35,7 +35,7 @@ class AgencyService {
 
     private response = async (ctx: MyContext) => {
         try {
-            const response = await apiService.GET()("me")
+            const response = await apiService.GET()("account")
             this.data = response.data
             if (ctx.callbackQuery) {
                 await ctx.editMessageText(
