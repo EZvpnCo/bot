@@ -15,7 +15,7 @@ interface AccountType {
     used_traffic: string,
     unused_traffic: string,
     total_traffic: string,
-
+    remaining_days: number,
 }
 
 class AccountService {
@@ -31,13 +31,14 @@ class AccountService {
 
     private account: AccountType | null = null
     private text = async (ctx: MyContext) => {
+
         const a = this.account!
         return `👤 <b>${a.user_name}</b>
 📧 <pre>${a.email}</pre>
 🧩 ${a.node_group}
 ⭐️ ${a.class}
 
-⌛️ Expire: ${a.class_expire} (${moment().diff(a.class_expire, "days")} Day)
+⌛️ Expire: ${a.class_expire} (${a.remaining_days} Day)
 📤 Traffic: ${a.used_traffic} / ${a.total_traffic}
 🖥 Device: ${(a.node_iplimit > 0 ? "~" + " / " + a.node_iplimit : "Unlimited")}
 💰 Wallet: ${a.money}$`
@@ -62,7 +63,10 @@ class AccountService {
         try {
             const uid = ctx.session.user?.account_id
             const response = await apiService.GET()("account?user=" + uid)
-            this.account = response.data.account
+            this.account = {
+                remaining_days: moment(response.data.account.class_expire).diff(moment(), "days"),
+                ...response.data.account
+            }
             await ctx.editMessageText(
                 await this.text(ctx),
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
