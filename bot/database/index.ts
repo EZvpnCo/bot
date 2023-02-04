@@ -1,8 +1,8 @@
 import { Sequelize, } from 'sequelize';
 
 const sequelize = new Sequelize(
-    'ezvpn_panel',
-    'ezvpn_panel',
+    'ezvpn_bot',
+    'ezvpn_bot',
     'BFadSaFNpefXh75b',
     {
         host: 'localhost',
