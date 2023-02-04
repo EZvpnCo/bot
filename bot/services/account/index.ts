@@ -1,4 +1,5 @@
 import { Bot, InlineKeyboard } from "grammy";
+import moment from "moment";
 import { MyContext } from "../..";
 import * as apiService from "../api"
 
@@ -36,7 +37,7 @@ class AccountService {
 🧩 ${a.node_group}
 ⭐️ ${a.class}
 
-⌛️ Expire: ${a.class_expire}
+⌛️ Expire: ${a.class_expire} (${moment(a.class_expire).diff("days")} Day)
 📤 Traffic: ${a.used_traffic} / ${a.total_traffic}
 🖥 Device: ${(a.node_iplimit > 0 ? "~" + " / " + a.node_iplimit : "Unlimited")}
 💰 Wallet: ${a.money}$`
