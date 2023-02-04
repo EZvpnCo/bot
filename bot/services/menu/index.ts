@@ -42,9 +42,14 @@ class MenuService {
             .row()
             .text(ctx.t("menu.servers-btn"), "servers")
             .row()
-            .url(ctx.t("menu.support-btn"), "EZvpnAdmin.t.me")
+
+            .text(ctx.t("menu.account-btn"), "account")
+            .text(ctx.t("menu.agency-btn"), "agency")
             .row()
-            .text(ctx.t("menu.myaccount-btn"), "myaccount")
+
+
+
+            .url(ctx.t("menu.support-btn"), "EZvpnAdmin.t.me")
             .row()
         // .url(ctx.t("menu.support-btn"), "clash://install-config?url=https://panel.ezvpn.co/sub/3d925f710b3d65b7/clash&name=EZvpn%20Panel")
         // if (admins.includes(ctx?.from?.id!)) keyboard.text("🎛 مدیریت", "management")
