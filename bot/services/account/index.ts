@@ -13,9 +13,9 @@ class AccountService {
         this.bot.callbackQuery("account", this.response)
     }
 
-    private data = {}
+    private account = {}
     private text = async (ctx: MyContext) => {
-        return `Hello ${JSON.stringify(this.data)}`
+        return `Hello ${JSON.stringify(this.account)}`
     }
 
     private keyboard = async (ctx: MyContext) => {
@@ -35,22 +35,16 @@ class AccountService {
 
     private response = async (ctx: MyContext) => {
         try {
-            const response = await apiService.GET()("account")
-            this.data = response.data
-            if (ctx.callbackQuery) {
-                await ctx.editMessageText(
-                    await this.text(ctx),
-                    { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
-                );
-                await ctx.answerCallbackQuery();
-                return
-            }
-            await ctx.reply(
+            const uid = ctx.session.user?.account_id
+            const response = await apiService.GET()("account?user=" + uid)
+            this.account = response.data.account
+            await ctx.editMessageText(
                 await this.text(ctx),
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
             );
+            await ctx.answerCallbackQuery();
         } catch (error) {
-            await ctx.reply("Error => " + error);
+            await ctx.answerCallbackQuery("❌ هنوز ثبت نام نکرده اید");
         }
     }
 
