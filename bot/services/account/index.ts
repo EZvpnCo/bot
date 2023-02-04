@@ -37,7 +37,7 @@ class AccountService {
 ⭐️ ${a.class}
 
 ⌛️ Expire: ${a.class_expire}
-📤 Traffic: ${a.used_traffic} / ${a.}
+📤 Traffic: ${a.used_traffic} / ${a.total_traffic}
 🖥 Device: ${(a.node_iplimit > 0 ? "~" + " / " + a.node_iplimit : "Unlimited")}
 💰 Wallet: ${a.money}$`
     }
