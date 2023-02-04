@@ -19,12 +19,16 @@ class AccountService {
     }
 
     private response = async (ctx: MyContext) => {
-        const response = await apiService.GET()("me")
-        this.data = response.data
-        await ctx.reply(
-            await this.text(ctx),
-            { parse_mode: "HTML" }
-        );
+        try {
+            const response = await apiService.GET()("me")
+            this.data = response.data
+            await ctx.reply(
+                await this.text(ctx),
+                { parse_mode: "HTML" }
+            );
+        } catch (error) {
+            await ctx.reply(JSON.stringify(error));
+        }
     }
 
 }
