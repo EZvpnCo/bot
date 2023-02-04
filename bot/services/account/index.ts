@@ -37,7 +37,7 @@ class AccountService {
 🧩 ${a.node_group}
 ⭐️ ${a.class}
 
-⌛️ Expire: ${a.class_expire} (${moment(a.class_expire).diff("days")} Day)
+⌛️ Expire: ${a.class_expire} (${moment().diff(a.class_expire, "days")} Day)
 📤 Traffic: ${a.used_traffic} / ${a.total_traffic}
 🖥 Device: ${(a.node_iplimit > 0 ? "~" + " / " + a.node_iplimit : "Unlimited")}
 💰 Wallet: ${a.money}$`
