@@ -2,6 +2,18 @@ import { Bot, InlineKeyboard } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
 
+
+interface AccountType {
+    user_name: string,
+    email: string,
+    node_group: string,
+    class: string,
+    class_expire: string,
+    money: number,
+    node_iplimit: number,
+
+}
+
 class AccountService {
     private bot;
     constructor(bot: Bot<MyContext>) {
@@ -13,9 +25,18 @@ class AccountService {
         this.bot.callbackQuery("account", this.response)
     }
 
-    private account = {}
+    private account: AccountType | null = null
     private text = async (ctx: MyContext) => {
-        return `Hello ${JSON.stringify(this.account)}`
+        const a = this.account!
+        return `👤 <b>${a.user_name}</b>
+📧 ${a.email}
+🧩 ${a.node_group}
+🎲 ${a.class}
+
+⌛️ Expire: ${a.class_expire}
+📤 Traffic: 9.4TB / 10TB
+🖥 Device: ${(a.node_iplimit > 0 ? "~" + " / " + a.node_iplimit : "Unlimited")}
+💰 Wallet: ${a.money}$`
     }
 
     private keyboard = async (ctx: MyContext) => {
