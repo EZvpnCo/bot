@@ -37,9 +37,9 @@ class AccountSubscriptionService {
 
     private text = async (ctx: MyContext) => {
         let _data = ''
-        _data += '<b>Universal(json): </b><pre>' + this.subscriptions?.json + '</pre>\n'
-        _data += '<b>Universal(clash): </b><pre>' + this.subscriptions?.clash + '</pre>\n'
-        _data += '<b>Universal(surfboard): </b><pre>' + this.subscriptions?.surfboard + '</pre>\n\n'
+        _data += '<b>JSON: </b>\n<<pre>' + this.subscriptions?.json + '</pre>\n'
+        _data += '<b>Clash: </b>\n<<pre>' + this.subscriptions?.clash + '</pre>\n'
+        _data += '<b>Surfboard: </b>\n<<pre>' + this.subscriptions?.surfboard + '</pre>\n\n'
 
         _data += '<b>ShadowSocks: </b>\n<pre>' + this.subscriptions?.ss + '</pre>\n'
         _data += '<b>V2ray: </b>\n<pre>' + this.subscriptions?.v2ray + '</pre>\n'
@@ -55,6 +55,7 @@ class AccountSubscriptionService {
         try {
             const uid = ctx.session.user?.account_id
             const response = await apiService.GET()("account/subscription?user=" + uid)
+            console.log(response.data)
             this.subscriptions = response.data.subscriptions
             await ctx.editMessageText(
                 await this.text(ctx),
