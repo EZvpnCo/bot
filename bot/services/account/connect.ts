@@ -1,6 +1,7 @@
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
+import MenuService from "../menu";
 
 class AccountConnectService {
     private bot;
@@ -56,10 +57,11 @@ class AccountConnectService {
                 const response = await apiService.POST()("login", data)
                 ctx.session.user!.account_id = response.data.account_id
                 await ctx.session.user?.save()
-                await ctx.reply("☑️ با موفقیت وارد شدید" + "\n/start");
-
+                await ctx.reply("☑️ با موفقیت وارد شدید");
+                new MenuService(this.bot).response(ctx)
             } catch (error) {
-                await ctx.reply("❌ ایمیل یا پسورد اشتباه است" + "\n/start");
+                await ctx.reply("❌ ایمیل یا پسورد اشتباه است");
+                new MenuService(this.bot).response(ctx)
             }
 
             ctx.session.inputState = null

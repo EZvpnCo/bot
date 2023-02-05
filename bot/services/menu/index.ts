@@ -67,7 +67,7 @@ class MenuService {
         return ctx.t("menu")
     }
 
-    private response = async (ctx: MyContext) => {
+    public response = async (ctx: MyContext) => {
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
                 await this.text(ctx),
