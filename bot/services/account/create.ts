@@ -16,7 +16,7 @@ class AccountCreateService {
 
 
     private text = async (ctx: MyContext) => {
-        return ` لطفا ایمیل خود را وارد کنید (این ایمیل صرفا جهت اطلاع رسانی و همچنین ورود به پنل استفاده می شود و تمامی اطلاعات شما پیش ما محفوط می ماند):`
+        return `🔻 لطفا ایمیل خود را وارد کنید (این ایمیل صرفا جهت اطلاع رسانی و همچنین ورود به پنل استفاده می شود و تمامی اطلاعات شما پیش ما محفوط می ماند):`
     }
 
     private response = async (ctx: MyContext) => {
@@ -61,11 +61,9 @@ class AccountCreateService {
                 await ctx.reply("☑️ ثبت نام با موفقیت انجام شد");
                 new MenuService(this.bot).response(ctx)
             } catch (error) {
-                try {
-                    const ee = error as { data: { msg: string } }
-                    await ctx.reply("Error: " + ee.data.msg)
-                    this.response(ctx)
-                } catch (error) { }
+                // const ee = error as { data: { msg: string } }
+                await ctx.reply("Error: " + error!.data!.msg)
+                this.response(ctx)
             }
             return
         }
