@@ -19,6 +19,8 @@ class PingPongService {
     }
 
     private response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         await ctx.reply(
             await this.text(ctx),
             { parse_mode: "MarkdownV2" }

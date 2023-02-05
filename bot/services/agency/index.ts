@@ -34,6 +34,8 @@ class AgencyService {
     }
 
     private response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         try {
             const response = await apiService.GET()("account")
             this.data = response.data

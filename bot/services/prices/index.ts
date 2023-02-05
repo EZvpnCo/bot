@@ -32,6 +32,8 @@ class PricesService {
     }
 
     private response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
                 await this.text(ctx),
@@ -48,6 +50,8 @@ class PricesService {
 
 
     private getContent = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         const q = ctx.match![1];
         await ctx.editMessageText(ctx.t("prices." + q), { reply_markup: backKeyboards(ctx, new InlineKeyboard(), "prices") });
         await ctx.answerCallbackQuery();

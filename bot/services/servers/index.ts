@@ -59,6 +59,8 @@ class ServersService {
     }
 
     private response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         if (ctx.match && ctx.match[1]) {
             this.page = parseInt(ctx.match[1])
         }

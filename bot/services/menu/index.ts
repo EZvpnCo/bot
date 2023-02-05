@@ -68,6 +68,8 @@ class MenuService {
     }
 
     public response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
                 await this.text(ctx),

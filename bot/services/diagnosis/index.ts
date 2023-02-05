@@ -33,6 +33,8 @@ class DiagnosisService {
     }
 
     private response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         this.query = await Diagnosis.findAndCountAll({ where: { lang: ctx.session.__language_code } })
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
@@ -53,6 +55,8 @@ class DiagnosisService {
 
 
     private getContent = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         const q = parseInt(ctx.match![1]);
         const fContent = await Diagnosis.findByPk(q)
         if (!fContent) return await ctx.answerCallbackQuery("❌");

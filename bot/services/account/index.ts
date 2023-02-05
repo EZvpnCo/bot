@@ -70,6 +70,8 @@ class AccountService {
 
 
     private response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         try {
             const uid = ctx.session.user?.account_id
             const response = await apiService.GET()("account?user=" + uid)

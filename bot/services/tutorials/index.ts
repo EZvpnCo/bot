@@ -35,6 +35,8 @@ class TutorialsService {
     }
 
     private response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
                 await this.text(ctx),
@@ -51,6 +53,8 @@ class TutorialsService {
 
 
     private getContent = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         const cat = ctx.match![1];
 
         const keyboard = new InlineKeyboard()

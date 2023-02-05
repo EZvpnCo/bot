@@ -15,6 +15,7 @@ class AccountLogoutService {
 
 
     private response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
         ctx.session.user!.account_id = null
         await ctx.session.user?.save()
 

@@ -32,6 +32,8 @@ class FaqService {
     }
 
     private response = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         this.query = await Faq.findAndCountAll({ where: { lang: ctx.session.__language_code } })
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
@@ -49,6 +51,8 @@ class FaqService {
 
 
     private getContent = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         const q = parseInt(ctx.match![1]);
         const fContent = await Faq.findByPk(q)
         if (!fContent) return await ctx.answerCallbackQuery("❌");

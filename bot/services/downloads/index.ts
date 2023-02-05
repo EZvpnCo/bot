@@ -51,6 +51,8 @@ class DownloadsService {
 
 
     private getContent = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         const cat = ctx.match![1];
 
         const keyboard = new InlineKeyboard()
@@ -68,6 +70,8 @@ class DownloadsService {
 
 
     private getItem = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
         const q = parseInt(ctx.match![1]);
         const query = await Downloads.findByPk(q)
 
