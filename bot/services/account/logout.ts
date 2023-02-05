@@ -14,16 +14,11 @@ class AccountLogoutService {
     }
 
 
-    private text = async (ctx: MyContext) => {
-        return `خارج شدید ❗️`
-    }
-
     private response = async (ctx: MyContext) => {
         ctx.session.user!.account_id = null
         await ctx.session.user?.save()
 
-
-        await ctx.editMessageText(await this.text(ctx));
+        await ctx.answerCallbackQuery({ show_alert: true, text: "خارج شدید!", });
 
         new MenuService(this.bot).response(ctx)
         await ctx.answerCallbackQuery();
