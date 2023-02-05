@@ -16,8 +16,8 @@ import TutorialsService from "./services/tutorials";
 
 
 interface InputState {
-  category: string;
-  subID: number,
+  category: string | null;
+  subID: number | null;
   parameter: string;
   messageID: number | null;
   data: string | null;

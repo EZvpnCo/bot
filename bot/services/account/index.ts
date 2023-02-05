@@ -2,6 +2,8 @@ import { Bot, InlineKeyboard } from "grammy";
 import moment from "moment";
 import { MyContext } from "../..";
 import * as apiService from "../api"
+import AccountConnectService from "./connect";
+import AccountCreateService from "./create";
 
 
 interface AccountType {
@@ -27,6 +29,9 @@ class AccountService {
     public run() {
         this.bot.command("account", this.response)
         this.bot.callbackQuery("account", this.response)
+
+        new AccountConnectService(this.bot).run()
+        new AccountCreateService(this.bot).run()
     }
 
     private account: AccountType | null = null
@@ -44,20 +49,23 @@ class AccountService {
 💰 Wallet: ${a.money}$`
     }
 
+
+
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        // if (this.page >= 1) keyboard.text("◀️", "servers:" + (this.page - 1))
-        // else keyboard.text("🚫", "servers:prev")
-        // keyboard.text((this.page + 1).toString(), "servers:current")
-        // if (this.page + 1 < Math.ceil(this.data.length / this.perPage)) keyboard.text("▶️", "servers:" + (this.page + 1))
-        // else keyboard.text("🚫", "servers:next")
+        // keyboard.text("🚫", "servers:next")
         // keyboard.row()
 
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu");
         return keyboard
     }
+
+
+
+
+
 
     private response = async (ctx: MyContext) => {
         try {
@@ -73,8 +81,36 @@ class AccountService {
             );
             await ctx.answerCallbackQuery();
         } catch (error) {
-            await ctx.answerCallbackQuery({ show_alert: true, text: "❌ هنوز ثبت نام نکرده اید", });
+            await ctx.answerCallbackQuery({ show_alert: true, text: "هنوز ثبت نام نکرده اید یا اکانت خود را وارد نکرده اید ❌", });
+            await ctx.editMessageText(
+                await this.loginORcreateText(ctx),
+                { parse_mode: "HTML", reply_markup: await this.loginORcreateKeyboard(ctx) }
+            );
         }
+    }
+
+
+
+
+
+
+
+
+
+    // login or create
+    private loginORcreateText = async (ctx: MyContext) => {
+        return `🔻 در صورتی که از قبل اکانت دارید و مایل هستید آن را به ربات متصل کنید بر روی اتصال اکانت کلیک کنید در غیر اینصورت بر روی ثبت نام کلیک کنید:`
+    }
+
+    private loginORcreateKeyboard = async (ctx: MyContext) => {
+        const keyboard = new InlineKeyboard()
+
+        keyboard.text(ctx.t("connect-account-btn"), "account:connect")
+        keyboard.text(ctx.t("create-account-btn"), "account:create")
+        keyboard.row()
+
+        keyboard.text(ctx.t("back-to-home-btn"), "menu");
+        return keyboard
     }
 
 }
