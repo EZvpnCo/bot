@@ -50,15 +50,15 @@ class AccountCreateService {
             u.password = randomPassword
             u.code = ""
             u.name = text?.split("@")[0]
-
-            ctx.session.inputState.data = JSON.stringify({ ...u, email: text })
+            u.email = text
+            ctx.session.inputState.data = JSON.stringify(u)
             // register
             try {
                 const data = JSON.parse(ctx.session.inputState.data)
                 const response = await apiService.POST()("register", data)
                 ctx.session.user!.account_id = response.data.account_id
                 await ctx.session.user?.save()
-                await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: ${u.email}\nPassword: ${u.password}`);
+                await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`);
                 new MenuService(this.bot).response(ctx)
             } catch (error) {
                 if (axios.isAxiosError(error)) {
