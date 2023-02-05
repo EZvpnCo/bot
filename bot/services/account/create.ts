@@ -20,12 +20,13 @@ class AccountCreateService {
     }
 
     private response = async (ctx: MyContext) => {
+
         ctx.session.inputState = {
             category: "account:create",
             parameter: "email",
             subID: null,
             messageID: null,
-            data: "{}",
+            data: `{}`,
         }
         await ctx.reply(await this.text(ctx));
         await ctx.answerCallbackQuery();
@@ -41,7 +42,15 @@ class AccountCreateService {
         const text = ctx.message?.text
         const u = JSON.parse(ctx.session.inputState.data!)
 
+
+
+
         if (ctx.session.inputState?.parameter === "email") {
+            const randomPassword = Math.random().toString(36).slice(-8)
+            u.password = randomPassword
+            u.code = ""
+            u.name = text?.split("@")[0]
+
             ctx.session.inputState.data = JSON.stringify({ ...u, email: text })
             // register
             try {
@@ -53,6 +62,7 @@ class AccountCreateService {
                 new MenuService(this.bot).response(ctx)
             } catch (error) {
                 await ctx.reply("❌ خطایی در روند ثبت نام رخ داده است با پشتیبانی در ارتباط باشید");
+                await ctx.reply("Error: " + error)
                 new MenuService(this.bot).response(ctx)
             }
             ctx.session.inputState = null
