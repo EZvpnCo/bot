@@ -1,6 +1,7 @@
-import { Bot, InlineKeyboard } from "grammy";
+import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
+import MenuService from "../menu";
 
 class AccountCreateService {
     private bot;
@@ -9,50 +10,56 @@ class AccountCreateService {
     }
 
     public run() {
-        this.bot.callbackQuery("account:create", this.response)
+        this.bot.callbackQuery("account:connect", this.response)
+        this.bot.on("message", this.enterInputs)
     }
 
-    private data = {}
+
     private text = async (ctx: MyContext) => {
-        return `Hello Agent ${JSON.stringify(this.data)}`
-    }
-
-    private keyboard = async (ctx: MyContext) => {
-        const keyboard = new InlineKeyboard()
-
-        // if (this.page >= 1) keyboard.text("◀️", "servers:" + (this.page - 1))
-        // else keyboard.text("🚫", "servers:prev")
-        // keyboard.text((this.page + 1).toString(), "servers:current")
-        // if (this.page + 1 < Math.ceil(this.data.length / this.perPage)) keyboard.text("▶️", "servers:" + (this.page + 1))
-        // else keyboard.text("🚫", "servers:next")
-        // keyboard.row()
-
-
-        keyboard.text(ctx.t("back-to-home-btn"), "menu");
-        return keyboard
+        return `🔻 لطفا ایمیل خود را وارد کنید (این ایمیل صرفا جهت اطلاع رسانی و همچنین ورود به پنل استفاده می شود و تمامی اطلاعات شما پیش ما محفوط می ماند):`
     }
 
     private response = async (ctx: MyContext) => {
-        try {
-            const response = await apiService.GET()("account")
-            this.data = response.data
-            if (ctx.callbackQuery) {
-                await ctx.editMessageText(
-                    await this.text(ctx),
-                    { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
-                );
-                await ctx.answerCallbackQuery();
-                return
-            }
-            await ctx.reply(
-                await this.text(ctx),
-                { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
-            );
-        } catch (error) {
-            await ctx.reply("Error => " + error);
+        ctx.session.inputState = {
+            category: "account:create",
+            parameter: "email",
+            subID: null,
+            messageID: null,
+            data: "{}",
         }
+        await ctx.reply(await this.text(ctx));
+        await ctx.answerCallbackQuery();
+        return
     }
 
+
+    private enterInputs = async (ctx: MyContext, _next: NextFunction) => {
+        if (ctx.session.inputState?.category !== "account:connect") {
+            return await _next()
+        }
+
+        const text = ctx.message?.text
+        const u = JSON.parse(ctx.session.inputState.data!)
+
+        if (ctx.session.inputState?.parameter === "email") {
+            ctx.session.inputState.data = JSON.stringify({ ...u, email: text })
+            // register
+            try {
+                const data = JSON.parse(ctx.session.inputState.data)
+                const response = await apiService.POST()("register", data)
+                ctx.session.user!.account_id = response.data.account_id
+                await ctx.session.user?.save()
+                await ctx.reply("☑️ ثبت نام با موفقیت انجام شد");
+                new MenuService(this.bot).response(ctx)
+            } catch (error) {
+                await ctx.reply("❌ خطایی در روند ثبت نام رخ داده است با پشتیبانی در ارتباط باشید");
+                new MenuService(this.bot).response(ctx)
+            }
+            ctx.session.inputState = null
+            return
+        }
+        return await _next()
+    }
 }
 
 
