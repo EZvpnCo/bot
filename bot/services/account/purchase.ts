@@ -43,6 +43,10 @@ class AccountPurchaseService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
+        for (let i = 0; i < this.plans.length; i++) {
+            const { id, name, price } = this.plans[i]
+            keyboard.text(`${name} 💰 ${price}$`, "menu")
+        }
 
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu")
@@ -53,7 +57,7 @@ class AccountPurchaseService {
         let _data = ''
         for (let i = 0; i < this.plans.length; i++) {
             const { id, name, price, content } = this.plans[i]
-            _data += `🎯 <b>${name}</b>\n💰 <pre>${price}$</pre>\n⌛️ ${content.class_expire} Day - 🧮 ${content.bandwidth} GB\n🌟 ${content.class}\n\n`
+            _data += `🎯 <b>${name}</b>\n<pre>💰 ${price}$</pre>\n⌛️ ${content.class_expire} Day  🧮 ${content.bandwidth} GB\n🌟 ${content.class}\n\n`
         }
         return `🔻 <b>لیست پلن ها (${this.plans.length}):</b>\n\n${_data}`
     }
