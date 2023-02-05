@@ -23,7 +23,8 @@ interface PlanType {
     },
     "auto_renew": number,
     "auto_reset_bandwidth": number,
-    "status": number
+    "status": number,
+    className: string
 }
 
 
@@ -57,7 +58,7 @@ class AccountPurchaseService {
         let _data = ''
         for (let i = 0; i < this.plans.length; i++) {
             const { id, name, price, content } = this.plans[i]
-            _data += `🎯 <b>${name}</b>\n<pre>💰 ${price}$</pre>\n⌛️ ${content.class_expire} Day  🧮 ${content.bandwidth} GB\n🌟 ${content.class}\n\n`
+            _data += `🎯 <b>${name}</b>\n<pre>💰 ${price}$</pre>\n⌛️ ${content.class_expire} Day  🧮 ${content.bandwidth} GB\n🌟 ${content.className}\n\n`
         }
         return `🔻 <b>لیست پلن ها (${this.plans.length}):</b>\n\n${_data}`
     }
