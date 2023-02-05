@@ -65,11 +65,11 @@ class AccountCreateService {
                 if (axios.isAxiosError(error)) {
                     await ctx.reply("Error: isAxiosError")
                 } else {
-                    await ctx.reply("Error: Noooo")
+                    await ctx.reply("Error: Noo")
                 }
                 // const ee = error as { data: { msg: string } }
 
-                this.response(ctx)
+                // this.response(ctx)
             }
             return
         }
