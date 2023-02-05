@@ -37,15 +37,15 @@ class AccountSubscriptionService {
 
     private text = async (ctx: MyContext) => {
         let _data = ''
-        _data += '\n<b>Universal(json):</b>' + this.subscriptions?.json
-        _data += '\n<b>Universal(clash):</b>' + this.subscriptions?.clash
+        _data += '<b>Universal(json): </b><pre>' + this.subscriptions!.json + '</pre>\n'
+        _data += '<b>Universal(clash): </b><pre>' + this.subscriptions!.clash + '</pre>\n'
 
-        _data += '\n\n<b>ShadowSocks:</b>' + this.subscriptions?.ss
-        _data += '\n<b>V2ray:</b>' + this.subscriptions?.v2ray
-        _data += '\n<b>Trojan:</b>' + this.subscriptions?.trojan
+        _data += '\n<b>ShadowSocks: </b><pre>' + this.subscriptions!.ss + '</pre>\n'
+        _data += '<b>V2ray: </b><pre>' + this.subscriptions!.v2ray + '</pre>\n'
+        _data += '<b>Trojan: </b><pre>' + this.subscriptions!.trojan + '</pre>'
 
 
-        return `🔻 <b>اطلاعات اشتراک:</b>\n${_data}`
+        return `🔻 <b>اطلاعات اشتراک:</b>\n\n${_data}`
     }
 
     private response = async (ctx: MyContext) => {
