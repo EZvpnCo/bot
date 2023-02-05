@@ -17,7 +17,7 @@ class AccountCreateService {
 
 
     private text = async (ctx: MyContext) => {
-        return `🔻 لطفا ایمیل خود را وارد کنید (این ایمیل صرفا جهت اطلاع رسانی و همچنین ورود به پنل استفاده می شود و تمامی اطلاعات شما پیش ما محفوط می ماند):`
+        return `🔻b لطفا ایمیل خود را وارد کنید (این ایمیل صرفا جهت اطلاع رسانی و همچنین ورود به پنل استفاده می شود و تمامی اطلاعات شما پیش ما محفوط می ماند):`
     }
 
     private response = async (ctx: MyContext) => {
@@ -55,6 +55,7 @@ class AccountCreateService {
             // register
             try {
                 const data = JSON.parse(ctx.session.inputState.data)
+                console.log("***", data)
                 const response = await apiService.POST()("register", data)
                 ctx.session.user!.account_id = response.data.account_id
                 await ctx.session.user?.save()
