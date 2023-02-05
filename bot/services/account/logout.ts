@@ -24,6 +24,8 @@ class AccountLogoutService {
 
 
         await ctx.editMessageText(await this.text(ctx));
+
+        new MenuService(this.bot).response(ctx)
         await ctx.answerCallbackQuery();
 
         return
