@@ -57,8 +57,8 @@ class AccountPurchaseService {
     private text = async (ctx: MyContext) => {
         let _data = ''
         for (let i = 0; i < this.plans.length; i++) {
-            const { id, name, price, content } = this.plans[i]
-            _data += `🎯 <b>${name}</b>\n<pre>💰 ${price}$</pre>\n⌛️ ${content.class_expire} Day  🧮 ${content.bandwidth} GB\n🌟 ${content.className}\n\n`
+            const { id, name, price, content, className } = this.plans[i]
+            _data += `🎯 <b>${name}</b>\n<pre>💰 ${price}$</pre>\n⌛️ ${content.class_expire} Day  🧮 ${content.bandwidth} GB\n🌟 ${className}\n\n`
         }
         return `🔻 <b>لیست پلن ها (${this.plans.length}):</b>\n\n${_data}`
     }
