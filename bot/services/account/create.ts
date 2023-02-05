@@ -55,11 +55,10 @@ class AccountCreateService {
             // register
             try {
                 const data = JSON.parse(ctx.session.inputState.data)
-                console.log("***", data)
                 const response = await apiService.POST()("register", data)
                 ctx.session.user!.account_id = response.data.account_id
                 await ctx.session.user?.save()
-                await ctx.reply("☑️ ثبت نام با موفقیت انجام شد");
+                await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: ${u.email}\nPassword: ${u.password}`);
                 new MenuService(this.bot).response(ctx)
             } catch (error) {
                 if (axios.isAxiosError(error)) {
