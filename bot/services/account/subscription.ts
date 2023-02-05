@@ -39,10 +39,11 @@ class AccountSubscriptionService {
         let _data = ''
         _data += '<b>Universal(json): </b><pre>' + this.subscriptions!.json + '</pre>\n'
         _data += '<b>Universal(clash): </b><pre>' + this.subscriptions!.clash + '</pre>\n'
+        _data += '<b>Universal(surfboard): </b><pre>' + this.subscriptions!.surfboard + '</pre>\n\n'
 
-        _data += '\n<b>ShadowSocks: </b><pre>' + this.subscriptions!.ss + '</pre>\n'
-        _data += '<b>V2ray: </b><pre>' + this.subscriptions!.v2ray + '</pre>\n'
-        _data += '<b>Trojan: </b><pre>' + this.subscriptions!.trojan + '</pre>'
+        _data += '<b>ShadowSocks: </b>\n<pre>' + this.subscriptions!.ss + '</pre>\n'
+        _data += '<b>V2ray: </b>\n<pre>' + this.subscriptions!.v2ray + '</pre>\n'
+        _data += '<b>Trojan: </b>\n<pre>' + this.subscriptions!.trojan + '</pre>'
 
 
         return `🔻 <b>اطلاعات اشتراک:</b>\n\n${_data}`
