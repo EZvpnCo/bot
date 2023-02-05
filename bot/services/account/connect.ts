@@ -60,8 +60,9 @@ class AccountConnectService {
                 await ctx.reply("☑️ با موفقیت وارد شدید");
                 new MenuService(this.bot).response(ctx)
             } catch (error) {
-                await ctx.reply("❌ ایمیل یا پسورد اشتباه است");
-                new MenuService(this.bot).response(ctx)
+                const ee = error as { data: { msg: string } }
+                await ctx.reply("Error: " + ee!.data.msg)
+                this.response(ctx)
             }
 
             ctx.session.inputState = null
