@@ -48,7 +48,7 @@ class AccountPurchaseService {
             keyboard.text(`${name} 💰 ${price}$`, "account:purchase:" + id).row()
         }
 
-
+        keyboard.text(ctx.t("back-btn"), "account")
         keyboard.text(ctx.t("back-to-home-btn"), "menu")
         return keyboard
     }
