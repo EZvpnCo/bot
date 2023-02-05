@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
@@ -61,8 +62,13 @@ class AccountCreateService {
                 await ctx.reply("☑️ ثبت نام با موفقیت انجام شد");
                 new MenuService(this.bot).response(ctx)
             } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    await ctx.reply("Error: isAxiosError")
+                } else {
+                    await ctx.reply("Error: Noooo")
+                }
                 // const ee = error as { data: { msg: string } }
-                await ctx.reply("Error: " + error.data.msg)
+
                 this.response(ctx)
             }
             return
