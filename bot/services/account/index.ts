@@ -4,6 +4,7 @@ import { MyContext } from "../..";
 import * as apiService from "../api"
 import AccountConnectService from "./connect";
 import AccountCreateService from "./create";
+import AccountLogoutService from "./logout";
 
 
 interface AccountType {
@@ -32,6 +33,7 @@ class AccountService {
 
         new AccountConnectService(this.bot).run()
         new AccountCreateService(this.bot).run()
+        new AccountLogoutService(this.bot).run()
     }
 
     private account: AccountType | null = null
@@ -54,8 +56,8 @@ class AccountService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        // keyboard.text("🚫", "servers:next")
-        // keyboard.row()
+        keyboard.text("🔐 خروج از حساب", "account:logout")
+        keyboard.row()
 
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu");

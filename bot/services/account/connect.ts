@@ -14,7 +14,7 @@ class AccountConnectService {
         this.bot.on("message", this.enterInputs)
     }
 
-    private data = {}
+
     private text = async (ctx: MyContext) => {
         return `🔻 برای ورود به اکانت خود ابتدا ایمیل را وارد کنید:`
     }
