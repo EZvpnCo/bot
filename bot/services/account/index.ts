@@ -17,6 +17,7 @@ interface AccountType {
     class_expire: string,
     money: number,
     node_iplimit: number,
+    node_connector: number,
     used_traffic: string,
     unused_traffic: string,
     total_traffic: string,
@@ -51,7 +52,7 @@ class AccountService {
 
 ⌛️ Expire: ${a.class_expire} (${a.remaining_days} Day)
 📤 Traffic: ${a.used_traffic} / ${a.total_traffic}
-🖥 Device: ${(a.node_iplimit > 0 ? "~" + " / " + a.node_iplimit : "Unlimited")}
+🖥 Device: ${(a.node_connector > 0 ? "~" + " / " + a.node_connector : "Unlimited")}
 💰 Wallet: ${a.money}$`
     }
 

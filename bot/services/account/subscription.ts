@@ -37,15 +37,13 @@ class AccountSubscriptionService {
 
     private text = async (ctx: MyContext) => {
         let _data = ''
-        _data += '<b>JSON:</b>\n<pre>' + this.subscriptions?.json + '</pre>\n'
-        _data += '<b>Clash:</b>\n<pre>' + this.subscriptions?.clash + '</pre>\n'
-        _data += '<b>Surfboard:</b>\n<pre>' + this.subscriptions?.surfboard + '</pre>\n\n'
+        _data += '<b>🔗 JSON:</b>\n<pre>' + this.subscriptions?.json + '</pre>\n\n'
+        _data += '<b>🔗 Clash:</b>\n<pre>' + this.subscriptions?.clash + '</pre>\n\n'
+        _data += '<b>🔗 Surfboard:</b>\n<pre>' + this.subscriptions?.surfboard + '</pre>\n\n'
 
-        _data += '<b>ShadowSocks:</b>\n<pre>' + this.subscriptions?.ss + '</pre>\n'
-        _data += '<b>V2ray:</b>\n<pre>' + this.subscriptions?.v2ray + '</pre>\n'
-        _data += '<b>Trojan:</b>\n<pre>' + this.subscriptions?.trojan + '</pre>'
-
-        console.log("**", _data)
+        _data += '<b>🔗 ShadowSocks:</b>\n<pre>' + this.subscriptions?.ss + '</pre>\n\n'
+        _data += '<b>🔗 V2ray:</b>\n<pre>' + this.subscriptions?.v2ray + '</pre>\n\n'
+        _data += '<b>🔗 Trojan:</b>\n<pre>' + this.subscriptions?.trojan + '</pre>'
 
         return `🔻 <b>اطلاعات اشتراک:</b>\n\n${_data}`
     }
