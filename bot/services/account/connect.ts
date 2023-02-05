@@ -61,11 +61,9 @@ class AccountConnectService {
                 new MenuService(this.bot).response(ctx)
             } catch (error) {
                 const ee = error as { data: { msg: string } }
-                await ctx.reply("Error: " + ee!.data.msg)
+                await ctx.reply("Error: " + ee.data.msg)
                 this.response(ctx)
             }
-
-            ctx.session.inputState = null
             return
         }
         return await _next()
