@@ -10,7 +10,7 @@ class AccountCreateService {
     }
 
     public run() {
-        this.bot.callbackQuery("account:connect", this.response)
+        this.bot.callbackQuery("account:create", this.response)
         this.bot.on("message", this.enterInputs)
     }
 
@@ -35,7 +35,7 @@ class AccountCreateService {
 
 
     private enterInputs = async (ctx: MyContext, _next: NextFunction) => {
-        if (ctx.session.inputState?.category !== "account:connect") {
+        if (ctx.session.inputState?.category !== "account:create") {
             return await _next()
         }
 
