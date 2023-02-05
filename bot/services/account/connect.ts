@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
@@ -28,7 +29,7 @@ class AccountConnectService {
             data: "{}",
         }
         await ctx.reply(await this.text(ctx));
-        await ctx.answerCallbackQuery();
+        if (ctx.callbackQuery) await ctx.answerCallbackQuery();
         return
     }
 
@@ -60,9 +61,15 @@ class AccountConnectService {
                 await ctx.reply("☑️ با موفقیت وارد شدید");
                 new MenuService(this.bot).response(ctx)
             } catch (error) {
-                const ee = error as { data: { msg: string } }
-                await ctx.reply("Error: " + ee.data.msg)
-                this.response(ctx)
+                if (axios.isAxiosError(error)) {
+                    await ctx.reply("Error: SystemError")
+                } else {
+                    const ee = error as { data: { msg: string } }
+                    await ctx.reply("Error: " + ee.data.msg)
+                }
+                setTimeout(async () => {
+                    await this.response(ctx)
+                }, 500)
             }
             return
         }

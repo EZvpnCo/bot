@@ -21,7 +21,6 @@ class AccountCreateService {
     }
 
     private response = async (ctx: MyContext) => {
-
         ctx.session.inputState = {
             category: "account:create",
             parameter: "email",
@@ -30,7 +29,7 @@ class AccountCreateService {
             data: `{}`,
         }
         await ctx.reply(await this.text(ctx));
-        await ctx.answerCallbackQuery();
+        if (ctx.callbackQuery) await ctx.answerCallbackQuery();
         return
     }
 
@@ -70,7 +69,7 @@ class AccountCreateService {
                 }
                 setTimeout(async () => {
                     await this.response(ctx)
-                }, 1000)
+                }, 500)
             }
             return
         }
