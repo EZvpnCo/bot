@@ -6,6 +6,7 @@ import AccountConnectService from "./connect";
 import AccountCreateService from "./create";
 import AccountLogoutService from "./logout";
 import AccountPurchaseService from "./purchase";
+import AccountSubscriptionService from "./subscription";
 
 
 interface AccountType {
@@ -36,6 +37,7 @@ class AccountService {
         new AccountCreateService(this.bot).run()
         new AccountLogoutService(this.bot).run()
         new AccountPurchaseService(this.bot).run()
+        new AccountSubscriptionService(this.bot).run()
     }
 
     private account: AccountType | null = null
