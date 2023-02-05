@@ -68,7 +68,9 @@ class AccountCreateService {
                     const ee = error as { data: { msg: string } }
                     await ctx.reply("Error: " + ee.data.msg)
                 }
-                // this.response(ctx)
+                setTimeout(async () => {
+                    await this.response(ctx)
+                }, 1000)
             }
             return
         }
