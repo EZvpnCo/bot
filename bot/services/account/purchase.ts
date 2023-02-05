@@ -45,7 +45,7 @@ class AccountPurchaseService {
 
         for (let i = 0; i < this.plans.length; i++) {
             const { id, name, price } = this.plans[i]
-            keyboard.text(`${name} 💰 ${price}$`, "account:purchase:" + id)
+            keyboard.text(`${name} 💰 ${price}$`, "account:purchase:" + id).row()
         }
 
 
