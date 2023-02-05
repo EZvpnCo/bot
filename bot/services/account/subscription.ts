@@ -55,8 +55,7 @@ class AccountSubscriptionService {
         try {
             const uid = ctx.session.user?.account_id
             const response = await apiService.GET()("account/subscription?user=" + uid)
-            console.log(response.data)
-            this.subscriptions = response.data.subscriptions
+            this.subscriptions = response.data.subscription
             await ctx.editMessageText(
                 await this.text(ctx),
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
