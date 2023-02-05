@@ -62,7 +62,7 @@ class AccountCreateService {
                 new MenuService(this.bot).response(ctx)
             } catch (error) {
                 await ctx.reply("❌ خطایی در روند ثبت نام رخ داده است با پشتیبانی در ارتباط باشید");
-                // await ctx.reply("Error: " + JSON.stringify(error))
+                await ctx.reply("Error: " + JSON.stringify(error.data))
                 console.log(error)
                 new MenuService(this.bot).response(ctx)
             }
