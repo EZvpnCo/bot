@@ -44,6 +44,7 @@ class AccountConnectService {
             ctx.session.inputState.data = JSON.stringify({ ...u, email: text })
             ctx.session.inputState.parameter = "password"
             await ctx.reply("🔻 حالا پسورد اکانت خود را وارد کنید:");
+            return
         }
         else if (ctx.session.inputState?.parameter === "password") {
             ctx.session.inputState.data = JSON.stringify({ ...u, password: text })
@@ -62,6 +63,7 @@ class AccountConnectService {
             }
 
             ctx.session.inputState = null
+            return
         }
         return await _next()
     }
