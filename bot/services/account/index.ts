@@ -85,10 +85,11 @@ class AccountService {
 
     private response = async (ctx: MyContext) => {
         ctx.session.inputState = null
-        await ctx.editMessageText(
-            await this.text(ctx),
-            { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
-        );
+        await ctx.reply("Hello")
+        // await ctx.editMessageText(
+        //     await this.text(ctx),
+        //     { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
+        // );
         await ctx.answerCallbackQuery();
     }
 
@@ -102,9 +103,7 @@ class AccountService {
                     ...response.data.account
                 }
                 return await _next()
-            } catch (error) {
-
-            }
+            } catch (error) { }
         }
         await ctx.answerCallbackQuery({ show_alert: true, text: "هنوز ثبت نام نکرده اید یا اکانت خود را وارد نکرده اید ❌", });
         await ctx.editMessageText(
