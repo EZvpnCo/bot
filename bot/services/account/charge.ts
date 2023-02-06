@@ -48,15 +48,20 @@ class AccountChargeService {
 
     // ############################
 
-    private chargeWaySelect = async (ctx: MyContext) => {
+    private chargeWaySelect = async (ctx: MyContext, _way: string) => {
         ctx.session.inputState = null
-        const match = ctx.match!
-        const way = match[1];
+        if (ctx.match && ctx.match[1]) {
+            _way = ctx.match[1]
+        }
 
-        if (way === "code") {
+        if (!["code"].includes(_way)) {
+            await ctx.answerCallbackQuery({ text: "روش انتخابی وجود ندارد", show_alert: true });
+        }
+
+        if (_way === "code") {
             ctx.session.inputState = {
                 category: "account:charge",
-                parameter: "code",
+                parameter: _way,
                 subID: null,
                 messageID: null,
                 data: `{}`,
@@ -91,7 +96,7 @@ class AccountChargeService {
                 await ctx.reply("Error: " + ee.data.msg)
             }
             setTimeout(async () => {
-                await this.enterCode(ctx, _next)
+                await this.chargeWaySelect(ctx, "code")
             }, 500)
         }
 
