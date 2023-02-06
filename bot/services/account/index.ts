@@ -102,6 +102,8 @@ class AccountService {
                     ...response.data.account
                 }
                 return await _next()
+            } catch (error) {
+
             }
         }
         await ctx.answerCallbackQuery({ show_alert: true, text: "هنوز ثبت نام نکرده اید یا اکانت خود را وارد نکرده اید ❌", });
