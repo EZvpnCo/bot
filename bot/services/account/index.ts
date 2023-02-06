@@ -43,10 +43,10 @@ class AccountService {
         new AccountChargeService(this.bot).run()
     }
 
-    private account: AccountType | null = null
+    // private account: AccountType | null = null
     private text = async (ctx: MyContext) => {
 
-        const a = this.account!
+        const a = ctx.session.account
         return `👤 <b>${a.user_name}</b>
 📧 <pre>${a.email}</pre>
 🧩 ${a.node_group}
@@ -98,7 +98,7 @@ class AccountService {
         if (uid) {
             try {
                 const response = await apiService.GET()("account?user=" + uid)
-                this.account = {
+                ctx.session.account = {
                     remaining_days: moment(response.data.account.class_expire).diff(moment(), "days"),
                     ...response.data.account
                 }

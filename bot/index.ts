@@ -27,6 +27,7 @@ interface InputState {
 interface SessionData {
   __language_code?: string;
   user: User | null;
+  account: any;
   isNew: boolean;
   inputState: InputState | null;
 }
@@ -39,6 +40,7 @@ export type MyContext = Context & SessionFlavor<SessionData> & I18nFlavor;
 function initial(): SessionData {
   return {
     __language_code: "fa",
+    account: null,
     user: null,
     isNew: true,
     inputState: null,
