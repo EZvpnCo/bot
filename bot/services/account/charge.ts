@@ -87,12 +87,11 @@ class AccountChargeService {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")
             } else {
-                console.log("**", error)
-                // const ee = error as { data: { msg: string } }
-                // await ctx.reply("Error: " + ee.data.msg)
+                const ee = error as { data: { msg: string } }
+                await ctx.reply("Error: " + ee.data.msg)
             }
             setTimeout(async () => {
-                await this.response(ctx)
+                await this.enterCode(ctx, _next)
             }, 500)
         }
 
