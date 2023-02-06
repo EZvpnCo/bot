@@ -34,6 +34,7 @@ class AccountService {
 
         let a = ctx.session.account
         if (ctx.match && ctx.match[1]) {
+            console.log(ctx.match)
             // get user
             try {
                 const response = await apiService.GET()("account?user=" + ctx.match[1])
@@ -42,7 +43,7 @@ class AccountService {
                     ...response.data.account
                 }
             } catch (error) {
-                return "Error: Getting user data failed!" + JSON.stringify(ctx.match)
+                return "Error: Getting user data failed!"
             }
         }
 
