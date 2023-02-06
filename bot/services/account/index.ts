@@ -85,7 +85,7 @@ class AccountService {
 
     private response = async (ctx: MyContext) => {
         ctx.session.inputState = null
-        await ctx.reply("Hello2")
+        await ctx.reply("Hello2" + JSON.stringify(ctx.session.account))
         await ctx.editMessageText(
             await this.text(ctx),
             { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
