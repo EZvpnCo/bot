@@ -133,12 +133,13 @@ class AccountPurchaseService {
         ctx.session.inputState = null
         const item = parseInt(ctx.match![1]);
         try {
-            const uid = ctx.session.user?.account_id
+            const uid = ctx.session.user?.account_id!
             await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
             await ctx.answerCallbackQuery({
                 text: "✅ با موفقیت فعال شد",
                 show_alert: true
             })
+            ctx.match = [`account:agency:users:detail:${uid}`, uid.toString()]
             new AccountService(this.bot).response(ctx)
         } catch (error) {
             if (axios.isAxiosError(error)) {

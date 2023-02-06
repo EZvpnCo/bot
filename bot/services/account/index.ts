@@ -33,7 +33,6 @@ class AccountService {
     private text = async (ctx: MyContext) => {
 
         let a = ctx.session.account
-        console.log(ctx.match)
         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0])) {
             // get user
             try {
