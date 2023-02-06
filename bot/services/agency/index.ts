@@ -54,6 +54,7 @@ class AgencyService {
         try {
             const response = await apiService.POST()("account/agency?user=" + account.id)
             this.agency = response.data
+            console.log(this.agency, "****")
             await ctx.editMessageText(
                 await this.text(ctx),
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
