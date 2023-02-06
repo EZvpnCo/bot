@@ -3,6 +3,7 @@ import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
 import MenuService from "../menu";
+import AgencyNewUserService from "./new_user";
 import AgencyUsersService from "./users";
 
 
@@ -19,6 +20,7 @@ class AgencyService {
         this.bot.callbackQuery("account:agency", this.response)
 
         new AgencyUsersService(this.bot).run()
+        new AgencyNewUserService(this.bot).run()
     }
 
 
@@ -34,7 +36,7 @@ class AgencyService {
 <b>👥 Users:</b> ${agency.accounts}
 <b>💵 Paybacks:</b> ${agency.paybacks}$
 
-<b>🧲 Referral:</b> <pre>${agency.code}</pre>
+<b>🧲 Invitation:</b> <pre>${agency.code}</pre>
 `
     }
 
@@ -113,7 +115,7 @@ class AgencyService {
         if (account.money < 25) {
             await ctx.answerCallbackQuery({
                 show_alert: true,
-                text: "❌ شرط داشتن حداقل موجودی را رعایت نکرده ابد. لطفا با پشتیبانی در ارتباط باشید"
+                text: "❌ شرط داشتن حداقل موجودی را رعایت نکرده اید. لطفا با پشتیبانی در ارتباط باشید"
             })
             new MenuService(this.bot).response(ctx)
         }

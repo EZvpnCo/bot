@@ -51,7 +51,7 @@ class AgencyNewUserService {
             u.email = text
             ctx.session.inputState.data = JSON.stringify(u)
 
-            await ctx.reply("Hallo")
+            await ctx.reply("Hallo" + ctx.session.agency.code)
             // create
             // try {
             //     const data = JSON.parse(ctx.session.inputState.data)

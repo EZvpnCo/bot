@@ -41,7 +41,6 @@ function initial(): SessionData {
     agency: null,
     isNew: true,
     inputState: null,
-
   };
 }
 
