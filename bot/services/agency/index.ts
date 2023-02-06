@@ -9,7 +9,6 @@ class AgencyService {
     }
 
     public run() {
-        this.bot.command("agency", this.response)
         this.bot.callbackQuery("agency", this.response)
     }
 

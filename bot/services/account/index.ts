@@ -1,4 +1,4 @@
-import { Bot, InlineKeyboard } from "grammy";
+import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import moment from "moment";
 import { MyContext } from "../..";
 import * as apiService from "../api"
@@ -32,9 +32,9 @@ class AccountService {
     }
 
     public run() {
-        this.bot.command("account", this.response)
-        this.bot.callbackQuery("account", this.response)
+        this.bot.callbackQuery(/^account:(.*)$/, this.checkAccount)
 
+        this.bot.callbackQuery("account", this.response)
         new AccountConnectService(this.bot).run()
         new AccountCreateService(this.bot).run()
         new AccountLogoutService(this.bot).run()
@@ -85,33 +85,31 @@ class AccountService {
 
     private response = async (ctx: MyContext) => {
         ctx.session.inputState = null
-
-        try {
-            const uid = ctx.session.user?.account_id
-            const response = await apiService.GET()("account?user=" + uid)
-            this.account = {
-                remaining_days: moment(response.data.account.class_expire).diff(moment(), "days"),
-                ...response.data.account
-            }
-            await ctx.editMessageText(
-                await this.text(ctx),
-                { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
-            );
-            await ctx.answerCallbackQuery();
-        } catch (error) {
-            await ctx.answerCallbackQuery({ show_alert: true, text: "هنوز ثبت نام نکرده اید یا اکانت خود را وارد نکرده اید ❌", });
-            await ctx.editMessageText(
-                await this.loginORcreateText(ctx),
-                { parse_mode: "HTML", reply_markup: await this.loginORcreateKeyboard(ctx) }
-            );
-        }
+        await ctx.editMessageText(
+            await this.text(ctx),
+            { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
+        );
+        await ctx.answerCallbackQuery();
     }
 
-
-
-
-
-
+    private checkAccount = async (ctx: MyContext, _next: NextFunction) => {
+        const uid = ctx.session.user?.account_id
+        if (uid) {
+            try {
+                const response = await apiService.GET()("account?user=" + uid)
+                this.account = {
+                    remaining_days: moment(response.data.account.class_expire).diff(moment(), "days"),
+                    ...response.data.account
+                }
+                return await _next()
+            }
+        }
+        await ctx.answerCallbackQuery({ show_alert: true, text: "هنوز ثبت نام نکرده اید یا اکانت خود را وارد نکرده اید ❌", });
+        await ctx.editMessageText(
+            await this.loginORcreateText(ctx),
+            { parse_mode: "HTML", reply_markup: await this.loginORcreateKeyboard(ctx) }
+        );
+    }
 
 
 
