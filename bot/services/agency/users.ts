@@ -36,6 +36,10 @@ class AgencyUsersService {
 
         const d = this.data!
 
+        for (let i = 0; i < d.data.length; i++) {
+            keyboard.text(d.data[i].email, "account:agency:users:edit:" + d.data[i].id).row()
+        }
+
         if (d.current_page > 1) keyboard.text("◀️", "account:agency:users:" + (d.current_page - 1))
         else keyboard.text("🚫", "account:agency:users:prev")
         keyboard.text((d.current_page).toString(), "account:agency:users:current")
