@@ -51,7 +51,7 @@ class MenuService {
             .row()
 
             .text(ctx.t("menu.account-btn"), "account")
-            .text(ctx.t("menu.agency-btn"), "account:subscription")
+            .text(ctx.t("menu.agency-btn"), "account:agency")
             .row()
 
 

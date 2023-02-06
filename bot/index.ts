@@ -6,12 +6,7 @@ import sequelize from "./database";
 import Authentication from "./middleware/authentication";
 import User from "./database/models/bot_user.model";
 import MenuService from "./services/menu";
-import PingPongService from "./services/pingpong";
-import FaqService from "./services/faq";
-import DiagnosisService from "./services/diagnosis";
-import PricesService from "./services/prices";
-import DownloadsService from "./services/downloads";
-import TutorialsService from "./services/tutorials";
+
 
 
 
