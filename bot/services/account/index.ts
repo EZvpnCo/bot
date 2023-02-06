@@ -34,8 +34,7 @@ class AccountService {
 
         let a = ctx.session.account
         console.log(ctx.match)
-        if (Array.isArray(ctx.match) && typeof ctx.match[1] === "number") {
-
+        if (Array.isArray(ctx.match) && parseInt(ctx.match[1])) {
             // get user
             try {
                 const response = await apiService.GET()("account?user=" + ctx.match[1])
@@ -65,11 +64,12 @@ class AccountService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        if (Array.isArray(ctx.match) && typeof ctx.match[1] === "number") {
-            keyboard.text("⚡️ خرید اشتراک", "account:purchase")
-            keyboard.text("🎲 اطلاعات اشتراک", "account:subscription")
+        if (Array.isArray(ctx.match) && parseInt(ctx.match[1])) {
+            keyboard.text("⚡️ خرید اشتراک", `account:agency:users:detail:${ctx.match[1]}:purchase`)
+            keyboard.text("🎲 اطلاعات اشتراک", `account:agency:users:detail:${ctx.match[1]}:subscription`)
             keyboard.row()
             keyboard.text(ctx.t("back-btn"), "account:agency")
+            keyboard.text(ctx.t("back-to-home-btn"), "menu")
         } else {
             keyboard.text("💵 شارژ حساب", "account:charge")
             keyboard.text("⚡️ خرید اشتراک", "account:purchase")
