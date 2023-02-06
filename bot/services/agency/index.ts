@@ -3,12 +3,14 @@ import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
 import MenuService from "../menu";
+import AgencyUsersService from "./users";
 
 
 interface AgencyType {
     accounts: number,
     paybacks: number,
-    percent: number
+    percent: number,
+    code: string
 }
 class AgencyService {
     private bot;
@@ -20,6 +22,8 @@ class AgencyService {
         this.bot.callbackQuery("account:agency:acceptTOS", this.acceptTOS)
         this.bot.callbackQuery(/^account:agency(.*)$/, this.checkAgency)
         this.bot.callbackQuery("account:agency", this.response)
+
+        new AgencyUsersService(this.bot).run()
     }
 
 
@@ -31,29 +35,33 @@ class AgencyService {
         return `🖥 <b>Agency Panel</b>
 
 <b>💰 Wallet:</b> ${account.money}$
+<b>🌀 Percent:</b> ${agency.percent}%
 
 <b>👥 Users:</b> ${agency.accounts}
-<b>💵 Paybacks:</b> ${agency.paybacks}
+<b>💵 Paybacks:</b> ${agency.paybacks}$
 
-<b>🌀 Percent:</b> ${agency.percent}
+<b>🧲 Referral:</b> <pre>${agency.code}</pre>
 `
     }
 
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
+        keyboard.text("👥 مدیریت کاربران", "account:agency:users")
+        keyboard.text("➕ کاربر جدید", "account:agency:new_user")
+        keyboard.row()
+
         keyboard.text(ctx.t("back-to-home-btn"), "menu");
         return keyboard
     }
 
-    private response = async (ctx: MyContext) => {
+    public response = async (ctx: MyContext) => {
         ctx.session.inputState = null
         const account = ctx.session.account
 
         try {
             const response = await apiService.GET()("account/agency?user=" + account.id)
             this.agency = response.data
-            console.log(this.agency, "****")
             await ctx.editMessageText(
                 await this.text(ctx),
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
@@ -70,9 +78,6 @@ class AgencyService {
                 new MenuService(this.bot).response(ctx)
             }, 500)
         }
-
-
-
     }
 
 
@@ -90,7 +95,7 @@ class AgencyService {
             const agencyTos = `🔻 <b>قوانین و شرایط دریافت پنل فروش:</b>
 
 🇮🇷 تابع قوانین جمهوری اسلامی ایران 🇮🇷
-حداقل موجودی اکانت ۲۵ دلار
+حداقل موجودی اکانت 25 دلار
 همین دیگه کافیه`
             const keys = new InlineKeyboard()
             keys.text("✅ می پذیرم", "account:agency:acceptTOS")
