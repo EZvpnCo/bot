@@ -4,6 +4,12 @@ import { MyContext } from "../..";
 import * as apiService from "../api"
 import MenuService from "../menu";
 
+
+interface AgencyType {
+    accounts: number,
+    paybacks: number,
+    percent: number
+}
 class AgencyService {
     private bot;
     constructor(bot: Bot<MyContext>) {
@@ -17,10 +23,20 @@ class AgencyService {
     }
 
 
+    private agency: AgencyType | null = null
     private text = async (ctx: MyContext) => {
         const account = ctx.session.account
+        const agency = this.agency!
 
-        return `Hello Agent ${JSON.stringify(account)}`
+        return `🖥 <b>Agency Panel</b>
+
+<b>💰 Wallet:</b> ${account.money}$
+
+<b>👥 Users:</b> ${agency.accounts}
+<b>💵 Paybacks:</b> ${agency.paybacks}
+
+<b>🌀 Percent:</b> ${agency.percent}
+`
     }
 
     private keyboard = async (ctx: MyContext) => {
@@ -32,13 +48,31 @@ class AgencyService {
 
     private response = async (ctx: MyContext) => {
         ctx.session.inputState = null
+        const account = ctx.session.account
 
 
-        await ctx.editMessageText(
-            await this.text(ctx),
-            { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
-        );
-        await ctx.answerCallbackQuery();
+        try {
+            const response = await apiService.POST()("account/agency?user=" + account.id)
+            this.agency = response.data
+            await ctx.editMessageText(
+                await this.text(ctx),
+                { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
+            );
+            await ctx.answerCallbackQuery();
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                await ctx.reply("Error: SystemError")
+            } else {
+                const ee = error as { data: { msg: string } }
+                await ctx.reply("Error: " + ee.data.msg)
+            }
+            setTimeout(async () => {
+                new MenuService(this.bot).response(ctx)
+            }, 500)
+        }
+
+
+
     }
 
 
