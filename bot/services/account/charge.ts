@@ -69,7 +69,7 @@ class AccountChargeService {
             await ctx.reply(`🧩 کد شارژ دریافتی را وارد کنید:`);
         }
 
-        await ctx.answerCallbackQuery();
+        if (ctx.callbackQuery) await ctx.answerCallbackQuery();
         return
     }
 
