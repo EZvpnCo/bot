@@ -2,6 +2,7 @@ import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
+import MenuService from "../menu";
 
 
 interface PlanType {
@@ -36,6 +37,8 @@ class AccountPurchaseService {
 
     public run() {
         this.bot.callbackQuery("account:purchase", this.response)
+        this.bot.callbackQuery(/^account:purchase:([0-9]+)$/, this.purchase)
+        this.bot.callbackQuery(/^account:purchase:([0-9]+):confirm$/, this.purchaseConfirm)
     }
 
 
@@ -73,7 +76,7 @@ class AccountPurchaseService {
                 await this.text(ctx),
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
             );
-            await ctx.answerCallbackQuery();
+            if (ctx.callbackQuery) await ctx.answerCallbackQuery();
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")
@@ -88,6 +91,67 @@ class AccountPurchaseService {
 
         return
     }
+
+
+
+    private purchase = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+        const item = parseInt(ctx.match![1]);
+
+        const keys = new InlineKeyboard()
+        keys.text("بله", "account:purchase:" + item + ":confirm")
+        keys.text("خیر", "account:purchase")
+
+
+        try {
+            const response = await apiService.GET()("shop?plan=" + item)
+            const plan = response.data.plan as PlanType
+            await ctx.editMessageText(
+                `💰 آیا از فعال سازی پلن <b>${plan.price}</b> با قیمت <b>${plan.name}</b> مطمئن هستید؟`,
+                {
+                    parse_mode: "HTML",
+                    reply_markup: keys
+                }
+            );
+            if (ctx.callbackQuery) await ctx.answerCallbackQuery();
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                await ctx.reply("Error: SystemError")
+            } else {
+                const ee = error as { data: { msg: string } }
+                await ctx.reply("Error: " + ee.data.msg)
+            }
+            setTimeout(async () => {
+                await this.response(ctx)
+            }, 500)
+        }
+    }
+
+
+    private purchaseConfirm = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+        const item = parseInt(ctx.match![1]);
+
+        try {
+            const uid = ctx.session.user?.account_id
+            await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
+            await ctx.reply("✅ با موفقیت فعال شد", { parse_mode: "HTML" });
+            new MenuService(this.bot).response(ctx)
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                await ctx.reply("Error: SystemError")
+            } else {
+                const ee = error as { data: { msg: string } }
+                await ctx.reply("Error: " + ee.data.msg)
+            }
+            setTimeout(async () => {
+                await this.response(ctx)
+            }, 500)
+        }
+
+        return
+    }
+
 
 }
 

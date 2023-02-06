@@ -47,21 +47,21 @@ class AccountChargeService {
 
 
     // ############################
-
-    private chargeWaySelect = async (ctx: MyContext, _way: string) => {
+    private selectedWay = "code"
+    private chargeWaySelect = async (ctx: MyContext) => {
         ctx.session.inputState = null
-        if (ctx.match && ctx.match[1]) {
-            _way = ctx.match[1]
+        if (!this.selectedWay && ctx.match) {
+            this.selectedWay = ctx.match[1]
         }
 
-        if (!["code"].includes(_way)) {
+        if (!["code"].includes(this.selectedWay)) {
             await ctx.answerCallbackQuery({ text: "روش انتخابی وجود ندارد", show_alert: true });
         }
 
-        if (_way === "code") {
+        if (this.selectedWay === "code") {
             ctx.session.inputState = {
                 category: "account:charge",
-                parameter: _way,
+                parameter: this.selectedWay,
                 subID: null,
                 messageID: null,
                 data: `{}`,
@@ -86,7 +86,7 @@ class AccountChargeService {
             const response = await apiService.POST()("account/chargeByCode?user=" + uid, { code: text })
             const data = response.data
             await ctx.reply(`✅ حساب شما با موفقیت شارژ شد
-موجودی: ${data.money}`, { parse_mode: "HTML" });
+موجودی: ${data.money}$`, { parse_mode: "HTML" });
             new MenuService(this.bot).response(ctx)
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -96,7 +96,8 @@ class AccountChargeService {
                 await ctx.reply("Error: " + ee.data.msg)
             }
             setTimeout(async () => {
-                await this.chargeWaySelect(ctx, "code")
+                this.selectedWay = "code"
+                await this.chargeWaySelect(ctx)
             }, 500)
         }
 
