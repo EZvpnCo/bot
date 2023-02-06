@@ -61,7 +61,10 @@ class AgencyService {
             keys.text("✅ می پذیرم", "account:agency:acceptTOS")
             keys.row()
             keys.text(ctx.t("back-to-home-btn"), "menu");
-            await ctx.answerCallbackQuery("💡 لطفا قوانین و شرایط دریافت پنل فروش را با دقت مطالعه و تایید کنید");
+            await ctx.answerCallbackQuery({
+                show_alert: true,
+                text: "💡 لطفا قوانین و شرایط دریافت پنل فروش را با دقت مطالعه و تایید کنید"
+            });
             await ctx.editMessageText(
                 agencyTos,
                 { parse_mode: "HTML", reply_markup: keys }
