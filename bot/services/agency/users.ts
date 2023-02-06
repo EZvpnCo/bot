@@ -38,7 +38,7 @@ class AgencyUsersService {
         const d = this.data!
 
         for (let i = 0; i < d.data.length; i++) {
-            keyboard.text(d.data[i].email, "account:agency:users:edit:" + d.data[i].id).row()
+            keyboard.text(d.data[i].email, "account:agency:users:detail:" + d.data[i].id).row()
         }
 
         if (d.current_page > 1) keyboard.text("⏪", "account:agency:users:" + (1))
@@ -72,7 +72,6 @@ class AgencyUsersService {
         try {
             const uid = ctx.session.user?.account_id
             const response = await apiService.GET()(`account/agency/users?user=${uid}&page=${page}&pageCount=15`)
-
 
             this.data = response.data.accounts
             await ctx.editMessageText(

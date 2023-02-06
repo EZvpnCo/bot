@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
+import AccountService from "../account";
 import * as apiService from "../api"
 
 
@@ -51,15 +52,20 @@ class AgencyNewUserService {
             u.email = text
             ctx.session.inputState.data = JSON.stringify(u)
 
-            await ctx.reply("Hallo" + ctx.session.agency.code)
+
             // create
             try {
                 const data = JSON.parse(ctx.session.inputState.data)
                 const response = await apiService.POST()("register", data)
+                await ctx.reply(
+                    "☑️ اطلاعات حساب کاربری:" +
+                    `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`,
+                    { parse_mode: "HTML" }
+                );
 
-                // await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`, { parse_mode: "HTML" });
-                // new MenuService(this.bot).response(ctx)
-                await ctx.reply("Done")
+                const accountID = response.data.account_id
+                ctx.match = [`account:agency:users:detail:${accountID}`, accountID]
+                new AccountService(this.bot).response(ctx)
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     await ctx.reply("Error: SystemError")

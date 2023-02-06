@@ -10,21 +10,6 @@ import AccountPurchaseService from "./purchase";
 import AccountSubscriptionService from "./subscription";
 
 
-interface AccountType {
-    user_name: string,
-    email: string,
-    node_group: string,
-    class: string,
-    class_expire: string,
-    money: number,
-    node_iplimit: number,
-    node_connector: number,
-    used_traffic: string,
-    unused_traffic: string,
-    total_traffic: string,
-    remaining_days: number,
-}
-
 class AccountService {
     private bot;
     constructor(bot: Bot<MyContext>) {
@@ -37,17 +22,31 @@ class AccountService {
 
         this.bot.callbackQuery(/^account(.*)$/, this.checkAccount)
 
-        this.bot.callbackQuery("account", this.response)
+        this.bot.callbackQuery(["account", /^account:agency:users:detail:([0-9]+)$/], this.response)
         new AccountLogoutService(this.bot).run()
         new AccountPurchaseService(this.bot).run()
         new AccountSubscriptionService(this.bot).run()
         new AccountChargeService(this.bot).run()
     }
 
-    // private account: AccountType | null = null
+
     private text = async (ctx: MyContext) => {
 
-        const a = ctx.session.account
+        let a = ctx.session.account
+        if (ctx.match && ctx.match[1]) {
+            // get user
+            try {
+                const response = await apiService.GET()("account?user=" + ctx.match[1])
+                a = {
+                    remaining_days: moment(response.data.account.class_expire).diff(moment(), "days"),
+                    ...response.data.account
+                }
+            } catch (error) {
+                return "Error: Getting user data failed!"
+            }
+        }
+
+
         return `👤 <b>${a.user_name}</b>
 📧 <pre>${a.email}</pre>
 🧩 ${a.node_group}
@@ -64,16 +63,20 @@ class AccountService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        keyboard.text("💵 شارژ حساب", "account:charge")
-        keyboard.text("⚡️ خرید اشتراک", "account:purchase")
-        keyboard.row()
-
-        keyboard.text("🎲 اطلاعات اشتراک", "account:subscription")
-        keyboard.row()
-
-        keyboard.text("🔐 خروج از حساب", "account:logout")
-        keyboard.row()
-
+        if (ctx.match && ctx.match[1]) {
+            keyboard.text("⚡️ خرید اشتراک", "account:purchase")
+            keyboard.row()
+            keyboard.text("🎲 اطلاعات اشتراک", "account:subscription")
+            keyboard.row()
+        } else {
+            keyboard.text("💵 شارژ حساب", "account:charge")
+            keyboard.text("⚡️ خرید اشتراک", "account:purchase")
+            keyboard.row()
+            keyboard.text("🎲 اطلاعات اشتراک", "account:subscription")
+            keyboard.row()
+            keyboard.text("🔐 خروج از حساب", "account:logout")
+            keyboard.row()
+        }
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu");
         return keyboard
@@ -84,14 +87,25 @@ class AccountService {
 
 
 
-    private response = async (ctx: MyContext) => {
+    public response = async (ctx: MyContext) => {
         ctx.session.inputState = null
-        await ctx.editMessageText(
+        if (ctx.callbackQuery) {
+            await ctx.editMessageText(
+                await this.text(ctx),
+                { reply_markup: await this.keyboard(ctx) }
+            );
+            await ctx.answerCallbackQuery();
+            return
+        }
+        await ctx.reply(
             await this.text(ctx),
-            { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
+            { reply_markup: await this.keyboard(ctx) }
         );
-        await ctx.answerCallbackQuery();
     }
+
+
+
+
 
     private checkAccount = async (ctx: MyContext, _next: NextFunction) => {
         const uid = ctx.session.user?.account_id
