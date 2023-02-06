@@ -33,8 +33,9 @@ class AccountService {
     private text = async (ctx: MyContext) => {
 
         let a = ctx.session.account
+        console.log(ctx.match)
         if (Array.isArray(ctx.match) && typeof ctx.match[1] === "number") {
-            console.log(ctx.match)
+
             // get user
             try {
                 const response = await apiService.GET()("account?user=" + ctx.match[1])
