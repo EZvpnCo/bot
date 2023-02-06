@@ -65,9 +65,9 @@ class AccountService {
 
         if (ctx.match && ctx.match[1]) {
             keyboard.text("⚡️ خرید اشتراک", "account:purchase")
-            keyboard.row()
             keyboard.text("🎲 اطلاعات اشتراک", "account:subscription")
             keyboard.row()
+            keyboard.text(ctx.t("back-btn"), "account:agency")
         } else {
             keyboard.text("💵 شارژ حساب", "account:charge")
             keyboard.text("⚡️ خرید اشتراک", "account:purchase")
@@ -76,9 +76,10 @@ class AccountService {
             keyboard.row()
             keyboard.text("🔐 خروج از حساب", "account:logout")
             keyboard.row()
+            keyboard.text(ctx.t("back-to-home-btn"), "menu");
         }
 
-        keyboard.text(ctx.t("back-to-home-btn"), "menu");
+
         return keyboard
     }
 
@@ -92,14 +93,14 @@ class AccountService {
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
                 await this.text(ctx),
-                { reply_markup: await this.keyboard(ctx) }
+                { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
             );
             await ctx.answerCallbackQuery();
             return
         }
         await ctx.reply(
             await this.text(ctx),
-            { reply_markup: await this.keyboard(ctx) }
+            { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
         );
     }
 
