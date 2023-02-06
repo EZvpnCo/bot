@@ -69,14 +69,9 @@ class AgencyUsersService {
         let page = 1
         if (ctx.match && ctx.match[1]) page = parseInt(ctx.match[1])
         if (!page) page = 1
-
-        console.log("****", page)
-
         try {
             const uid = ctx.session.user?.account_id
-            const response = await apiService.GET()(`account/agency/users?user=${uid}&page=${page}&pageCount=1`)
-
-            console.log("bbbb", response.data)
+            const response = await apiService.GET()(`account/agency/users?user=${uid}&page=${page}&pageCount=15`)
 
 
             this.data = response.data.accounts
