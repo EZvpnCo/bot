@@ -2,6 +2,7 @@ import { Bot, InlineKeyboard } from "grammy";
 import moment from "moment";
 import { MyContext } from "../..";
 import * as apiService from "../api"
+import AccountChargeService from "./charge";
 import AccountConnectService from "./connect";
 import AccountCreateService from "./create";
 import AccountLogoutService from "./logout";
@@ -39,6 +40,7 @@ class AccountService {
         new AccountLogoutService(this.bot).run()
         new AccountPurchaseService(this.bot).run()
         new AccountSubscriptionService(this.bot).run()
+        new AccountChargeService(this.bot).run()
     }
 
     private account: AccountType | null = null
