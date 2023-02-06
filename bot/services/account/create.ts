@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
+import AccountService from ".";
 import { MyContext } from "../..";
 import * as apiService from "../api"
 import MenuService from "../menu";
@@ -59,7 +60,7 @@ class AccountCreateService {
                 ctx.session.user!.account_id = response.data.account_id
                 await ctx.session.user?.save()
                 await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`, { parse_mode: "HTML" });
-                new MenuService(this.bot).response(ctx)
+                new AccountService(this.bot).response(ctx)
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     await ctx.reply("Error: SystemError")

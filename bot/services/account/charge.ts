@@ -1,8 +1,8 @@
 import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
+import AccountService from ".";
 import { MyContext } from "../..";
 import * as apiService from "../api"
-import MenuService from "../menu";
 
 
 class AccountChargeService {
@@ -87,7 +87,7 @@ class AccountChargeService {
             const data = response.data
             await ctx.reply(`✅ حساب شما با موفقیت شارژ شد
 موجودی: ${data.money}$`, { parse_mode: "HTML" });
-            new MenuService(this.bot).response(ctx)
+            new AccountService(this.bot).response(ctx)
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")

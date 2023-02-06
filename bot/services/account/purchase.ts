@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
+import AccountService from ".";
 import { MyContext } from "../..";
 import * as apiService from "../api"
 import MenuService from "../menu";
@@ -135,7 +136,7 @@ class AccountPurchaseService {
             const uid = ctx.session.user?.account_id
             await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
             await ctx.reply("✅ با موفقیت فعال شد", { parse_mode: "HTML" });
-            new MenuService(this.bot).response(ctx)
+            new AccountService(this.bot).response(ctx)
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")
