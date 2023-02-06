@@ -10,9 +10,9 @@ class AgencyService {
     }
 
     public run() {
+        this.bot.callbackQuery("account:agency:acceptTOS", this.acceptTOS)
         this.bot.callbackQuery(/^account:agency(.*)$/, this.checkAgency)
         this.bot.callbackQuery("account:agency", this.response)
-        this.bot.callbackQuery("account:agency:acceptTOS", this.acceptTOS)
     }
 
 
@@ -55,6 +55,7 @@ class AgencyService {
             const agencyTos = `🔻 <b>قوانین و شرایط دریافت پنل فروش:</b>
 
 🇮🇷 تابع قوانین جمهوری اسلامی ایران 🇮🇷
+حداقل موجودی اکانت ۲۵ دلار
 همین دیگه کافیه`
             const keys = new InlineKeyboard()
             keys.text("✅ می پذیرم", "account:agency:acceptTOS")
@@ -79,6 +80,7 @@ class AgencyService {
                 text: "❌ شرط داشتن حداقل موجودی را رعایت نکرده ابد. لطفا با پشتیبانی در ارتباط باشید"
             })
             new MenuService(this.bot).response(ctx)
+
         }
 
         // start
