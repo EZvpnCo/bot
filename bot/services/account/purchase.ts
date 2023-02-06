@@ -107,7 +107,7 @@ class AccountPurchaseService {
             const response = await apiService.GET()("shop?plan=" + item)
             const plan = response.data.plan as PlanType
             await ctx.editMessageText(
-                `💰 آیا از فعال سازی پلن <b>${plan.price}</b> با قیمت <b>${plan.name}</b> مطمئن هستید؟`,
+                `💰 آیا از فعال سازی پلن <b>${plan.name}</b> با قیمت <b>${plan.price}</b> مطمئن هستید؟`,
                 {
                     parse_mode: "HTML",
                     reply_markup: keys
@@ -131,7 +131,6 @@ class AccountPurchaseService {
     private purchaseConfirm = async (ctx: MyContext) => {
         ctx.session.inputState = null
         const item = parseInt(ctx.match![1]);
-
         try {
             const uid = ctx.session.user?.account_id
             await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
@@ -148,7 +147,6 @@ class AccountPurchaseService {
                 await this.response(ctx)
             }, 500)
         }
-
         return
     }
 
