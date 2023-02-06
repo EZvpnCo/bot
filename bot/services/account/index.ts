@@ -33,7 +33,7 @@ class AccountService {
     private text = async (ctx: MyContext) => {
 
         let a = ctx.session.account
-        if (ctx.match && ctx.match[1]) {
+        if (Array.isArray(ctx.match) && typeof ctx.match[1] === "number") {
             console.log(ctx.match)
             // get user
             try {
@@ -64,7 +64,7 @@ class AccountService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        if (ctx.match && ctx.match[1]) {
+        if (Array.isArray(ctx.match) && typeof ctx.match[1] === "number") {
             keyboard.text("⚡️ خرید اشتراک", "account:purchase")
             keyboard.text("🎲 اطلاعات اشتراک", "account:subscription")
             keyboard.row()
