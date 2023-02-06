@@ -102,7 +102,6 @@ class AgencyService {
                     "🔻 برای ورود کلیک کنید:",
                     { parse_mode: "HTML", reply_markup: keys }
                 );
-                return await _next()
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     await ctx.reply("Error: SystemError")
