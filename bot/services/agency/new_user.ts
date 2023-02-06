@@ -53,25 +53,25 @@ class AgencyNewUserService {
 
             await ctx.reply("Hallo" + ctx.session.agency.code)
             // create
-            // try {
-            //     const data = JSON.parse(ctx.session.inputState.data)
-            //     const response = await apiService.POST()("register", data)
-            //     ctx.session.user!.account_id = response.data.account_id
-            //     await ctx.session.user?.save()
-            //     await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`, { parse_mode: "HTML" });
-            //     new MenuService(this.bot).response(ctx)
-            // } catch (error) {
-            //     if (axios.isAxiosError(error)) {
-            //         await ctx.reply("Error: SystemError")
-            //     } else {
-            //         const ee = error as { data: { msg: string } }
-            //         await ctx.reply("Error: " + ee.data.msg)
-            //     }
-            //     setTimeout(async () => {
-            //         await this.response(ctx)
-            //     }, 500)
-            // }
-            // return
+            try {
+                const data = JSON.parse(ctx.session.inputState.data)
+                const response = await apiService.POST()("register", data)
+
+                // await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`, { parse_mode: "HTML" });
+                // new MenuService(this.bot).response(ctx)
+                await ctx.reply("Done")
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    await ctx.reply("Error: SystemError")
+                } else {
+                    const ee = error as { data: { msg: string } }
+                    await ctx.reply("Error: " + ee.data.msg)
+                }
+                setTimeout(async () => {
+                    await this.response(ctx)
+                }, 500)
+            }
+            return
         }
         return await _next()
     }
