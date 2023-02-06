@@ -135,7 +135,10 @@ class AccountPurchaseService {
         try {
             const uid = ctx.session.user?.account_id
             await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
-            await ctx.reply("✅ با موفقیت فعال شد", { parse_mode: "HTML" });
+            await ctx.answerCallbackQuery({
+                text: "✅ با موفقیت فعال شد",
+                show_alert: true
+            })
             new AccountService(this.bot).response(ctx)
         } catch (error) {
             if (axios.isAxiosError(error)) {
