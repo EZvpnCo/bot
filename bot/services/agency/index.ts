@@ -50,9 +50,13 @@ class AgencyService {
         ctx.session.inputState = null
         const account = ctx.session.account
 
+        console.log("GGGG")
+        console.log(account)
+
+
 
         try {
-            const response = await apiService.POST()("account/agency?user=" + account.id)
+            const response = await apiService.POST()("account/agency?user=" + account.id, {})
             this.agency = response.data
             console.log(this.agency, "****")
             await ctx.editMessageText(
