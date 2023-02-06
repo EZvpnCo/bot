@@ -32,11 +32,12 @@ class AccountService {
     }
 
     public run() {
+        new AccountConnectService(this.bot).run()
+        new AccountCreateService(this.bot).run()
+
         this.bot.callbackQuery(/^account(.*)$/, this.checkAccount)
 
         this.bot.callbackQuery("account", this.response)
-        new AccountConnectService(this.bot).run()
-        new AccountCreateService(this.bot).run()
         new AccountLogoutService(this.bot).run()
         new AccountPurchaseService(this.bot).run()
         new AccountSubscriptionService(this.bot).run()
@@ -85,7 +86,6 @@ class AccountService {
 
     private response = async (ctx: MyContext) => {
         ctx.session.inputState = null
-        await ctx.reply("Hello235" + JSON.stringify(ctx.session.account))
         await ctx.editMessageText(
             await this.text(ctx),
             { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
