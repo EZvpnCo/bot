@@ -68,7 +68,7 @@ class AgencyUsersService {
         try {
             const uid = ctx.session.user?.account_id
             const response = await apiService.GET()(`account/agency/users?user=${uid}&page=${page}&pageCount=1`)
-            this.data = response.data.servers
+            this.data = response.data.accounts
             await ctx.editMessageText(
                 await this.text(ctx),
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
