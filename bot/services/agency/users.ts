@@ -25,7 +25,7 @@ class AgencyUsersService {
     }
 
     public run() {
-        this.bot.callbackQuery("account:agency:users", this.response)
+        this.bot.callbackQuery(["account:agency:users", /^account:agency:users:([0-9]+)$/], this.response)
     }
 
 
@@ -65,9 +65,15 @@ class AgencyUsersService {
         if (ctx.match && ctx.match[1]) page = parseInt(ctx.match[1])
         if (!page) page = 1
 
+        console.log("****", page)
+
         try {
             const uid = ctx.session.user?.account_id
             const response = await apiService.GET()(`account/agency/users?user=${uid}&page=${page}&pageCount=1`)
+
+            console.log("bbbb", response.data)
+
+
             this.data = response.data.accounts
             await ctx.editMessageText(
                 await this.text(ctx),
