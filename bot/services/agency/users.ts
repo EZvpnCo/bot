@@ -10,6 +10,7 @@ interface DataType {
     current_page: number,
     total: number,
     per_page: number,
+    last_page: number
 }
 
 interface UserType {
@@ -40,11 +41,15 @@ class AgencyUsersService {
             keyboard.text(d.data[i].email, "account:agency:users:edit:" + d.data[i].id).row()
         }
 
+        if (d.current_page > 1) keyboard.text("⏪", "account:agency:users:" + (1))
+        else keyboard.text("🚫", "account:agency:users:first")
         if (d.current_page > 1) keyboard.text("◀️", "account:agency:users:" + (d.current_page - 1))
         else keyboard.text("🚫", "account:agency:users:prev")
         keyboard.text((d.current_page).toString(), "account:agency:users:current")
-        if (d.current_page < Math.ceil(d.total / d.per_page)) keyboard.text("▶️", "account:agency:users:" + (d.current_page + 1))
+        if (d.current_page < d.last_page) keyboard.text("▶️", "account:agency:users:" + (d.current_page + 1))
         else keyboard.text("🚫", "account:agency:users:next")
+        if (d.current_page < d.last_page) keyboard.text("⏩", "account:agency:users:" + (d.last_page))
+        else keyboard.text("🚫", "account:agency:users:last")
         keyboard.row()
 
         keyboard.text(ctx.t("back-btn"), "account:agency")
@@ -55,7 +60,7 @@ class AgencyUsersService {
     private text = async (ctx: MyContext) => {
         return `🔻 <b>مدیریت اکانت ها:</b>
 
-<b>👥 تعداد:</b> ${this.data!.total}`
+<b>👥 تعداد کل:</b> ${this.data!.total}`
     }
 
     private response = async (ctx: MyContext) => {
