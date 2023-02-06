@@ -78,7 +78,7 @@ class AccountChargeService {
         const text = ctx.message?.text
         try {
             const uid = ctx.session.user?.account_id
-            const response = await apiService.POST()("/account/chargeByCode?user=" + uid, { code: text })
+            const response = await apiService.POST()("account/chargeByCode?user=" + uid, { code: text })
             const data = response.data
             await ctx.reply(`✅ حساب شما با موفقیت شارژ شد
 موجودی: ${data.money}`, { parse_mode: "HTML" });
