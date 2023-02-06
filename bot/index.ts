@@ -23,6 +23,7 @@ interface SessionData {
   __language_code?: string;
   user: User | null;
   account: any;
+  agency: any;
   isNew: boolean;
   inputState: InputState | null;
 }
@@ -37,6 +38,7 @@ function initial(): SessionData {
     __language_code: "fa",
     account: null,
     user: null,
+    agency: null,
     isNew: true,
     inputState: null,
 

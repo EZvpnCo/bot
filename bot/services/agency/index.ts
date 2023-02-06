@@ -6,12 +6,7 @@ import MenuService from "../menu";
 import AgencyUsersService from "./users";
 
 
-interface AgencyType {
-    accounts: number,
-    paybacks: number,
-    percent: number,
-    code: string
-}
+
 class AgencyService {
     private bot;
     constructor(bot: Bot<MyContext>) {
@@ -27,10 +22,9 @@ class AgencyService {
     }
 
 
-    private agency: AgencyType | null = null
     private text = async (ctx: MyContext) => {
         const account = ctx.session.account
-        const agency = this.agency!
+        const agency = ctx.session.agency!
 
         return `🖥 <b>Agency Panel</b>
 
@@ -57,27 +51,11 @@ class AgencyService {
 
     public response = async (ctx: MyContext) => {
         ctx.session.inputState = null
-        const account = ctx.session.account
-
-        try {
-            const response = await apiService.GET()("account/agency?user=" + account.id)
-            this.agency = response.data
-            await ctx.editMessageText(
-                await this.text(ctx),
-                { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
-            );
-            await ctx.answerCallbackQuery();
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                await ctx.reply("Error: SystemError")
-            } else {
-                const ee = error as { data: { msg: string } }
-                await ctx.reply("Error: " + ee.data.msg)
-            }
-            setTimeout(async () => {
-                new MenuService(this.bot).response(ctx)
-            }, 500)
-        }
+        await ctx.editMessageText(
+            await this.text(ctx),
+            { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
+        );
+        await ctx.answerCallbackQuery();
     }
 
 
@@ -86,9 +64,23 @@ class AgencyService {
     // #################################
 
     private checkAgency = async (ctx: MyContext, _next: NextFunction) => {
-
         const account = ctx.session.account
         if (account.is_agent) {
+            try {
+                const response = await apiService.GET()("account/agency?user=" + account.id)
+                ctx.session.agency = response.data
+                return await _next()
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    await ctx.reply("Error: SystemError")
+                } else {
+                    const ee = error as { data: { msg: string } }
+                    await ctx.reply("Error: " + ee.data.msg)
+                }
+                setTimeout(async () => {
+                    new MenuService(this.bot).response(ctx)
+                }, 500)
+            }
             return await _next()
         }
         else {
