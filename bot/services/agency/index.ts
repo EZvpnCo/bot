@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import * as apiService from "../api"
@@ -77,27 +78,44 @@ class AgencyService {
         // ====> check rules
         const account = ctx.session.account
 
+
         if (account.money < 25) {
             await ctx.answerCallbackQuery({
                 show_alert: true,
                 text: "❌ شرط داشتن حداقل موجودی را رعایت نکرده ابد. لطفا با پشتیبانی در ارتباط باشید"
             })
             new MenuService(this.bot).response(ctx)
-
         }
 
         // start
         else {
-            await ctx.answerCallbackQuery({
-                show_alert: true,
-                text: "✅ پنل فروش با موفقیت باز گردید"
-            });
-            const keys = new InlineKeyboard()
-            keys.text("🔓 ورود به پنل", "account:agency")
-            await ctx.editMessageText(
-                "🔻 برای ورود کلیک کنید:",
-                { parse_mode: "HTML", reply_markup: keys }
-            );
+
+            try {
+                await apiService.POST()("account/beAgent?user=" + account.id)
+                await ctx.answerCallbackQuery({
+                    show_alert: true,
+                    text: "✅ پنل فروش با موفقیت باز گردید"
+                });
+                const keys = new InlineKeyboard()
+                keys.text("🔓 ورود به پنل", "account:agency")
+                await ctx.editMessageText(
+                    "🔻 برای ورود کلیک کنید:",
+                    { parse_mode: "HTML", reply_markup: keys }
+                );
+                return await _next()
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    await ctx.reply("Error: SystemError")
+                } else {
+                    const ee = error as { data: { msg: string } }
+                    await ctx.reply("Error: " + ee.data.msg)
+                }
+                setTimeout(async () => {
+                    new MenuService(this.bot).response(ctx)
+                }, 500)
+            }
+
+
         }
     }
 
