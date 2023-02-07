@@ -94,7 +94,11 @@ class AccountPurchaseService {
                 await ctx.reply("Error: " + ee.data.msg)
             }
             setTimeout(async () => {
-                await this.response(ctx)
+                if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase$/.test(ctx.match[0])) {
+                    const accountID = ctx.match[1]
+                    ctx.match = [`account:agency:users:detail:${accountID}`, accountID]
+                }
+                new AccountService(this.bot).response(ctx)
             }, 500)
         }
 
@@ -139,6 +143,10 @@ class AccountPurchaseService {
                 await ctx.reply("Error: " + ee.data.msg)
             }
             setTimeout(async () => {
+                if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase:([0-9]+)$/.test(ctx.match[0])) {
+                    const accountID = ctx.match[1]
+                    ctx.match = [`account:agency:users:detail:${accountID}:purchase`, accountID]
+                }
                 await this.response(ctx)
             }, 500)
         }
@@ -171,6 +179,10 @@ class AccountPurchaseService {
                 await ctx.reply("Error: " + ee.data.msg)
             }
             setTimeout(async () => {
+                if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase:([0-9]+):confirm$/.test(ctx.match[0])) {
+                    const accountID = ctx.match[1]
+                    ctx.match = [`account:agency:users:detail:${accountID}:purchase`, accountID]
+                }
                 await this.response(ctx)
             }, 500)
         }

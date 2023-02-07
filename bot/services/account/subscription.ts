@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
+import AccountService from ".";
 import { MyContext } from "../..";
 import * as apiService from "../api"
 
@@ -76,7 +77,11 @@ class AccountSubscriptionService {
                 await ctx.reply("Error: " + ee.data.msg)
             }
             setTimeout(async () => {
-                await this.response(ctx)
+                if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription$/.test(ctx.match[0])) {
+                    const accountID = ctx.match[1]
+                    ctx.match = [`account:agency:users:detail:${accountID}`, accountID]
+                }
+                new AccountService(this.bot).response(ctx)
             }, 500)
         }
 
