@@ -137,10 +137,10 @@ class AccountSubscriptionService {
             }
 
             try {
-                const qr = await QRCode.toDataURL(suburl)
-                const buffer = Buffer.from(qr, 'base64')
-                console.log(buffer)
-                await ctx.replyWithPhoto(new InputFile(buffer), { caption: suburl })
+                const qr = await QRCode.toBuffer(suburl)
+                // const buffer = Buffer.from(qr, 'base64')
+                console.log("@@@@@@@@@@@", qr)
+                await ctx.replyWithPhoto(new InputFile(qr), { caption: suburl })
             } catch (err) {
                 console.error(err)
             }
