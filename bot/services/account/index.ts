@@ -47,7 +47,11 @@ class AccountService {
             } catch (error) {
                 return "Error: Getting user data failed!"
             }
-        } else if (!a && ctx.session.user!.account_id) {
+        } else if (!a && !ctx.session.user?.account_id) {
+            isSelf = true
+            return "Error: Getting user data failed!!" + JSON.stringify(ctx.session.user)
+        }
+        else {
             ctx.reply("Hello2")
             isSelf = true
             try {
@@ -57,12 +61,8 @@ class AccountService {
                     ...response.data.account
                 }
             } catch (error) {
-                return "Error: Getting user data failed!!"
+                return "Error: Getting user data failed!!!"
             }
-        }
-        else {
-            isSelf = true
-            return "Error: Getting user data failed!!!" + JSON.stringify(ctx.session.user)
         }
 
 
