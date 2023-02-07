@@ -70,7 +70,7 @@ class AccountService {
             keyboard.text("⚡️ خرید اشتراک", `account:agency:users:detail:${ctx.match[1]}:purchase`)
             keyboard.text("🎲 اطلاعات اشتراک", `account:agency:users:detail:${ctx.match[1]}:subscription`)
             keyboard.row()
-            keyboard.text(ctx.t("back-btn"), "account:agency")
+            keyboard.text(ctx.t("back-btn"), "account:agency:users")
             keyboard.text(ctx.t("back-to-home-btn"), "menu")
         } else {
             keyboard.text("💵 شارژ حساب", "account:charge")

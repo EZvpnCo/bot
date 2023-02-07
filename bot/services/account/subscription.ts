@@ -30,7 +30,7 @@ class AccountSubscriptionService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription$/.test(ctx.match[0])) {
-            keyboard.text(ctx.t("back-btn"), "account:agency")
+            keyboard.text(ctx.t("back-btn"), "account:agency:users:detail:" + ctx.match[1])
         }
         else {
             keyboard.text(ctx.t("back-btn"), "account")
