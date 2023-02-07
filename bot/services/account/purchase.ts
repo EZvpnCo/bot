@@ -124,7 +124,7 @@ class AccountPurchaseService {
             const response = await apiService.GET()("shop?plan=" + item)
             const plan = response.data.plan as PlanType
             await ctx.editMessageText(
-                `💰 آیا از فعال سازی پلن <b>${plan.name}</b> با قیمت <b>${plan.price}</b> مطمئن هستید؟`,
+                `💰 آیا از فعال سازی پلن <b>\n${plan.name}\n</b> با قیمت <b>${plan.price}$</b> مطمئن هستید؟`,
                 {
                     parse_mode: "HTML",
                     reply_markup: keys
