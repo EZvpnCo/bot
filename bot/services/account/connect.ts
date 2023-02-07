@@ -60,6 +60,7 @@ class AccountConnectService {
                 ctx.session.user!.account_id = response.data.account_id
                 await ctx.session.user?.save()
                 await ctx.reply("☑️ با موفقیت وارد شدید");
+                ctx.session.account = null
                 new AccountService(this.bot).response(ctx)
             } catch (error) {
                 if (axios.isAxiosError(error)) {
