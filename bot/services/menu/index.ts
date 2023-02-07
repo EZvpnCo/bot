@@ -11,6 +11,7 @@ import ServersService from "../servers";
 import TutorialsService from "../tutorials";
 import AccountService from "../account";
 import AgencyService from "../agency";
+import MakeMoneyService from "../makemoney";
 
 
 class MenuService {
@@ -31,14 +32,19 @@ class MenuService {
         new TutorialsService(this.bot).run()
         new ServersService(this.bot).run()
 
+
         new AccountService(this.bot).run()
-        new AgencyService(this.bot).run()
+        new MakeMoneyService(this.bot).run()
     }
 
     // ############################
 
     private keyboard = async (ctx: MyContext) => {
+
+        const acc = ctx.session.account
+
         const keyboard = new InlineKeyboard()
+            .text("⚡️ خرید سرویس", `account:purchase`)
             .text(ctx.t("menu.prices-btn"), "prices")
             .row()
             .text(ctx.t("menu.downloads-btn"), "downloads")
@@ -50,8 +56,12 @@ class MenuService {
             .text(ctx.t("menu.servers-btn"), "servers")
             .row()
 
+        if (acc?.is_agent) keyboard.text("💰 پنل فروش", "account:agency")
+        else keyboard.text("💰 کسب درآمد 💰", "make_money")
+
+        keyboard
+            .row()
             .text(ctx.t("menu.account-btn"), "account")
-            .text(ctx.t("menu.agency-btn"), "account:agency")
             .row()
 
 

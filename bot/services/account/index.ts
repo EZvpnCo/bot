@@ -1,6 +1,7 @@
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import moment from "moment";
 import { MyContext } from "../..";
+import AgencyService from "../agency";
 import * as apiService from "../api"
 import AccountChargeService from "./charge";
 import AccountConnectService from "./connect";
@@ -27,6 +28,7 @@ class AccountService {
         new AccountPurchaseService(this.bot).run()
         new AccountSubscriptionService(this.bot).run()
         new AccountChargeService(this.bot).run()
+        new AgencyService(this.bot).run()
     }
 
 
@@ -82,22 +84,23 @@ class AccountService {
         const keyboard = new InlineKeyboard()
 
         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0])) {
-            keyboard.text("⚡️ خرید اشتراک", `account:agency:users:detail:${ctx.match[1]}:purchase`)
             keyboard.text("🎲 اطلاعات اشتراک", `account:agency:users:detail:${ctx.match[1]}:subscription`)
+            keyboard.text("⚡️ خرید اشتراک", `account:agency:users:detail:${ctx.match[1]}:purchase`)
             keyboard.row()
             keyboard.text(ctx.t("back-btn"), "account:agency:users")
             keyboard.text(ctx.t("back-to-home-btn"), "menu")
         } else {
-            keyboard.text("💵 شارژ حساب", "account:charge")
+            keyboard.text("🎲 اطلاعات اشتراک", "account:subscription")
             keyboard.text("⚡️ خرید اشتراک", "account:purchase")
             keyboard.row()
-            keyboard.text("🎲 اطلاعات اشتراک", "account:subscription")
+            keyboard.text("💵 شارژ حساب", "account:charge")
             keyboard.row()
-            keyboard.text("🔐 خروج از حساب", "account:logout")
+            keyboard.text("💰 پنل فروش", "account:agency")
             keyboard.row()
-            keyboard.text(ctx.t("back-to-home-btn"), "menu");
-        }
 
+            keyboard.text(ctx.t("back-to-home-btn"), "menu")
+            keyboard.text("🔐 خروج از حساب", "account:logout")
+        }
 
         return keyboard
     }
