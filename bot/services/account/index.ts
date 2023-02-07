@@ -48,11 +48,12 @@ class AccountService {
                 return "Error: Getting user data failed!"
             }
         } else if (!a && !ctx.session.user?.account_id) {
+            ctx.reply("Hello2")
             isSelf = true
             return "Error: Getting user data failed!!" + JSON.stringify(ctx.session.user)
         }
-        else {
-            ctx.reply("Hello2")
+        else if (!a) {
+            ctx.reply("Hello3")
             isSelf = true
             try {
                 const response = await apiService.GET()("account?user=" + ctx.session.user!.account_id)
