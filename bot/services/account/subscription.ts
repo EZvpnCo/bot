@@ -34,6 +34,13 @@ class AccountSubscriptionService {
             keyboard.text(ctx.t("back-btn"), "account:agency:users:detail:" + ctx.match[1])
         }
         else {
+            keyboard.text("Clash", "account:subscription:Clash")
+            keyboard.text("Surfboard", "account:subscription:Surfboard")
+            keyboard.row()
+            keyboard.text("ShadowSocks", "account:subscription:ShadowSocks")
+            keyboard.text("V2ray", "account:subscription:V2ray")
+            keyboard.text("Trojan", "account:subscription:Trojan")
+            keyboard.row()
             keyboard.text(ctx.t("back-btn"), "account")
         }
         keyboard.text(ctx.t("back-to-home-btn"), "menu")
