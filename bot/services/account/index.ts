@@ -47,9 +47,8 @@ class AccountService {
             } catch (error) {
                 return "Error: Getting user data failed!"
             }
-        } else if (!a) {
+        } else if (!a && ctx.session.user?.account_id) {
             ctx.reply("Hello2")
-            ctx.reply(ctx.session.user?.account_id?.toString())
             isSelf = true
             try {
                 const response = await apiService.GET()("account?user=" + ctx.session.user?.account_id)
@@ -60,6 +59,9 @@ class AccountService {
             } catch (error) {
                 return "Error: Getting user data failed!"
             }
+        }
+        else {
+            return "Error: Getting user data failed!"
         }
         ctx.reply("Hello3")
 
