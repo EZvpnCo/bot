@@ -87,6 +87,7 @@ class AccountChargeService {
             const data = response.data
             await ctx.reply(`✅ حساب شما با موفقیت شارژ شد
 موجودی: ${data.money}$`, { parse_mode: "HTML" });
+            ctx.session.account = null
             new AccountService(this.bot).response(ctx)
         } catch (error) {
             if (axios.isAxiosError(error)) {
