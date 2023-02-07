@@ -36,6 +36,13 @@ class AccountSubscriptionService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription$/.test(ctx.match[0])) {
+            keyboard.text("Clash", "account:agency:users:detail:" + ctx.match[1] + ":subscription:clash")
+            keyboard.text("Surfboard", "account:agency:users:detail:" + ctx.match[1] + ":subscription:surfboard")
+            keyboard.row()
+            keyboard.text("ShadowSocks", "account:agency:users:detail:" + ctx.match[1] + ":subscription:ss")
+            keyboard.text("V2ray", "account:agency:users:detail:" + ctx.match[1] + ":subscription:v2ray")
+            keyboard.text("Trojan", "account:agency:users:detail:" + ctx.match[1] + ":subscription:trojan")
+            keyboard.row()
             keyboard.text(ctx.t("back-btn"), "account:agency:users:detail:" + ctx.match[1])
         }
         else {
