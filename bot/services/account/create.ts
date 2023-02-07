@@ -55,16 +55,13 @@ class AccountCreateService {
             ctx.session.inputState.data = JSON.stringify(u)
             // register
             try {
-                await ctx.reply(ctx.session.inputState.data)
                 const data = JSON.parse(ctx.session.inputState.data)
                 const response = await apiService.POST()("register", data)
                 if (!response.data.account_id) {
-                    throw response.data
+                    throw response
                 }
-                await ctx.reply(JSON.stringify(response.data))
                 ctx.session.user!.account_id = response.data.account_id
                 await ctx.session.user?.save()
-                await ctx.reply("ggg" + ctx.session.user!.account_id)
                 await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`, { parse_mode: "HTML" });
                 new AccountService(this.bot).response(ctx)
             } catch (error) {
