@@ -62,6 +62,9 @@ class AgencyNewUserService {
                     `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`,
                     { parse_mode: "HTML" }
                 );
+                if (!response.data.account_id) {
+                    throw response
+                }
                 const accountID = response.data.account_id
                 ctx.match = [`account:agency:users:detail:${accountID}`, accountID]
                 new AccountService(this.bot).response(ctx)
