@@ -3,6 +3,7 @@ import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import AccountService from ".";
 import { MyContext } from "../..";
 import * as apiService from "../api"
+import QRCode from 'qrcode'
 
 
 interface SubType {
@@ -134,7 +135,17 @@ class AccountSubscriptionService {
                     suburl = s.trojan
                     break
             }
-            await ctx.reply("Hello\n" + suburl)
+
+            try {
+                const qr = await QRCode.toDataURL(suburl)
+                console.log(qr)
+                await ctx.reply("Hello\n" + suburl)
+                await ctx.reply(qr)
+            } catch (err) {
+                console.error(err)
+            }
+
+            await ctx.answerCallbackQuery()
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")
