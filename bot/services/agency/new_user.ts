@@ -57,14 +57,14 @@ class AgencyNewUserService {
             try {
                 const data = JSON.parse(ctx.session.inputState.data)
                 const response = await apiService.POST()("register", data)
+                if (!response.data.account_id) {
+                    throw response
+                }
                 await ctx.reply(
                     "☑️ اطلاعات حساب کاربری:" +
                     `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`,
                     { parse_mode: "HTML" }
                 );
-                if (!response.data.account_id) {
-                    throw response
-                }
                 const accountID = response.data.account_id
                 ctx.match = [`account:agency:users:detail:${accountID}`, accountID]
                 new AccountService(this.bot).response(ctx)
