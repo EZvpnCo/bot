@@ -46,11 +46,22 @@ class AccountService {
             } catch (error) {
                 return "Error: Getting user data failed!"
             }
+        } else if (!a) {
+            isSelf = true
+            try {
+                const response = await apiService.GET()("account?user=" + ctx.session.user?.account_id)
+                a = {
+                    remaining_days: moment(response.data.account.class_expire).diff(moment(), "days"),
+                    ...response.data.account
+                }
+            } catch (error) {
+                return "Error: Getting user data failed!"
+            }
         }
 
 
 
-        return `${isSelf ? "" : "🔻 UserInfo:\n\n"}👤 <b>${a.user_name}</b>
+        return `${isSelf ? "" : "🔻 <b>اطلاعات کاربر:</b>\n\n"}👤 <b>${a.user_name}</b>
 📧 <pre>${a.email}</pre>
 🧩 ${a.node_group}
 ⭐️ ${a.class}
