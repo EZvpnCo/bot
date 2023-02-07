@@ -23,6 +23,10 @@ class AccountSubscriptionService {
 
     public run() {
         this.bot.callbackQuery(["account:subscription", /^account:agency:users:detail:([0-9]+):subscription$/], this.response)
+        this.bot.callbackQuery([
+            /^account:subscription:(clash|surfboard|ss|v2ray|trojan)$/,
+            /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan)$/
+        ], this.detailSubscription)
     }
 
 
@@ -34,12 +38,12 @@ class AccountSubscriptionService {
             keyboard.text(ctx.t("back-btn"), "account:agency:users:detail:" + ctx.match[1])
         }
         else {
-            keyboard.text("Clash", "account:subscription:Clash")
-            keyboard.text("Surfboard", "account:subscription:Surfboard")
+            keyboard.text("Clash", "account:subscription:clash")
+            keyboard.text("Surfboard", "account:subscription:surfboard")
             keyboard.row()
-            keyboard.text("ShadowSocks", "account:subscription:ShadowSocks")
-            keyboard.text("V2ray", "account:subscription:V2ray")
-            keyboard.text("Trojan", "account:subscription:Trojan")
+            keyboard.text("ShadowSocks", "account:subscription:ss")
+            keyboard.text("V2ray", "account:subscription:v2ray")
+            keyboard.text("Trojan", "account:subscription:trojan")
             keyboard.row()
             keyboard.text(ctx.t("back-btn"), "account")
         }
@@ -93,6 +97,60 @@ class AccountSubscriptionService {
         }
 
         return
+    }
+
+
+
+    private detailSubscription = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+
+
+        try {
+            let uid = ctx.session.user?.account_id
+            let subtype = ctx.match![1]!
+            if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan)$/.test(ctx.match[0])) {
+                uid = parseInt(ctx.match[1])
+                subtype = ctx.match![2]!
+            }
+
+            const response = await apiService.GET()("account/subscription?user=" + uid)
+            const s: SubType = response.data.subscription
+
+            let suburl = ''
+            switch (subtype) {
+                case 'clash':
+                    suburl = s.clash
+                    break
+                case 'surfboard':
+                    suburl = s.surfboard
+                    break
+                case 'ss':
+                    suburl = s.ss
+                    break
+                case 'v2ray':
+                    suburl = s.v2ray
+                    break
+                case 'trojan':
+                    suburl = s.trojan
+                    break
+            }
+            await ctx.reply("Hello\n" + suburl)
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                await ctx.reply("Error: SystemError")
+            } else {
+                const ee = error as { data: { msg: string } }
+                await ctx.reply("Error: " + ee.data.msg)
+            }
+            setTimeout(async () => {
+                if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan)$/.test(ctx.match[0])) {
+                    const accountID = ctx.match[1]
+                    ctx.match = [`account:agency:users:detail:${accountID}:subscription`, accountID]
+                }
+                this.response(ctx)
+            }, 500)
+        }
+
     }
 
 }
