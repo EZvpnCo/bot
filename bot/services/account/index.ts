@@ -57,13 +57,13 @@ class AccountService {
                     ...response.data.account
                 }
             } catch (error) {
-                return "Error: Getting user data failed!"
+                return "Error: Getting user data failed!!"
             }
         }
         else {
-            return "Error: Getting user data failed!"
+            isSelf = true
+            return "Error: Getting user data failed!!!" + JSON.stringify(ctx.session.user)
         }
-        ctx.reply("Hello3")
 
 
 
