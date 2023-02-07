@@ -58,6 +58,9 @@ class AccountCreateService {
                 await ctx.reply(ctx.session.inputState.data)
                 const data = JSON.parse(ctx.session.inputState.data)
                 const response = await apiService.POST()("register", data)
+                if (!response.data.account_id) {
+                    throw response.data
+                }
                 await ctx.reply(JSON.stringify(response.data))
                 ctx.session.user!.account_id = response.data.account_id
                 await ctx.session.user?.save()
