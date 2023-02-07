@@ -37,9 +37,9 @@ class AccountPurchaseService {
     }
 
     public run() {
-        this.bot.callbackQuery("account:purchase", this.response)
-        this.bot.callbackQuery(/^account:purchase:([0-9]+)$/, this.purchase)
-        this.bot.callbackQuery(/^account:purchase:([0-9]+):confirm$/, this.purchaseConfirm)
+        this.bot.callbackQuery(["account:purchase", /^account:agency:users:detail:([0-9]+):purchase$/], this.response)
+        this.bot.callbackQuery([/^account:purchase:([0-9]+)$/, /^account:agency:users:detail:([0-9]+):purchase:([0-9]+)$/], this.purchase)
+        this.bot.callbackQuery([/^account:purchase:([0-9]+):confirm$/, /^account:agency:users:detail:([0-9]+):purchase:([0-9]+):confirm$/], this.purchaseConfirm)
     }
 
 
@@ -50,10 +50,18 @@ class AccountPurchaseService {
 
         for (let i = 0; i < this.plans.length; i++) {
             const { id, name, price } = this.plans[i]
-            keyboard.text(`${name} 💰 ${price}$`, "account:purchase:" + id).row()
+            if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase$/.test(ctx.match[0])) {
+                keyboard.text(`${name} 💰 ${price}$`, "account:agency:users:detail:" + ctx.match[1] + ":purchase:" + id).row()
+            } else {
+                keyboard.text(`${name} 💰 ${price}$`, "account:purchase:" + id).row()
+            }
         }
-
-        keyboard.text(ctx.t("back-btn"), "account")
+        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase$/.test(ctx.match[0])) {
+            keyboard.text(ctx.t("back-btn"), "account:agency")
+        }
+        else {
+            keyboard.text(ctx.t("back-btn"), "account")
+        }
         keyboard.text(ctx.t("back-to-home-btn"), "menu")
         return keyboard
     }
@@ -100,8 +108,16 @@ class AccountPurchaseService {
         const item = parseInt(ctx.match![1]);
 
         const keys = new InlineKeyboard()
-        keys.text("بله", "account:purchase:" + item + ":confirm")
-        keys.text("خیر", "account:purchase")
+
+        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase:([0-9]+)$/.test(ctx.match[0])) {
+            keys.text("بله", "account:agency:users:detail:" + ctx.match[1] + ":purchase:" + item + ":confirm")
+            keys.text("خیر", "account:agency:users:detail:" + ctx.match[1] + ":purchase")
+        }
+        else {
+            keys.text("بله", "account:purchase:" + item + ":confirm")
+            keys.text("خیر", "account:purchase")
+        }
+
 
 
         try {
@@ -131,16 +147,22 @@ class AccountPurchaseService {
 
     private purchaseConfirm = async (ctx: MyContext, _next: NextFunction) => {
         ctx.session.inputState = null
-        const item = parseInt(ctx.match![1]);
+
         try {
-            const uid = ctx.session.user?.account_id!
+            let uid = ctx.session.user?.account_id!
+            let item = parseInt(ctx.match![1]);
+            if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase:([0-9]+):confirm$/.test(ctx.match[0])) {
+                uid = parseInt(ctx.match[1])
+                item = parseInt(ctx.match[2]);
+                // api for transfer money
+                // await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
+            }
             await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
             await ctx.answerCallbackQuery({
                 text: "✅ با موفقیت فعال شد",
                 show_alert: true
             })
-            new AccountService(this.bot).checkAccount(ctx, _next)
-            new AccountService(this.bot).response(ctx)
+            new MenuService(this.bot).response(ctx)
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")

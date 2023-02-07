@@ -21,7 +21,7 @@ class AccountSubscriptionService {
     }
 
     public run() {
-        this.bot.callbackQuery("account:subscription", this.response)
+        this.bot.callbackQuery(["account:subscription", /^account:agency:users:detail:([0-9]+):subscription$/], this.response)
     }
 
 
@@ -29,8 +29,12 @@ class AccountSubscriptionService {
     private subscriptions: SubType | null = null
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
-
-        keyboard.text(ctx.t("back-btn"), "account")
+        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription$/.test(ctx.match[0])) {
+            keyboard.text(ctx.t("back-btn"), "account:agency")
+        }
+        else {
+            keyboard.text(ctx.t("back-btn"), "account")
+        }
         keyboard.text(ctx.t("back-to-home-btn"), "menu")
         return keyboard
     }
@@ -52,7 +56,11 @@ class AccountSubscriptionService {
         ctx.session.inputState = null
 
         try {
-            const uid = ctx.session.user?.account_id
+            let uid = ctx.session.user?.account_id
+            if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription$/.test(ctx.match[0])) {
+                uid = parseInt(ctx.match[1])
+            }
+
             const response = await apiService.GET()("account/subscription?user=" + uid)
             this.subscriptions = response.data.subscription
             await ctx.editMessageText(
