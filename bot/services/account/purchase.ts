@@ -129,7 +129,7 @@ class AccountPurchaseService {
     }
 
 
-    private purchaseConfirm = async (ctx: MyContext) => {
+    private purchaseConfirm = async (ctx: MyContext, _next: NextFunction) => {
         ctx.session.inputState = null
         const item = parseInt(ctx.match![1]);
         try {
@@ -139,7 +139,7 @@ class AccountPurchaseService {
                 text: "✅ با موفقیت فعال شد",
                 show_alert: true
             })
-            ctx.match = [`account:agency:users:detail:${uid}`, uid.toString()]
+            new AccountService(this.bot).checkAccount(ctx, _next)
             new AccountService(this.bot).response(ctx)
         } catch (error) {
             if (axios.isAxiosError(error)) {

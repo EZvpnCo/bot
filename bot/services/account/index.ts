@@ -33,8 +33,10 @@ class AccountService {
     private text = async (ctx: MyContext) => {
 
         let a = ctx.session.account
+        let isSelf = true
         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0])) {
             // get user
+            isSelf = false
             try {
                 const response = await apiService.GET()("account?user=" + ctx.match[1])
                 a = {
@@ -47,7 +49,8 @@ class AccountService {
         }
 
 
-        return `👤 <b>${a.user_name}</b>
+
+        return `${isSelf ? "" : "🔻 UserInfo:\n\n"}👤 <b>${a.user_name}</b>
 📧 <pre>${a.email}</pre>
 🧩 ${a.node_group}
 ⭐️ ${a.class}
@@ -109,7 +112,7 @@ class AccountService {
 
 
 
-    private checkAccount = async (ctx: MyContext, _next: NextFunction) => {
+    public checkAccount = async (ctx: MyContext, _next: NextFunction) => {
         const uid = ctx.session.user?.account_id
         if (uid) {
             try {
