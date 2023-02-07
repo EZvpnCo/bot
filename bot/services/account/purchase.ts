@@ -105,15 +105,15 @@ class AccountPurchaseService {
 
     private purchase = async (ctx: MyContext) => {
         ctx.session.inputState = null
-        const item = parseInt(ctx.match![1]);
-
+        let item = parseInt(ctx.match![1]);
         const keys = new InlineKeyboard()
-
         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase:([0-9]+)$/.test(ctx.match[0])) {
+            item = parseInt(ctx.match![2]);
             keys.text("بله", "account:agency:users:detail:" + ctx.match[1] + ":purchase:" + item + ":confirm")
             keys.text("خیر", "account:agency:users:detail:" + ctx.match[1] + ":purchase")
         }
         else {
+            item = parseInt(ctx.match![1]);
             keys.text("بله", "account:purchase:" + item + ":confirm")
             keys.text("خیر", "account:purchase")
         }
