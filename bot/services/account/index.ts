@@ -35,6 +35,7 @@ class AccountService {
         let a = ctx.session.account
         let isSelf = true
         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0])) {
+            ctx.reply("Hello1")
             // get user
             isSelf = false
             try {
@@ -47,6 +48,8 @@ class AccountService {
                 return "Error: Getting user data failed!"
             }
         } else if (!a) {
+            ctx.reply("Hello2")
+            ctx.reply(ctx.session.user?.account_id?.toString())
             isSelf = true
             try {
                 const response = await apiService.GET()("account?user=" + ctx.session.user?.account_id)
@@ -58,6 +61,7 @@ class AccountService {
                 return "Error: Getting user data failed!"
             }
         }
+        ctx.reply("Hello3")
 
 
 
