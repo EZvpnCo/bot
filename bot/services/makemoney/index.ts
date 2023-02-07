@@ -33,14 +33,14 @@ class MakeMoneyService {
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
                 await this.text(ctx),
-                { reply_markup: await this.keyboard(ctx) }
+                { reply_markup: await this.keyboard(ctx), parse_mode: "HTML" }
             );
             await ctx.answerCallbackQuery();
             return
         }
         await ctx.reply(
             await this.text(ctx),
-            { reply_markup: await this.keyboard(ctx) }
+            { reply_markup: await this.keyboard(ctx), parse_mode: "HTML" }
         );
     }
 
