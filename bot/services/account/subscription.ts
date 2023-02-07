@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Bot, InlineKeyboard, NextFunction } from "grammy";
+import { Bot, InlineKeyboard, InputFile, NextFunction } from "grammy";
 import AccountService from ".";
 import { MyContext } from "../..";
 import * as apiService from "../api"
@@ -139,8 +139,8 @@ class AccountSubscriptionService {
             try {
                 const qr = await QRCode.toDataURL(suburl)
                 console.log(qr)
-                await ctx.reply("Hllo\n" + suburl)
-                await ctx.replyWithPhoto(qr)
+                await ctx.reply("Hio\n" + suburl)
+                await ctx.replyWithPhoto(new InputFile(qr))
             } catch (err) {
                 console.error(err)
             }
