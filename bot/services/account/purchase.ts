@@ -4,6 +4,7 @@ import AccountService from ".";
 import { MyContext } from "../..";
 import * as apiService from "../api"
 import MenuService from "../menu";
+import AccountSubscriptionService from "./subscription";
 
 
 interface PlanType {
@@ -170,7 +171,11 @@ class AccountPurchaseService {
                 text: "✅ با موفقیت فعال شد",
                 show_alert: true
             })
-            new MenuService(this.bot).response(ctx)
+            if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase:([0-9]+):confirm$/.test(ctx.match[0])) {
+                const accountID = ctx.match[1]
+                ctx.match = [`account:agency:users:detail:${accountID}:subscription`, accountID]
+            }
+            new AccountSubscriptionService(this.bot).response(ctx)
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")

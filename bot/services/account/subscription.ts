@@ -53,7 +53,7 @@ class AccountSubscriptionService {
         return `🔻 <b>اطلاعات اشتراک:</b>\n\n${_data}`
     }
 
-    private response = async (ctx: MyContext) => {
+    public response = async (ctx: MyContext) => {
         ctx.session.inputState = null
 
         try {
