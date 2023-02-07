@@ -48,7 +48,7 @@ class AccountService {
             }
         } else if (!a && !ctx.session.user?.account_id) {
             isSelf = true
-            return "Error: Getting user data failed!!" + JSON.stringify(ctx.session.user)
+            return "Error: Getting user data failed!!"
         }
         else if (!a) {
             isSelf = true

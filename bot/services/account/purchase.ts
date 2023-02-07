@@ -161,12 +161,13 @@ class AccountPurchaseService {
             let uid = ctx.session.user?.account_id!
             let item = parseInt(ctx.match![1]);
             if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase:([0-9]+):confirm$/.test(ctx.match[0])) {
-                uid = parseInt(ctx.match[1])
+                const subuid = parseInt(ctx.match[1])
                 item = parseInt(ctx.match[2]);
-                // api for transfer money
-                // await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
+                await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "", subuid: subuid })
             }
-            await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
+            else {
+                await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
+            }
             await ctx.answerCallbackQuery({
                 text: "✅ با موفقیت فعال شد",
                 show_alert: true
