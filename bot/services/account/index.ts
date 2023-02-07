@@ -47,11 +47,11 @@ class AccountService {
             } catch (error) {
                 return "Error: Getting user data failed!"
             }
-        } else if (!a && ctx.session.user?.account_id) {
+        } else if (!a && ctx.session.user!.account_id) {
             ctx.reply("Hello2")
             isSelf = true
             try {
-                const response = await apiService.GET()("account?user=" + ctx.session.user?.account_id)
+                const response = await apiService.GET()("account?user=" + ctx.session.user!.account_id)
                 a = {
                     remaining_days: moment(response.data.account.class_expire).diff(moment(), "days"),
                     ...response.data.account
