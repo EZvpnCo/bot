@@ -114,8 +114,8 @@ class AgencyUsersService {
         if (!account || !account.is_agent) await ctx.answerInlineQuery([])
 
         const match = ctx.match!
-
-        const response = await apiService.GET()(`account/agency/users?search=${match}&page=${1}&pageCount=10`)
+        const uid = ctx.session.user?.account_id
+        const response = await apiService.GET()(`account/agency/users?user=${uid}&search=${match}&page=${1}&pageCount=10`)
         const _query = response.data.accounts
         const _users: InlineQueryResultArticle[] = []
         for (let i = 0; i < _query.length; i++) {
