@@ -45,7 +45,7 @@ class AccountService {
             }
             isSelf = false
             try {
-                const response = await apiService.GET()("account?user=" + ctx.match[1])
+                const response = await apiService.GET()("account?user=" + ctx.match[1] + "&agency=" + ctx.session.account.id)
                 a = {
                     remaining_days: moment(response.data.account.class_expire).diff(moment(), "days"),
                     ...response.data.account
