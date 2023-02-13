@@ -1,6 +1,6 @@
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import moment from "moment";
-import { MyContext } from "../..";
+import { backKeyboards, MyContext } from "../..";
 import AgencyService from "../agency";
 import * as apiService from "../api"
 import AccountChargeService from "./charge";
@@ -51,11 +51,11 @@ class AccountService {
                     ...response.data.account
                 }
             } catch (error) {
-                return "Error: Getting user data failed!"
+                return "ErrorGettingData"
             }
         } else if (!a && !ctx.session.user?.account_id) {
             isSelf = true
-            return "Error: Getting user data failed!!"
+            return "ErrorGettingData"
         }
         else if (!a) {
             isSelf = true
@@ -66,7 +66,7 @@ class AccountService {
                     ...response.data.account
                 }
             } catch (error) {
-                return "Error: Getting user data failed!!!"
+                return "ErrorGettingData"
             }
         }
 
@@ -87,6 +87,8 @@ class AccountService {
 
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
+
+
 
         if (Array.isArray(ctx.match) && (/^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0]) || /^ShowAccount:([0-9]+)$/.test(ctx.match[0]))) {
             keyboard.text("🎲 اطلاعات اشتراک", `account:agency:users:detail:${ctx.match[1]}:subscription`)
@@ -117,22 +119,27 @@ class AccountService {
 
     public response = async (ctx: MyContext) => {
         ctx.session.inputState = null
+        let _keys = await this.keyboard(ctx)
+        let _text = await this.text(ctx)
+        if (_text === "ErrorGettingData") {
+            _keys = backKeyboards(ctx, new InlineKeyboard(), "account:agency")
+        }
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
-                await this.text(ctx),
+                _text,
                 {
                     parse_mode: "HTML",
-                    reply_markup: await this.keyboard(ctx)
+                    reply_markup: _keys
                 }
             );
             await ctx.answerCallbackQuery();
             return
         }
         await ctx.reply(
-            await this.text(ctx),
+            _text,
             {
                 parse_mode: "HTML",
-                reply_markup: await this.keyboard(ctx)
+                reply_markup: _keys
             }
         );
     }
