@@ -40,6 +40,9 @@ class AccountService {
         let isSelf = true
         if (Array.isArray(ctx.match) && (/^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0]) || /^ShowAccount:([0-9]+)$/.test(ctx.match[0]))) {
             // get user
+            if (/^ShowAccount:([0-9]+)$/.test(ctx.match[0])) {
+                await ctx.deleteMessage()
+            }
             isSelf = false
             try {
                 const response = await apiService.GET()("account?user=" + ctx.match[1])

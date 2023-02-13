@@ -120,12 +120,12 @@ class AgencyUsersService {
             _users.push({
                 type: "article",
                 id: "user_" + id,
-                title: email,
+                title: user_name,
                 input_message_content: {
                     message_text: this.userText(ctx, _query[i]),
                     parse_mode: "HTML",
                 },
-                description: `${user_name}\n${email}`,
+                description: email,
             })
         }
         await ctx.answerInlineQuery(_users as InlineQueryResult[], { cache_time: 0, },);
