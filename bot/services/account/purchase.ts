@@ -71,7 +71,7 @@ class AccountPurchaseService {
         let _data = ''
         for (let i = 0; i < this.plans.length; i++) {
             const { id, name, price, content, className } = this.plans[i]
-            _data += `🎯 <b>${name}</b>\n<pre>💰 ${price}$</pre>\n⌛️ ${content.class_expire} Day  🧮 ${content.bandwidth > 10000 ? "Unlimited" : content.bandwidth + " GB"}\n🌟 ${className}\n\n`
+            _data += `🎯 <b>${name}</b>\n<pre>💰 ${price}$</pre>\n⌛️ ${content.class_expire} Day  🧮 ${content.bandwidth > 5000 ? "Unlimited" : content.bandwidth + " GB"}\n🌟 ${className}\n\n`
         }
         return `🔻 <b>لیست پلن ها (${this.plans.length}):</b>\n\n${_data}`
     }
@@ -161,9 +161,9 @@ class AccountPurchaseService {
             let uid = ctx.session.user?.account_id!
             let item = parseInt(ctx.match![1]);
             if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase:([0-9]+):confirm$/.test(ctx.match[0])) {
-                const subuid = parseInt(ctx.match[1])
+                const account = parseInt(ctx.match[1])
                 item = parseInt(ctx.match[2]);
-                await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "", subuid: subuid })
+                await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "", account })
             }
             else {
                 await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })

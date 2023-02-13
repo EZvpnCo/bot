@@ -87,7 +87,7 @@ class DownloadsService {
         }
         else {
             const keyboard = backKeyboards(ctx, _keyboard, "downloads:" + query.category)
-            await ctx.reply(_text, { reply_markup: keyboard })
+            await ctx.editMessageText(_text, { reply_markup: keyboard })
         }
         await ctx.answerCallbackQuery();
     }
