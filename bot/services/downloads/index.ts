@@ -86,7 +86,8 @@ class DownloadsService {
             await ctx.replyWithDocument(query.file, { caption: _text, reply_markup: _keyboard });
         }
         else {
-            await ctx.reply(_text, { reply_markup: _keyboard })
+            const keyboard = backKeyboards(ctx, _keyboard, "downloads:" + query.category)
+            await ctx.reply(_text, { reply_markup: keyboard })
         }
         await ctx.answerCallbackQuery();
     }

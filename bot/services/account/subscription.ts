@@ -35,6 +35,7 @@ class AccountSubscriptionService {
     private subscriptions: SubType | null = null
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
+        keyboard.text("👇 دریافت QR code 👇", "account:subscription:get_qrcode")
         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription$/.test(ctx.match[0])) {
             keyboard.text("Clash", "account:agency:users:detail:" + ctx.match[1] + ":subscription:clash")
             keyboard.text("Surfboard", "account:agency:users:detail:" + ctx.match[1] + ":subscription:surfboard")

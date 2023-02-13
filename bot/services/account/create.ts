@@ -43,15 +43,20 @@ class AccountCreateService {
         const text = ctx.message?.text
         const u = JSON.parse(ctx.session.inputState.data!)
 
-
-
-
         if (ctx.session.inputState?.parameter === "email") {
             const randomPassword = Math.random().toString(36).slice(-8)
             u.password = randomPassword
             u.code = ""
             u.name = text?.split("@")[0]
             u.email = text
+            ctx.session.inputState.data = JSON.stringify(u)
+            ctx.session.inputState.parameter = "code"
+
+            await ctx.reply("🔻 در صورتی که کد دعوت دارید آن را وارد کنید. در غیر اینصورت بر روی /skip کلیک کنید:");
+            return
+        }
+        else if (ctx.session.inputState?.parameter === "code") {
+            if (text !== "/skip") u.code = text
             ctx.session.inputState.data = JSON.stringify(u)
             // register
             try {

@@ -73,7 +73,7 @@ class AccountService {
 ⭐️ ${a.class}
 
 ⌛️ Expire: ${a.class_expire} (${a.remaining_days} Day)
-📤 Traffic: ${a.used_traffic} / ${a.total_traffic}
+📤 Traffic: ${a.used_traffic} / ${a.total_traffic > 10000 ? "Unlimited" : a.total_traffic + " GB"}
 🖥 Device: ${(a.node_connector > 0 ? "~" + " / " + a.node_connector : "Unlimited")}
 💰 Wallet: ${a.money}$`
     }
