@@ -39,7 +39,7 @@ class AgencyUsersService {
 
         const d = this.data!
 
-        keyboard.switchInlineCurrent("🔍 جستجو", "SearchUser:")
+        keyboard.switchInlineCurrent("🔍 جستجو", "SearchUser:").row()
 
         for (let i = 0; i < d.data.length; i++) {
             keyboard.text(d.data[i].email, "account:agency:users:detail:" + d.data[i].id).row()
