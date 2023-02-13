@@ -24,6 +24,8 @@ class AccountChargeService {
         keyboard.text('🖲 کد شارژ', "account:charge:code")
         keyboard.text('💸 درگاه کریپتو', "account:charge:crypto")
         keyboard.row()
+        keyboard.text('📝 ارسال فیش واریزی', "account:charge:sendReceipt")
+        keyboard.row()
 
         keyboard.text(ctx.t("back-btn"), "account")
         keyboard.text(ctx.t("back-to-home-btn"), "menu")
