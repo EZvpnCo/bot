@@ -22,8 +22,10 @@ class AccountService {
         new AccountCreateService(this.bot).run()
 
         this.bot.callbackQuery(/^account(.*)$/, this.checkAccount)
-
         this.bot.callbackQuery(["account", /^account:agency:users:detail:([0-9]+)$/], this.response)
+        this.bot.hears(/^ShowAccount:([0-9]+)$/, this.response)
+
+
         new AccountLogoutService(this.bot).run()
         new AccountPurchaseService(this.bot).run()
         new AccountSubscriptionService(this.bot).run()
@@ -36,7 +38,7 @@ class AccountService {
 
         let a = ctx.session.account
         let isSelf = true
-        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0])) {
+        if (Array.isArray(ctx.match) && (/^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0]) || /^ShowAccount:([0-9]+)$/.test(ctx.match[0]))) {
             // get user
             isSelf = false
             try {
@@ -83,7 +85,7 @@ class AccountService {
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
 
-        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0])) {
+        if (Array.isArray(ctx.match) && (/^account:agency:users:detail:([0-9]+)$/.test(ctx.match[0]) || /^ShowAccount:([0-9]+)$/.test(ctx.match[0]))) {
             keyboard.text("🎲 اطلاعات اشتراک", `account:agency:users:detail:${ctx.match[1]}:subscription`)
             keyboard.text("⚡️ خرید اشتراک", `account:agency:users:detail:${ctx.match[1]}:purchase`)
             keyboard.row()
@@ -115,14 +117,20 @@ class AccountService {
         if (ctx.callbackQuery) {
             await ctx.editMessageText(
                 await this.text(ctx),
-                { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
+                {
+                    parse_mode: "HTML",
+                    reply_markup: await this.keyboard(ctx)
+                }
             );
             await ctx.answerCallbackQuery();
             return
         }
         await ctx.reply(
             await this.text(ctx),
-            { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
+            {
+                parse_mode: "HTML",
+                reply_markup: await this.keyboard(ctx)
+            }
         );
     }
 

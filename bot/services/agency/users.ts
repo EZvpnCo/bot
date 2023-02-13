@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
+import { InlineQueryResult, InlineQueryResultArticle } from "grammy/out/types";
 import AgencyService from ".";
 import { MyContext } from "../..";
 import * as apiService from "../api"
@@ -27,6 +28,7 @@ class AgencyUsersService {
 
     public run() {
         this.bot.callbackQuery(["account:agency:users", /^account:agency:users:([0-9]+)$/], this.response)
+        this.bot.inlineQuery(/^SearchUser:(.*)$/, this.searchUser)
     }
 
 
@@ -36,6 +38,8 @@ class AgencyUsersService {
         const keyboard = new InlineKeyboard()
 
         const d = this.data!
+
+        keyboard.switchInlineCurrent("🔍 جستجو", "SearchUser:")
 
         for (let i = 0; i < d.data.length; i++) {
             keyboard.text(d.data[i].email, "account:agency:users:detail:" + d.data[i].id).row()
@@ -91,6 +95,43 @@ class AgencyUsersService {
                 new AgencyService(this.bot).response(ctx)
             }, 500)
         }
+    }
+
+
+
+
+
+
+    // ############
+
+    private userText = (ctx: MyContext, account: { id: number }) => {
+        return "ShowAccount:" + account['id'];
+    }
+
+    private searchUser = async (ctx: MyContext) => {
+        // check agency
+        const account = ctx.session.account
+        if (!account || !account.is_agent) await ctx.answerInlineQuery([])
+
+        const match = ctx.match!
+
+        const response = await apiService.GET()(`account/agency/users?search=${match}&page=${1}&pageCount=10`)
+        const _query = response.data.accounts
+        const _users: InlineQueryResultArticle[] = []
+        for (let i = 0; i < _query.length; i++) {
+            const { id, user_name, email } = _query[i]
+            _users.push({
+                type: "article",
+                id: "user_" + id,
+                title: email,
+                input_message_content: {
+                    message_text: this.userText(ctx, _query[i]),
+                    parse_mode: "HTML",
+                },
+                description: `${user_name}\n${email}`,
+            })
+        }
+        await ctx.answerInlineQuery(_users as InlineQueryResult[], { cache_time: 0, },);
     }
 
 }
