@@ -110,8 +110,10 @@ class AgencyUsersService {
 
     private searchUser = async (ctx: MyContext) => {
         const match = ctx.match!
+        console.log("Mi")
         const response = await apiService.GET()(`account/agency/users?user=${1}&search=${match}&page=${1}&pageCount=10`)
         const _query = response.data.accounts
+        console.log(response.data)
         const _users: InlineQueryResultArticle[] = []
         for (let i = 0; i < _query.length; i++) {
             const { id, user_name, email } = _query[i]
