@@ -3,6 +3,8 @@ import axios from "axios";
 const baseUrl = "https://core.ezvpn.co/tlgBot/"
 
 const headers = (token: string) => { return { headers: { Authorization: token } } }
+
+
 const defaultConfig = () => { return { timeout: 120000 } }
 
 export const POST = (withToken = true, config = {}) => async (url = '', data = {}) => {

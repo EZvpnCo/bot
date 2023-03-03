@@ -46,6 +46,8 @@ class AgencyService {
         keyboard.text("👥 مدیریت کاربران", "account:agency:users")
         keyboard.text("➕ کاربر جدید", "account:agency:new_user")
         keyboard.row()
+        keyboard.text("⚙️ تنظیمات", "account:agency:settings")
+
 
         keyboard.text(ctx.t("back-to-home-btn"), "menu");
         return keyboard

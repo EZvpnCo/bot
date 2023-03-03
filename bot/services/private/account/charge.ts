@@ -2,7 +2,7 @@ import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import AccountService from ".";
 import { MyContext } from "../../..";
-import { AdminGP, } from "../../../config";
+import { AdminGP, NowPayment_api_key, NowPayment_api_url, } from "../../../config";
 import * as apiService from "../../../api"
 
 
@@ -89,7 +89,6 @@ class AccountChargeService {
             keyboard.row()
             keyboard.text(ctx.t("back-btn"), "account:charge")
             keyboard.text(ctx.t("back-to-home-btn"), "menu")
-
             await ctx.editMessageText(
                 "🧩 مبلغی که میخواهید شارژ کنید را انتخاب کنید (به دلار):",
                 { parse_mode: "HTML", reply_markup: keyboard }
@@ -162,11 +161,49 @@ class AccountChargeService {
         }
         try {
             const uid = ctx.session.user?.account_id
-            // const response = await apiService.POST()("account/chargeByCode?user=" + uid, { code: text })
-            // const data = response.data
-            // await ctx.reply(``, { parse_mode: "HTML" })
-            // ctx.session.account = null
-            // new AccountService(this.bot).response(ctx)
+            ctx.reply("hello")
+
+            // create order
+            const orderID = "707"
+
+            try {
+                let $data: any = {}
+                $data['price_amount'] = price;
+                $data['price_currency'] = "usd";
+                $data['pay_currency'] = "usdttrc20";
+                $data['order_id'] = orderID;
+                $data['order_description'] = "EZvpn:)";
+                $data['is_fixed_rate'] = true;
+                $data['is_fee_paid_by_user'] = true;
+
+                $data['success_url'] = '/payment?order=' + orderID;
+                $data['ipn_callback_url'] = '/payment_callback';
+
+                const response = await axios.post(
+                    `${NowPayment_api_url}/v1/invoice`,
+                    {},
+                    {
+                        headers: {
+                            'x-api-key': NowPayment_api_key
+                        }
+                    }
+                ).catch((error) => { throw error.response })
+
+                ctx.reply(JSON.stringify(response))
+
+                const keyboard = new InlineKeyboard()
+                keyboard.url("اتصال به درگاه پرداخت", "https://google.com")
+                keyboard.row()
+                keyboard.text(ctx.t("back-btn"), "account:charge:payment")
+                keyboard.text(ctx.t("back-to-home-btn"), "menu")
+                await ctx.editMessageText(
+                    `❗️شما میخواهید اکانت خودتون رو به مبلغ ${price}$ شارژ کنید. برای ادامه بر روی اتصال به درگاه پرداخت کلیک کنید.`,
+                    { parse_mode: "HTML", reply_markup: keyboard }
+                );
+
+            } catch (error) {
+                await ctx.reply("خطایی رخ داد")
+            }
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")
