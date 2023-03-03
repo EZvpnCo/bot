@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express';
+import bodyParser from "body-parser";
 import cors from 'cors';
 import { MyBot } from '..';
 import { SuperAdmin } from '../config';
@@ -7,6 +8,7 @@ import { SuperAdmin } from '../config';
 export default function EndPoint(bot: MyBot) {
     const app: Express = express()
     const router = express.Router()
+    app.use(bodyParser.json())
 
     router.get('/qrcode', (req: Request, res: Response) => {
         res.send("QRCODE")

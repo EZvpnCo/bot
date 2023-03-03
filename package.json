@@ -9,7 +9,9 @@
 	"dependencies": {
 		"@grammyjs/emoji": "^1.1.0",
 		"@grammyjs/i18n": "^1.0.1",
+		"@types/body-parser": "^1.19.2",
 		"axios": "^1.2.3",
+		"body-parser": "^1.20.2",
 		"cors": "^2.8.5",
 		"express": "^4.18.2",
 		"grammy": "^1.13.0",
