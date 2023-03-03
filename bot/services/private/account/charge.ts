@@ -157,7 +157,7 @@ class AccountChargeService {
         }
         try {
             const uid = ctx.session.user?.account_id
-            ctx.reply("hello")
+            ctx.reply("hello1")
 
             // create order
             const orderID = "707"
@@ -183,7 +183,7 @@ class AccountChargeService {
                 data, { headers: { 'x-api-key': NowPayment_api_key } }
             )
 
-            // ctx.reply(JSON.stringify(response.data))
+            ctx.reply(JSON.stringify(response.data))
 
             const keyboard = new InlineKeyboard()
             keyboard.url("اتصال به درگاه پرداخت", "https://google.com")
