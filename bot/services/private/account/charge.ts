@@ -157,30 +157,29 @@ class AccountChargeService {
         }
         try {
             const uid = ctx.session.user?.account_id
-            ctx.reply("hello7877")
+            ctx.reply("hello787799")
 
             // create order
             const orderID = "707"
 
             try {
-                let $data: any = {}
-                $data['price_amount'] = price;
-                $data['price_currency'] = "usd";
-                $data['pay_currency'] = "usdttrc20";
-                $data['order_id'] = orderID;
-                $data['order_description'] = "EZvpn";
-                $data['is_fixed_rate'] = true;
-                $data['is_fee_paid_by_user'] = true;
+                const data = {
+                    "price_amount": 1000,
+                    "price_currency": "usd",
+                    "order_id": "RGDBP-21314",
+                    "order_description": "Apple Macbook Pro 2019 x 1",
+                    "ipn_callback_url": "https://nowpayments.io",
+                    "success_url": "https://nowpayments.io",
+                    "cancel_url": "https://nowpayments.io",
+                    "partially_paid_url": "https://nowpayments.io",
+                    "is_fixed_rate": true,
+                    "is_fee_paid_by_user": false
+                }
 
-                $data['success_url'] = '/payment?order=' + orderID;
-                $data['ipn_callback_url'] = '/payment_callback';
-
-                console.log($data)
-                ctx.reply(JSON.stringify($data))
 
                 const response = await axios.post(
                     `${NowPayment_api_url}/v1/invoice`,
-                    JSON.stringify($data),
+                    JSON.stringify(data),
                     { headers: { 'x-api-key': NowPayment_api_key } }
                 ).catch((error) => { throw error.response })
 
