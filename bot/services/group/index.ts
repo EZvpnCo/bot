@@ -13,8 +13,8 @@ class GroupService {
     }
 
     private userReply = async (ctx: MyContext, _next: NextFunction) => {
-        ctx.session.inputState = null
         if (ctx.chat?.id !== AdminGP) return await _next()
+        ctx.session.inputState = null
         await ctx.reply("Hilo")
         if (ctx.msg?.reply_to_message?.forward_from) {
             const toChatID = ctx.msg?.reply_to_message?.forward_from.id
