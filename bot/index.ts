@@ -1,4 +1,4 @@
-import { Bot, GrammyError, session, HttpError, Context, SessionFlavor, InlineKeyboard } from "grammy";
+import { Bot, GrammyError, session, HttpError, Context, SessionFlavor, InlineKeyboard, RawApi, Api } from "grammy";
 import { UserFromGetMe } from "grammy/out/types";
 import { I18n, I18nFlavor } from "@grammyjs/i18n";
 import { BotToken, SuperAdmin } from "./config"
@@ -7,6 +7,7 @@ import Authentication from "./middleware/authentication";
 import User from "./database/models/bot_user.model";
 import MenuService from "./services/private/menu";
 import GroupService from "./services/group";
+import EndPoint from "./endpoints";
 
 
 
@@ -30,7 +31,7 @@ interface SessionData {
 }
 
 export type MyContext = Context & SessionFlavor<SessionData> & I18nFlavor;
-
+export type MyBot = Bot<MyContext, Api<RawApi>>;
 
 
 // Install session middleware, and define the initial session value.
@@ -181,3 +182,8 @@ bot.start({
     bot.api.sendMessage(SuperAdmin, _text, { parse_mode: 'HTML' })
   }
 });
+
+
+
+// Run EndPoint
+EndPoint(bot)
