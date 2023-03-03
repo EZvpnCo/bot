@@ -1,6 +1,8 @@
 import { Bot, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import { AdminGP } from "../../config";
+import User from "../../database/models/bot_user.model";
+import * as apiService from "../../api"
 
 class GroupService {
     private bot;
@@ -9,22 +11,66 @@ class GroupService {
     }
 
     public run() {
-        this.bot.on("message", this.userReply)
+        this.bot.callbackQuery(/^superAdmin:user:profile:([0-9]+)$/, this.userProfile)
+        this.bot.callbackQuery(/^superAdmin:user:message:([0-9]+)$/, this.userMessage)
+        this.bot.on("message", this.sendMessage)
     }
 
-    private userReply = async (ctx: MyContext, _next: NextFunction) => {
+
+    private checkUser = async (ctx: MyContext, _next: NextFunction) => {
+        const userID = ctx?.match ? parseInt(ctx.match[1]) : 0
+        const _user = await User.findByPk(userID)
+        if (!_user) {
+            return null
+        }
+        const uid = _user?.account_id
+        if (uid) {
+            try {
+                const response = await apiService.GET()("account?user=" + uid)
+                return { user: _user, account: response.data.account }
+            } catch (error) {
+                return null
+            }
+        }
+
+    }
+
+    private userMessage = async (ctx: MyContext, _next: NextFunction) => {
+        if (ctx.chat?.id !== AdminGP) return await _next()
+
+        const response = await this.checkUser(ctx, _next)
+        if (!response)
+            return await ctx.reply("User or Account not found!")
+        const { user, account } = response
+
+        ctx.session.inputState = {
+            category: "superAdmin:user",
+            parameter: "message",
+            subID: user.id,
+            messageID: null,
+            data: `{}`,
+        }
+        await ctx.reply(`Ok, I'm waiting for your message\n${account.email}`)
+        await ctx.answerCallbackQuery();
+    }
+
+
+    private userProfile = async (ctx: MyContext, _next: NextFunction) => {
         if (ctx.chat?.id !== AdminGP) return await _next()
         ctx.session.inputState = null
-        await ctx.reply("Hilo")
-        await ctx.reply(JSON.stringify(ctx.msg))
 
-        if (ctx.msg?.reply_to_message?.forward_from) {
-            const toChatID = ctx.msg?.reply_to_message?.forward_from.id
-            await ctx.api.copyMessage(toChatID, ctx.chat?.id!, ctx.msg.message_id)
-            await ctx.reply("پیام شما به کاربر ارسال شد")
-            return
+        await ctx.answerCallbackQuery();
+    }
+
+
+    private sendMessage = async (ctx: MyContext, _next: NextFunction) => {
+        const ii = ctx.session.inputState
+        if (!ii || ii.category !== "superAdmin:user" || ii.parameter !== "message") {
+            return await _next()
         }
-        return await _next()
+        const accountID = ii.subID!
+        await this.bot.api.copyMessage(accountID, ctx.chat?.id!, ctx.message?.message_id!)
+        await ctx.reply("Your message sent successfully")
     }
 
 }
