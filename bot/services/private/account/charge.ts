@@ -151,6 +151,8 @@ class AccountChargeService {
 
     private payment = async (ctx: MyContext, _next: NextFunction) => {
         const ii = ctx.session.inputState
+        await ctx.reply("لطفا مبلغ را به درستی وارد کنید")
+
         if (!ii || ii.category !== "account:charge" || ii.parameter !== "payment") {
             return await _next()
         }
