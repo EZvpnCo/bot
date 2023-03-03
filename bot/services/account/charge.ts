@@ -185,13 +185,12 @@ class AccountChargeService {
         if (!ii || ii.category !== "account:charge" || ii.parameter !== "sendReceipt") {
             return await _next()
         }
-        const text = `🔻 یک فیش از طرف اکانت ${ctx.session.account.email} برای شارژ اکانت ارسال شد:`
-        const keyboard = new InlineKeyboard()
 
-        keyboard.url('تلگرام کاربر', `tg://user?id=${ctx.session.account.id}`)
-
-        await this.bot.api.sendMessage(AdminGP, text, { reply_markup: keyboard })
+        let text = `🔻 یک فیش از طرف اکانت ${ctx.session.account.email} برای شارژ اکانت ارسال شد:`
+        text += `<a href="tg://user?id=${ctx.session.account.id}">اکانت تلگرام</a>`
+        await this.bot.api.sendMessage(AdminGP, text, { parse_mode: "HTML" })
         await this.bot.api.forwardMessage(AdminGP, ctx.chat?.id!, ctx.message?.message_id!)
+
         await ctx.reply("با موفقیت ارسال شد. در ۲۴ الی ۴۸ ساعت آینده پس از بررسی اکانت شما شارژ خواهد شد")
         new AccountService(this.bot).response(ctx)
     }
