@@ -13,8 +13,9 @@ export default function EndPoint(bot: MyBot) {
     })
 
     router.post('/payment', (req: Request, res: Response) => {
-        bot.api.sendMessage(SuperAdmin, "Text")
-        bot.api.sendMessage(SuperAdmin, JSON.stringify(req.body))
+        bot.api.sendMessage(SuperAdmin, "Text2")
+        console.log(req.body)
+        // bot.api.sendMessage(SuperAdmin, )
         res.send("Payment")
     })
 
