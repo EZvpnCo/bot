@@ -157,7 +157,7 @@ class AccountChargeService {
         }
         try {
             const uid = ctx.session.user?.account_id
-            ctx.reply("hello7")
+            ctx.reply("hello78")
 
             // create order
             const orderID = "707"
@@ -177,12 +177,8 @@ class AccountChargeService {
 
                 const response = await axios.post(
                     `${NowPayment_api_url}/v1/invoice`,
-                    {},
-                    {
-                        headers: {
-                            'x-api-key': NowPayment_api_key
-                        }
-                    }
+                    $data,
+                    { headers: { 'x-api-key': NowPayment_api_key } }
                 ).catch((error) => { throw error.response })
 
                 ctx.reply(JSON.stringify(response))
