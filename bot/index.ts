@@ -5,7 +5,8 @@ import { BotToken, SuperAdmin } from "./config"
 import sequelize from "./database";
 import Authentication from "./middleware/authentication";
 import User from "./database/models/bot_user.model";
-import MenuService from "./services/menu";
+import MenuService from "./services/private/menu";
+import GroupService from "./services/group/group";
 
 
 
@@ -86,17 +87,25 @@ bot
     await ctx.reply(_text, { parse_mode: 'HTML' })
   });
 
-bot
-  .filter((ctx) => (ctx.chat?.type !== "private"))
-  .use((ctx) => {
-    ctx.reply("This is Group");
-  });
-
 
 bot.use(session({ initial }));
 bot
   .filter((ctx) => (ctx.message !== undefined || ctx.callbackQuery !== undefined))
   .use(Authentication);
+
+
+// #############################################
+
+
+
+// ****************************** Group
+new GroupService(bot).run()
+bot
+  .filter((ctx) => (ctx.chat?.type !== "private"))
+  .use((ctx) => { /** Nothing */ });
+// ****************************** Group
+
+
 
 
 
@@ -108,12 +117,6 @@ bot.command("start", (ctx) => {
 });
 
 
-export const backKeyboards = (ctx: MyContext, keyboard: InlineKeyboard, backLevel: string) => {
-  keyboard
-    .text(ctx.t("back-btn"), backLevel)
-    .text(ctx.t("back-to-home-btn"), "menu")
-  return keyboard
-}
 
 
 
