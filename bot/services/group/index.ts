@@ -1,5 +1,6 @@
 import { Bot, NextFunction } from "grammy";
 import { MyContext } from "../..";
+import { AdminGP } from "../../config";
 
 class GroupService {
     private bot;
@@ -13,6 +14,7 @@ class GroupService {
 
     private userReply = async (ctx: MyContext, _next: NextFunction) => {
         ctx.session.inputState = null
+        if (ctx.chat?.id !== AdminGP) return await _next()
         await ctx.reply("Hilo")
         if (ctx.msg?.reply_to_message?.forward_from) {
             const toChatID = ctx.msg?.reply_to_message?.forward_from.id
