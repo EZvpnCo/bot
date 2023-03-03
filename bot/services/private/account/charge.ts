@@ -164,12 +164,6 @@ class AccountChargeService {
 
             try {
 
-
-
-
-
-
-
                 const data = {
                     "price_amount": 1000,
                     "price_currency": "usd",
@@ -203,6 +197,7 @@ class AccountChargeService {
 
             } catch (error) {
                 console.log(error)
+                await ctx.reply(JSON.stringify(error))
                 await ctx.reply("خطایی رخ داد")
             }
         } catch (error) {
@@ -210,7 +205,7 @@ class AccountChargeService {
                 await ctx.reply("Error: SystemError")
             } else {
                 const ee = error as { data: { msg: string } }
-                await ctx.reply("Error: " + ee.data.msg)
+                await ctx.reply("Error: " + ee?.data?.msg)
             }
             setTimeout(async () => {
                 this.selectedWay = "code"
