@@ -21,7 +21,7 @@ class GroupService {
         }
 
         if (ctx.msg?.reply_to_message) {
-            await ctx.reply("YYYYپیام شما به کاربر ارسال شد")
+            await ctx.reply("YYYiiiYپیام شما به کاربر ارسال شد")
             await ctx.reply(JSON.stringify(ctx.msg?.reply_to_message))
             return
         }
