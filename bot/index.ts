@@ -99,10 +99,10 @@ bot
 
 
 // ****************************** Group
-// new GroupService(bot).run()
-// bot
-//   .filter((ctx) => (ctx.chat?.type !== "private"))
-//   .use((ctx) => { /** Nothing */ });
+new GroupService(bot).run()
+bot
+  .filter((ctx) => (ctx.chat?.type !== "private"))
+  .use((ctx) => { /** Nothing */ });
 // ****************************** Group
 
 
