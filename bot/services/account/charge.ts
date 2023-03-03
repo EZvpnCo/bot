@@ -2,6 +2,7 @@ import axios from "axios";
 import { Bot, InlineKeyboard, NextFunction } from "grammy";
 import AccountService from ".";
 import { MyContext } from "../..";
+import { AdminGP, } from "../../config";
 import * as apiService from "../api"
 
 
@@ -84,7 +85,7 @@ class AccountChargeService {
             keyboard.text('200 دلار', "account:charge:payment:200")
             keyboard.text('500 دلار', "account:charge:payment:500")
             keyboard.row()
-            keyboard.text(ctx.t("back-btn"), "account:charge:payment")
+            keyboard.text(ctx.t("back-btn"), "account:charge")
             keyboard.text(ctx.t("back-to-home-btn"), "menu")
 
             await ctx.editMessageText(
@@ -184,6 +185,13 @@ class AccountChargeService {
         if (!ii || ii.category !== "account:charge" || ii.parameter !== "sendReceipt") {
             return await _next()
         }
+        const text = `🔻 یک فیش از طرف اکانت ${ctx.session.account.email} برای شارژ اکانت ارسال شد:`
+        const keyboard = new InlineKeyboard()
+
+        keyboard.url('تلگرام کاربر', `tg://user?id=${ctx.session.account.id}`)
+
+        await this.bot.api.sendMessage(AdminGP, text, { reply_markup: keyboard })
+        await this.bot.api.forwardMessage(AdminGP, ctx.chat?.id!, ctx.message?.message_id!)
         await ctx.reply("با موفقیت ارسال شد. در ۲۴ الی ۴۸ ساعت آینده پس از بررسی اکانت شما شارژ خواهد شد")
         new AccountService(this.bot).response(ctx)
     }
