@@ -179,8 +179,7 @@ class AccountChargeService {
 
                 const response = await axios.post(
                     `${NowPayment_api_url}/v1/invoice`,
-                    JSON.stringify(data),
-                    { headers: { 'x-api-key': NowPayment_api_key } }
+                    data, { headers: { 'x-api-key': NowPayment_api_key } }
                 ).catch((error) => { throw error.response })
 
                 ctx.reply(JSON.stringify(response))
