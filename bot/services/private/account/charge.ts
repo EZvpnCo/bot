@@ -165,14 +165,14 @@ class AccountChargeService {
             // try {
 
             const data = {
-                "price_amount": 1000,
+                "price_amount": price,
                 "price_currency": "usd",
                 "order_id": "RGDBP-21314",
-                "order_description": "Apple Macbook Pro 2019 x 1",
-                "ipn_callback_url": "https://nowpayments.io",
-                "success_url": "https://nowpayments.io",
-                "cancel_url": "https://nowpayments.io",
-                "partially_paid_url": "https://nowpayments.io",
+                "order_description": "EZvpn charge " + price + "$ user " + ctx.session.account.email,
+                "ipn_callback_url": "https://ezvpn.co/",
+                "success_url": "https://ezvpn.co/",
+                "cancel_url": "https://ezvpn.co/",
+                "partially_paid_url": "https://ezvpn.co/",
                 "is_fixed_rate": true,
                 "is_fee_paid_by_user": false
             }
@@ -183,10 +183,11 @@ class AccountChargeService {
                 data, { headers: { 'x-api-key': NowPayment_api_key } }
             )
 
-            ctx.reply(JSON.stringify(response.data))
+            const paylink = response.data?.invoice_url
+            if (!paylink) return await ctx.reply("خطایی رخ داد")
 
             const keyboard = new InlineKeyboard()
-            keyboard.url("اتصال به درگاه پرداخت", "https://google.com")
+            keyboard.url("اتصال به درگاه پرداخت", paylink)
             keyboard.row()
             keyboard.text(ctx.t("back-btn"), "account:charge:payment")
             keyboard.text(ctx.t("back-to-home-btn"), "menu")
@@ -194,12 +195,6 @@ class AccountChargeService {
                 `❗️شما میخواهید اکانت خودتون رو به مبلغ ${price}$ شارژ کنید. برای ادامه بر روی اتصال به درگاه پرداخت کلیک کنید.`,
                 { parse_mode: "HTML", reply_markup: keyboard }
             );
-
-            // } catch (error) {
-            //     console.log(error)
-            //     await ctx.reply(JSON.stringify(error))
-            //     await ctx.reply("خطایی رخ داد")
-            // }
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")
