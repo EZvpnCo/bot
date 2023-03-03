@@ -3,9 +3,12 @@ lockfileVersion: 5.4
 specifiers:
   '@grammyjs/emoji': ^1.1.0
   '@grammyjs/i18n': ^1.0.1
+  '@types/cors': ^2.8.13
+  '@types/express': ^4.17.17
   '@types/node': ^18.11.18
   '@types/qrcode': ^1.5.0
   axios: ^1.2.3
+  cors: ^2.8.5
   express: ^4.18.2
   grammy: ^1.13.0
   i18n-iso-countries: ^7.5.0
@@ -19,6 +22,7 @@ dependencies:
   '@grammyjs/emoji': 1.1.0_grammy@1.13.0
   '@grammyjs/i18n': 1.0.1_grammy@1.13.0
   axios: 1.2.3
+  cors: 2.8.5
   express: 4.18.2
   grammy: 1.13.0
   i18n-iso-countries: 7.5.0
@@ -28,6 +32,8 @@ dependencies:
   sequelize: 6.28.0_mysql2@3.0.1
 
 devDependencies:
+  '@types/cors': 2.8.13
+  '@types/express': 4.17.17
   '@types/node': 18.11.18
   '@types/qrcode': 1.5.0
   typescript: 4.9.4
@@ -67,11 +73,51 @@ packages:
     resolution: {integrity: sha512-x3Q1ngj89Sxu4bsLLPPAzAhAn+dqtaVtRPGXagVCZO7MJFbiWKdhs0aJKtC+HNaSlEhCS1unBOVde0ecAh9MZQ==}
     dev: false
 
+  /@types/body-parser/1.19.2:
+    resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
+    dependencies:
+      '@types/connect': 3.4.35
+      '@types/node': 18.11.18
+    dev: true
+
+  /@types/connect/3.4.35:
+    resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
+    dependencies:
+      '@types/node': 18.11.18
+    dev: true
+
+  /@types/cors/2.8.13:
+    resolution: {integrity: sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA==}
+    dependencies:
+      '@types/node': 18.11.18
+    dev: true
+
   /@types/debug/4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
     dependencies:
       '@types/ms': 0.7.31
     dev: false
+
+  /@types/express-serve-static-core/4.17.33:
+    resolution: {integrity: sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA==}
+    dependencies:
+      '@types/node': 18.11.18
+      '@types/qs': 6.9.7
+      '@types/range-parser': 1.2.4
+    dev: true
+
+  /@types/express/4.17.17:
+    resolution: {integrity: sha512-Q4FmmuLGBG58btUnfS1c1r/NQdlp3DMfGDGig8WhfpA2YRUtEkxAjkZb0yvplJGYdF1fsQ81iMDcH24sSCNC/Q==}
+    dependencies:
+      '@types/body-parser': 1.19.2
+      '@types/express-serve-static-core': 4.17.33
+      '@types/qs': 6.9.7
+      '@types/serve-static': 1.15.1
+    dev: true
+
+  /@types/mime/3.0.1:
+    resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
+    dev: true
 
   /@types/ms/0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
@@ -83,6 +129,21 @@ packages:
   /@types/qrcode/1.5.0:
     resolution: {integrity: sha512-x5ilHXRxUPIMfjtM+1vf/GPTRWZ81nqscursm5gMznJeK9M0YnZ1c3bEvRLQ0zSSgedLx1J6MGL231ObQGGhaA==}
     dependencies:
+      '@types/node': 18.11.18
+    dev: true
+
+  /@types/qs/6.9.7:
+    resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
+    dev: true
+
+  /@types/range-parser/1.2.4:
+    resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
+    dev: true
+
+  /@types/serve-static/1.15.1:
+    resolution: {integrity: sha512-NUo5XNiAdULrJENtJXZZ3fHtfMolzZwczzBbnAeBbqBwG+LaG6YaJtuwzwGSQZ2wsCrxjEhNNjAkKigy3n8teQ==}
+    dependencies:
+      '@types/mime': 3.0.1
       '@types/node': 18.11.18
     dev: true
 
@@ -217,6 +278,14 @@ packages:
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /cors/2.8.5:
+    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
+    engines: {node: '>= 0.10'}
+    dependencies:
+      object-assign: 4.1.1
+      vary: 1.1.2
     dev: false
 
   /debug/2.6.9:
@@ -625,6 +694,11 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /object-assign/4.1.1:
+    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
+    engines: {node: '>=0.10.0'}
     dev: false
 
   /object-inspect/1.12.3:
