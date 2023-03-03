@@ -1,5 +1,4 @@
 import { Bot, InlineKeyboard } from "grammy";
-import { Op } from "sequelize";
 import { MyContext } from "../../..";
 
 import DiagnosisService from "../diagnosis";

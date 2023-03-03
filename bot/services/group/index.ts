@@ -13,10 +13,24 @@ class GroupService {
 
     private userReply = async (ctx: MyContext, _next: NextFunction) => {
         ctx.session.inputState = null
-        if (ctx.message?.forward_from) {
+
+        await ctx.reply("Hi")
+        if (ctx.msg?.forward_from) {
             await ctx.reply("پیام شما به کاربر ارسال شد")
             return
         }
+
+        if (ctx.msg?.reply_to_message) {
+            await ctx.reply("YYYYپیام شما به کاربر ارسال شد")
+            return
+        }
+
+        if (ctx.msg?.reply_to_message && ctx.msg?.reply_to_message.forward_from) {
+            await ctx.reply("YYYYپیام شما به کBBBBBBاربر ارسال شد")
+            return
+        }
+
+
         return await _next()
     }
 

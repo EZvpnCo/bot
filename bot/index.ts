@@ -6,7 +6,7 @@ import sequelize from "./database";
 import Authentication from "./middleware/authentication";
 import User from "./database/models/bot_user.model";
 import MenuService from "./services/private/menu";
-import GroupService from "./services/group/group";
+import GroupService from "./services/group";
 
 
 
