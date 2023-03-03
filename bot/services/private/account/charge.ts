@@ -157,12 +157,19 @@ class AccountChargeService {
         }
         try {
             const uid = ctx.session.user?.account_id
-            ctx.reply("hello787799")
+            ctx.reply("hello78779888889")
 
             // create order
             const orderID = "707"
 
             try {
+
+
+
+
+
+
+
                 const data = {
                     "price_amount": 1000,
                     "price_currency": "usd",
