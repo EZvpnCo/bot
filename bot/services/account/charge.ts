@@ -51,11 +51,11 @@ class AccountChargeService {
 
 
     // ############################
-    private selectedWay = "code"
+    private selectedWay = ""
     private chargeWaySelect = async (ctx: MyContext) => {
         ctx.session.inputState = null
-        if (!this.selectedWay && ctx.match) {
-            this.selectedWay = ctx.match[1]
+        if (ctx.match) {
+            this.selectedWay = ctx.match[1]!
         }
 
         if (!["code", "payment", "sendReceipt"].includes(this.selectedWay)) {
