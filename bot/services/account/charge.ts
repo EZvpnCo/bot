@@ -13,7 +13,7 @@ class AccountChargeService {
 
     public run() {
         this.bot.callbackQuery("account:charge", this.response)
-        this.bot.callbackQuery(/^account:charge:(code|payment)$/, this.chargeWaySelect)
+        this.bot.callbackQuery(/^account:charge:(code|payment|sendReceipt)$/, this.chargeWaySelect)
         this.bot.callbackQuery(/^account:charge:payment:([0-9]+)$/, this.payment)
         this.bot.on("message", this.enterCode)
         this.bot.on("message", this.sendReceipt)
@@ -58,7 +58,7 @@ class AccountChargeService {
             this.selectedWay = ctx.match[1]
         }
 
-        if (!["code", "payment"].includes(this.selectedWay)) {
+        if (!["code", "payment", "sendReceipt"].includes(this.selectedWay)) {
             await ctx.answerCallbackQuery({ text: "روش انتخابی وجود ندارد", show_alert: true });
         }
 
