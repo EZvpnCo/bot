@@ -168,7 +168,7 @@ class AccountChargeService {
                 $data['price_currency'] = "usd";
                 $data['pay_currency'] = "usdttrc20";
                 $data['order_id'] = orderID;
-                $data['order_description'] = "EZvpn:)";
+                $data['order_description'] = "EZvpn";
                 $data['is_fixed_rate'] = true;
                 $data['is_fee_paid_by_user'] = true;
 
