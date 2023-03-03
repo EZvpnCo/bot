@@ -71,6 +71,7 @@ class GroupService {
         const accountID = ii.subID!
         await this.bot.api.copyMessage(accountID, ctx.chat?.id!, ctx.message?.message_id!)
         await ctx.reply("Your message sent successfully")
+        ctx.session.inputState = null
     }
 
 }
