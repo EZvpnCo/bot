@@ -157,49 +157,49 @@ class AccountChargeService {
         }
         try {
             const uid = ctx.session.user?.account_id
-            ctx.reply("hello78779888889")
+            ctx.reply("hello")
 
             // create order
             const orderID = "707"
 
-            try {
+            // try {
 
-                const data = {
-                    "price_amount": 1000,
-                    "price_currency": "usd",
-                    "order_id": "RGDBP-21314",
-                    "order_description": "Apple Macbook Pro 2019 x 1",
-                    "ipn_callback_url": "https://nowpayments.io",
-                    "success_url": "https://nowpayments.io",
-                    "cancel_url": "https://nowpayments.io",
-                    "partially_paid_url": "https://nowpayments.io",
-                    "is_fixed_rate": true,
-                    "is_fee_paid_by_user": false
-                }
-
-
-                const response = await axios.post(
-                    `${NowPayment_api_url}/v1/invoice`,
-                    data, { headers: { 'x-api-key': NowPayment_api_key } }
-                ).catch((error) => { throw error.response })
-
-                ctx.reply(JSON.stringify(response))
-
-                const keyboard = new InlineKeyboard()
-                keyboard.url("اتصال به درگاه پرداخت", "https://google.com")
-                keyboard.row()
-                keyboard.text(ctx.t("back-btn"), "account:charge:payment")
-                keyboard.text(ctx.t("back-to-home-btn"), "menu")
-                await ctx.editMessageText(
-                    `❗️شما میخواهید اکانت خودتون رو به مبلغ ${price}$ شارژ کنید. برای ادامه بر روی اتصال به درگاه پرداخت کلیک کنید.`,
-                    { parse_mode: "HTML", reply_markup: keyboard }
-                );
-
-            } catch (error) {
-                console.log(error)
-                await ctx.reply(JSON.stringify(error))
-                await ctx.reply("خطایی رخ داد")
+            const data = {
+                "price_amount": 1000,
+                "price_currency": "usd",
+                "order_id": "RGDBP-21314",
+                "order_description": "Apple Macbook Pro 2019 x 1",
+                "ipn_callback_url": "https://nowpayments.io",
+                "success_url": "https://nowpayments.io",
+                "cancel_url": "https://nowpayments.io",
+                "partially_paid_url": "https://nowpayments.io",
+                "is_fixed_rate": true,
+                "is_fee_paid_by_user": false
             }
+
+
+            const response = await axios.post(
+                `${NowPayment_api_url}/v1/invoice`,
+                data, { headers: { 'x-api-key': NowPayment_api_key } }
+            )
+
+            // ctx.reply(JSON.stringify(response.data))
+
+            const keyboard = new InlineKeyboard()
+            keyboard.url("اتصال به درگاه پرداخت", "https://google.com")
+            keyboard.row()
+            keyboard.text(ctx.t("back-btn"), "account:charge:payment")
+            keyboard.text(ctx.t("back-to-home-btn"), "menu")
+            await ctx.editMessageText(
+                `❗️شما میخواهید اکانت خودتون رو به مبلغ ${price}$ شارژ کنید. برای ادامه بر روی اتصال به درگاه پرداخت کلیک کنید.`,
+                { parse_mode: "HTML", reply_markup: keyboard }
+            );
+
+            // } catch (error) {
+            //     console.log(error)
+            //     await ctx.reply(JSON.stringify(error))
+            //     await ctx.reply("خطایی رخ داد")
+            // }
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")
