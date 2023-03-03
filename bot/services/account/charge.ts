@@ -187,8 +187,7 @@ class AccountChargeService {
         }
 
         let text = `🔻 یک فیش از طرف اکانت ${ctx.session.account.email} برای شارژ اکانت ارسال شد:`
-        text += `<a href="tg://user?id=${ctx.session.account.id}">اکانت تلگرام</a>`
-        await this.bot.api.sendMessage(AdminGP, text, { parse_mode: "HTML" })
+        await this.bot.api.sendMessage(AdminGP, text)
         await this.bot.api.forwardMessage(AdminGP, ctx.chat?.id!, ctx.message?.message_id!)
 
         await ctx.reply("با موفقیت ارسال شد. در ۲۴ الی ۴۸ ساعت آینده پس از بررسی اکانت شما شارژ خواهد شد")
