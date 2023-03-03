@@ -157,7 +157,7 @@ class AccountChargeService {
         }
         try {
             const uid = ctx.session.user?.account_id
-            ctx.reply("hello")
+            ctx.reply("hello7")
 
             // create order
             const orderID = "707"
@@ -198,6 +198,7 @@ class AccountChargeService {
                 );
 
             } catch (error) {
+                console.log(error)
                 await ctx.reply("خطایی رخ داد")
             }
         } catch (error) {
