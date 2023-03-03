@@ -169,10 +169,10 @@ class AccountChargeService {
                 "price_currency": "usd",
                 "order_id": "RGDBP-21314",
                 "order_description": "EZvpn charge " + price + "$ user " + ctx.session.account.email,
-                "ipn_callback_url": "https://ezvpn.co/",
-                "success_url": "https://ezvpn.co/",
-                "cancel_url": "https://ezvpn.co/",
-                "partially_paid_url": "https://ezvpn.co/",
+                "ipn_callback_url": "http://bot.ezvpn.co:1551/payment",
+                "success_url": "http://bot.ezvpn.co:1551/",
+                "cancel_url": "http://bot.ezvpn.co:1551/",
+                "partially_paid_url": "http://bot.ezvpn.co:1551/",
                 "is_fixed_rate": true,
                 "is_fee_paid_by_user": false
             }
