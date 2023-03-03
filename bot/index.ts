@@ -86,10 +86,16 @@ bot
     await ctx.reply(_text, { parse_mode: 'HTML' })
   });
 
+bot
+  .filter((ctx) => (ctx.chat?.type !== "private"))
+  .use((ctx) => {
+    ctx.reply("This is Group");
+  });
+
 
 bot.use(session({ initial }));
 bot
-  .filter((ctx) => ctx.message !== undefined || ctx.callbackQuery !== undefined)
+  .filter((ctx) => (ctx.message !== undefined || ctx.callbackQuery !== undefined))
   .use(Authentication);
 
 
