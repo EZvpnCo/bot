@@ -22,7 +22,7 @@ export default function EndPoint(bot: MyBot) {
                 <meta property="twitter:image" content="https://qr.io/logo/qr-background.png">
                 </head>
                 <body>
-                <img src="${qr}" />
+                <img src="${qr.toString('base64')}" />
                 QRcode
                 </body>
                 </html>
