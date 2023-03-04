@@ -144,13 +144,17 @@ class AccountSubscriptionService {
                     break
             }
 
-            try {
-                const qr = await QRCode.toBuffer(suburl)
-                await ctx.replyWithPhoto(new InputFile(qr), { caption: `<pre>${suburl}</pre>`, parse_mode: "HTML" })
-            } catch (err) {
-                console.error(err)
-            }
+            await ctx.editMessageText(
+                `<a href="http://bot.ezvpn.co/qrcode/?content=${suburl}">🔻</a> <pre>${suburl}</pre>`,
+                { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
+            );
 
+            // try {
+            //     const qr = await QRCode.toBuffer(suburl)
+            //     await ctx.replyWithPhoto(new InputFile(qr), { caption: `<pre>${suburl}</pre>`, parse_mode: "HTML" })
+            // } catch (err) {
+            //     console.error(err)
+            // }
             await ctx.answerCallbackQuery()
         } catch (error) {
             if (axios.isAxiosError(error)) {
