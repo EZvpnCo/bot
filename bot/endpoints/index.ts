@@ -19,8 +19,8 @@ export default function EndPoint(bot: MyBot) {
             res.send(`
                 <html>
                 <head>
-                <meta property="og:image" content="${img}">
-                <meta property="twitter:image" content="${img}">
+                <meta property="og:image" content="https://cdn.sstatic.net/Img/teams/teams-illo-free-sidebar-promo.svg?v=47faa659a05e">
+                <meta property="twitter:image" content="https://cdn.sstatic.net/Img/teams/teams-illo-free-sidebar-promo.svg?v=47faa659a05e">
                 </head>
                 <body>
                 <img src="${img}" />
