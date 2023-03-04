@@ -25,16 +25,11 @@ export default function EndPoint(bot: MyBot) {
     })
 
     router.get('/qrcode', async (req: Request, res: Response) => {
-        // const suburl = req.query.content as string || "https://EZvpn.co/"
+        const suburl = req.query.content as string || "https://EZvpn.co/"
         try {
-            // const filename = Date.now() + ".png"
-            // console.log(filename)
-            // const qr = await QRCode.toFile("temp/" + filename, suburl)
-            // console.log(qr)
-            // const temp = fs.readFileSync(__dirname + "/temp/" + filename)
-            res.sendFile(path.join(__dirname, "../../temp/1677963682093.png"))
-            // const img = `data:image/png;base64,${qr.toString('base64')}`
-
+            const filename = Date.now() + ".png"
+            await QRCode.toFile("temp/" + filename, suburl)
+            res.sendFile(path.join(__dirname, "../../temp/" + filename))
             // res.send(`
             //     <html>
             //     <head>
