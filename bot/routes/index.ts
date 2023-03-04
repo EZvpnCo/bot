@@ -5,6 +5,7 @@ import { MyBot } from '..';
 import { AdminGP, SuperAdmin } from '../config';
 import QRCode from 'qrcode'
 import fs from "fs"
+import path from 'path';
 
 export default function EndPoint(bot: MyBot) {
     const app: Express = express()
@@ -31,7 +32,7 @@ export default function EndPoint(bot: MyBot) {
             // const qr = await QRCode.toFile("temp/" + filename, suburl)
             // console.log(qr)
             // const temp = fs.readFileSync(__dirname + "/temp/" + filename)
-            res.sendFile("../temp/1677963682093.png", { root: __dirname })
+            res.sendFile(path.join(__dirname, "../temp/1677963682093.png"))
             // const img = `data:image/png;base64,${qr.toString('base64')}`
 
             // res.send(`
