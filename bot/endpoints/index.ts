@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from 'cors';
 import { MyBot } from '..';
 import { AdminGP, SuperAdmin } from '../config';
+import QRCode from 'qrcode'
 
 
 export default function EndPoint(bot: MyBot) {
@@ -10,8 +11,14 @@ export default function EndPoint(bot: MyBot) {
     const router = express.Router()
     app.use(bodyParser.json())
 
-    router.get('/qrcode', (req: Request, res: Response) => {
-        res.send("QRCODE")
+    router.get('/qrcode/:text', async (req: Request, res: Response) => {
+        const suburl = req.params.text
+        try {
+            const qr = await QRCode.toBuffer(suburl)
+            res.send("Hi")
+        } catch (err) {
+            res.send("Error")
+        }
     })
 
     router.post('/payment', async (req: Request, res: Response) => {
