@@ -7,7 +7,7 @@ import Authentication from "./middleware/authentication";
 import User from "./database/models/bot_user.model";
 import MenuService from "./services/private/menu";
 import GroupService from "./services/group";
-import EndPoint from "./endpoints";
+import EndPoint from "./routes";
 
 
 
