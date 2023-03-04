@@ -27,7 +27,7 @@ export default function EndPoint(bot: MyBot) {
         const suburl = req.query.content as string || "https://EZvpn.co/"
         // try {
         const filename = Date.now() + ".png"
-        const qr = QRCode.toFile(__dirname + "/temp/" + filename, suburl)
+        const qr = await QRCode.toFile(__dirname + "/temp/" + filename, suburl)
         console.log(qr)
         // const temp = fs.readFileSync(__dirname + "/temp/" + filename)
         res.sendFile(__dirname + "/temp/" + filename)
