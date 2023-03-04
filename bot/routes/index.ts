@@ -62,6 +62,7 @@ export default function EndPoint(bot: MyBot) {
             //     </html>
             // `)
         } catch (err) {
+            console.log(err)
             res.send("Error")
         }
     })
