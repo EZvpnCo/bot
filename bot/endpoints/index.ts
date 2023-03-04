@@ -15,14 +15,15 @@ export default function EndPoint(bot: MyBot) {
         const suburl = req.params.text
         try {
             const qr = await QRCode.toBuffer(suburl)
+            const img = `data:image/png;base64,${qr.toString('base64')}`
             res.send(`
                 <html>
                 <head>
-                <meta property="og:image" content="https://qr.io/logo/qr-background.png">
-                <meta property="twitter:image" content="https://qr.io/logo/qr-background.png">
+                <meta property="og:image" content="${img}">
+                <meta property="twitter:image" content="${img}">
                 </head>
                 <body>
-                <img src="${qr.toString('base64')}" />
+                <img src="${img}" />
                 QRcode
                 </body>
                 </html>
