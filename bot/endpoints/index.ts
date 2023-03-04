@@ -19,23 +19,22 @@ export default function EndPoint(bot: MyBot) {
             res.send(`
                 <html>
                 <head>
-                    <title>Generate Customized QR Codes | QR.io</title>
+                    <title>Subscription</title>
                     <link rel="canonical" href="/">
                     <meta charset="utf-8">
                     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-                    <meta name="title" content="Generate Customized QR Codes | QR.io">
-                    <meta name="author" content="QR.io">
-                    <meta name="description" content="Generate fully customized QR Codes, with color &amp; shape, logo and keep track of how many people scan your QR Codes, from where and on what date.">
-                    <meta name="keywords" content="qr, qr code, qr code generator">
+                    <meta name="title" content="Subscription">
+                    <meta name="author" content="ezvpn.co">
+                    <meta name="description" content="">
                     <meta property="og:type" content="website">
-                    <meta property="og:url" content="https://qr.io">
-                    <meta property="og:title" content="Generate Customized QR Codes | QR.io">
-                    <meta property="og:description" content="Generate fully customized QR Codes, with color &amp; shape, logo and keep track of how many people scan your QR Codes, from where and on what date.">
+                    <meta property="og:url" content="http://bot.ezvpn.co">
+                    <meta property="og:title" content="Subscription">
+                    <meta property="og:description" content="">
                     <meta property="og:image" content="https://qr.io/logo/qr-background.png">
                     <meta property="twitter:card" content="summary_large_image">
-                    <meta property="twitter:url" content="https://qr.io">
-                    <meta property="twitter:title" content="Generate Customized QR Codes | QR.io">
-                    <meta property="twitter:description" content="Generate fully customized QR Codes, with color &amp; shape, logo and keep track of how many people scan your QR Codes, from where and on what date.">
+                    <meta property="twitter:url" content="http://bot.ezvpn.co">
+                    <meta property="twitter:title" content="Subscription">
+                    <meta property="twitter:description" content="">
                     <meta property="twitter:image" content="https://qr.io/logo/qr-background.png">
                 </head>
                 <body>
