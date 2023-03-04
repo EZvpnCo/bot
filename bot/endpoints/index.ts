@@ -11,8 +11,8 @@ export default function EndPoint(bot: MyBot) {
     const router = express.Router()
     app.use(bodyParser.json())
 
-    router.get('/qrcode/:text', async (req: Request, res: Response) => {
-        const suburl = req.params.text
+    router.get('/qrcode', async (req: Request, res: Response) => {
+        const suburl = req.query.content as string || "https://EZvpn.co/"
         try {
             const qr = await QRCode.toBuffer(suburl)
             const img = `data:image/png;base64,${qr.toString('base64')}`
@@ -24,7 +24,6 @@ export default function EndPoint(bot: MyBot) {
                 </head>
                 <body>
                 <img src="${img}" />
-                QRcode
                 </body>
                 </html>
             `)
