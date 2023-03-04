@@ -6,6 +6,11 @@ import { AdminGP, SuperAdmin } from '../config';
 import QRCode from 'qrcode'
 import fs from "fs"
 import path from 'path';
+import Order from '../database/models/bot_orders.model';
+import User from '../database/models/bot_user.model';
+import * as apiService from "../api"
+
+
 
 export default function EndPoint(bot: MyBot) {
     const app: Express = express()
@@ -65,13 +70,30 @@ export default function EndPoint(bot: MyBot) {
 
     router.post('/payment', async (req: Request, res: Response) => {
         bot.api.sendMessage(SuperAdmin, "Text2")
-        console.log(req.body)
+        console.log(req.body, "*************")
 
-        // get account id by order
+        const { payment_status, order_id } = req.body
 
-        const text = `🔻 اکانت عباس 50 دلار شارژ شد`
-        await bot.api.sendMessage(AdminGP, text)
-        await bot.api.sendMessage(AdminGP, JSON.stringify(req.body))
+
+        const order = await Order.findByPk(order_id)
+        const _price = order?.price
+        const user = await User.findOne({ where: { account_id: order?.account_id! } })
+        const response = await apiService.GET()("account?user=" + order?.account_id!)
+        const account = response.data
+
+
+        if (payment_status === "finished") {
+            const _text = `🔻 اکانت شما ${_price} دلار شارژ شد\n موجودی: ${account.money}`
+            await bot.api.sendMessage(user?.id!, _text)
+
+            const text = `🔻 اکانت ${account.email} ${_price} دلار شارژ شد\n موجودی: ${account.money}`
+            await bot.api.sendMessage(AdminGP, text)
+            await bot.api.sendMessage(AdminGP, JSON.stringify(req.body))
+        }
+        else {
+            const _text = `❌ شارٓ حساب با خطا مواجه شد`
+            await bot.api.sendMessage(user?.id!, _text)
+        }
 
         res.send("payment result")
     })
