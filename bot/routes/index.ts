@@ -91,7 +91,7 @@ export default function EndPoint(bot: MyBot) {
             await bot.api.sendMessage(AdminGP, JSON.stringify(req.body))
         }
         else {
-            const _text = `❌ شارٓ حساب با خطا مواجه شد`
+            const _text = `❌ شارژ حساب با خطا مواجه شد`
             await bot.api.sendMessage(user?.id!, _text)
         }
 
