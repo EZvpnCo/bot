@@ -30,15 +30,16 @@ export default function EndPoint(bot: MyBot) {
                     <meta property="og:url" content="http://bot.ezvpn.co">
                     <meta property="og:title" content="Subscription">
                     <meta property="og:description" content="">
-                    <meta property="og:image" content="https://qr.io/logo/qr-background.png">
+                    <meta property="og:image" content="${img}">
                     <meta property="twitter:card" content="summary_large_image">
                     <meta property="twitter:url" content="http://bot.ezvpn.co">
                     <meta property="twitter:title" content="Subscription">
                     <meta property="twitter:description" content="">
-                    <meta property="twitter:image" content="https://qr.io/logo/qr-background.png">
+                    <meta property="twitter:image" content="${img}">
                 </head>
                 <body>
                 <img src="${img}" />
+                1
                 </body>
                 </html>
             `)
