@@ -31,7 +31,7 @@ export default function EndPoint(bot: MyBot) {
         const qr = await QRCode.toFile("temp/" + filename, suburl)
         console.log(qr)
         // const temp = fs.readFileSync(__dirname + "/temp/" + filename)
-        res.sendFile(__dirname + "/temp/" + filename)
+        res.sendFile("temp/" + filename)
         // const img = `data:image/png;base64,${qr.toString('base64')}`
 
         // res.send(`
