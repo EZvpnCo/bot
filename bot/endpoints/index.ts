@@ -15,7 +15,18 @@ export default function EndPoint(bot: MyBot) {
         const suburl = req.params.text
         try {
             const qr = await QRCode.toBuffer(suburl)
-            res.send(qr)
+            res.send(`
+                <html>
+                <head>
+                <meta property="og:image" content="https://qr.io/logo/qr-background.png">
+                <meta property="twitter:image" content="https://qr.io/logo/qr-background.png">
+                </head>
+                <body>
+                <img src="${qr}" />
+                QRcode
+                </body>
+                </html>
+            `)
         } catch (err) {
             res.send("Error")
         }
