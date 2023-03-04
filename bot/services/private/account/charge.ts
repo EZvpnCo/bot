@@ -4,6 +4,8 @@ import AccountService from ".";
 import { MyContext } from "../../..";
 import { AdminGP, NowPayment_api_key, NowPayment_api_url, } from "../../../config";
 import * as apiService from "../../../api"
+import Order from "../../../database/models/bot_orders.model";
+import moment from "moment";
 
 
 class AccountChargeService {
@@ -156,18 +158,22 @@ class AccountChargeService {
             return
         }
         try {
-            const uid = ctx.session.user?.account_id
+            const aid = ctx.session.user?.account_id!
             ctx.reply("hello1")
 
             // create order
-            const orderID = "707"
+            const order = await Order.create({
+                account_id: aid,
+                price: price,
+            })
+            const orderID = order.id
 
             // try {
 
             const data = {
                 "price_amount": price,
                 "price_currency": "usd",
-                "order_id": "RGDBP-21314",
+                "order_id": orderID,
                 "order_description": "EZvpn charge " + price + "$ user " + ctx.session.account.email,
                 "ipn_callback_url": "http://bot.ezvpn.co:1551/payment",
                 "success_url": "http://bot.ezvpn.co:1551/",
@@ -183,6 +189,8 @@ class AccountChargeService {
                 data, { headers: { 'x-api-key': NowPayment_api_key } }
             )
 
+
+
             const paylink = response.data?.invoice_url
             if (!paylink) return await ctx.reply("خطایی رخ داد")
 
@@ -195,6 +203,14 @@ class AccountChargeService {
                 `❗️شما میخواهید اکانت خودتون رو به مبلغ ${price}$ شارژ کنید. برای ادامه بر روی اتصال به درگاه پرداخت کلیک کنید.`,
                 { parse_mode: "HTML", reply_markup: keyboard }
             );
+
+
+
+            const text = `🔻 صورتحسابی برای شارژ اکانت ${ctx.session.account.email} به مبلغ ${price}$ ایجاد شد\nشماره سفارش: ${orderID}`
+            await this.bot.api.sendMessage(AdminGP, text)
+
+
+
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")
@@ -216,9 +232,7 @@ class AccountChargeService {
             return await _next()
         }
         const keyboard = new InlineKeyboard()
-
         keyboard.text('💬 Send message', `superAdmin:user:message:${ctx.session.user?.id}`)
-        // keyboard.text('🧩 Check profile', `superAdmin:user:profile:${ctx.session.user?.id}`)
         const text = `🔻 یک فیش از طرف اکانت ${ctx.session.account.email} برای شارژ اکانت ارسال شد:`
         await this.bot.api.sendMessage(AdminGP, text, { reply_markup: keyboard })
         await this.bot.api.copyMessage(AdminGP, ctx.chat?.id!, ctx.message?.message_id!)

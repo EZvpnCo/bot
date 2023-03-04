@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import bodyParser from "body-parser";
 import cors from 'cors';
 import { MyBot } from '..';
-import { SuperAdmin } from '../config';
+import { AdminGP, SuperAdmin } from '../config';
 
 
 export default function EndPoint(bot: MyBot) {
@@ -14,11 +14,17 @@ export default function EndPoint(bot: MyBot) {
         res.send("QRCODE")
     })
 
-    router.post('/payment', (req: Request, res: Response) => {
+    router.post('/payment', async (req: Request, res: Response) => {
         bot.api.sendMessage(SuperAdmin, "Text2")
         console.log(req.body)
-        // bot.api.sendMessage(SuperAdmin, )
-        res.send("Payment")
+
+        // get account id by order
+
+        const text = `🔻 اکانت عباس 50 دلار شارژ شد`
+        await bot.api.sendMessage(AdminGP, text)
+        await bot.api.sendMessage(AdminGP, JSON.stringify(req.body))
+
+        res.send("payment result")
     })
 
     router.get('/', (req: Request, res: Response) => {
