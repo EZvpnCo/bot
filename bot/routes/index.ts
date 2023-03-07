@@ -69,7 +69,9 @@ export default function EndPoint(bot: MyBot) {
     })
 
     router.post('/payment', async (req: Request, res: Response) => {
-        console.log(req.body, "*************")
+        bot.api.sendMessage(AdminGP, "Payment")
+        await bot.api.sendMessage(AdminGP, JSON.stringify(req.body))
+
 
         const { payment_status, order_id } = req.body
 
@@ -78,17 +80,21 @@ export default function EndPoint(bot: MyBot) {
         const _price = order?.price
         const user = await User.findOne({ where: { account_id: order?.account_id! } })
 
-
         try {
+
+
+
 
             if (payment_status === "finished") {
                 const response = await apiService.PATCH()("account?user=" + order?.account_id!, { moneycharge: _price })
                 const account = response.data.account
+
                 const _text = `🔻 اکانت شما ${_price} دلار شارژ شد\n موجودی: ${account.money}`
                 await bot.api.sendMessage(user?.id!, _text)
 
                 const text = `🔻 اکانت ${account.email} ${_price} دلار شارژ شد\n موجودی: ${account.money}`
                 await bot.api.sendMessage(AdminGP, text)
+
             }
             else {
                 const _text = `❌ شارژ حساب با خطا مواجه شد`
@@ -96,8 +102,6 @@ export default function EndPoint(bot: MyBot) {
             }
         } catch (error) {
             console.log(error, "#######")
-            const _text = `❌ شارژ حساب با خطا مواجه شد ❌`
-            await bot.api.sendMessage(user?.id!, _text)
         }
         res.send("payment result")
     })
