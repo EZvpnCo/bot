@@ -96,6 +96,10 @@ export default function EndPoint(bot: MyBot) {
                 await bot.api.sendMessage(AdminGP, text)
 
             }
+            else if (payment_status === "waiting") {
+                const _text = `در انتظار پرداخت ...`
+                await bot.api.sendMessage(user?.id!, _text)
+            }
             else {
                 const _text = `❌ شارژ حساب با خطا مواجه شد`
                 await bot.api.sendMessage(user?.id!, _text)
