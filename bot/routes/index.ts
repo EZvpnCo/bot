@@ -80,16 +80,15 @@ export default function EndPoint(bot: MyBot) {
 
 
         try {
-            const response = await apiService.PATCH()("account?user=" + order?.account_id!, { moneycharge: _price })
-            const account = response.data.account
 
             if (payment_status === "finished") {
+                const response = await apiService.PATCH()("account?user=" + order?.account_id!, { moneycharge: _price })
+                const account = response.data.account
                 const _text = `🔻 اکانت شما ${_price} دلار شارژ شد\n موجودی: ${account.money}`
                 await bot.api.sendMessage(user?.id!, _text)
 
                 const text = `🔻 اکانت ${account.email} ${_price} دلار شارژ شد\n موجودی: ${account.money}`
                 await bot.api.sendMessage(AdminGP, text)
-                await bot.api.sendMessage(AdminGP, JSON.stringify(req.body))
             }
             else {
                 const _text = `❌ شارژ حساب با خطا مواجه شد`
