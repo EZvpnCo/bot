@@ -102,6 +102,8 @@ export default function EndPoint(bot: MyBot) {
             }
         } catch (error) {
             console.log(error, "#######")
+            const _text = `❌ شارژ حساب با خطا مواجه شد ❌`
+            await bot.api.sendMessage(user?.id!, _text)
         }
         res.send("payment result")
     })
