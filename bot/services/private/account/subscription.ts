@@ -35,7 +35,7 @@ class AccountSubscriptionService {
     private subscriptions: SubType | null = null
     private keyboard = async (ctx: MyContext) => {
         const keyboard = new InlineKeyboard()
-        keyboard.text("🛠 آموزش اتصال", "menu.tutorials-btn").row()
+        keyboard.text("🛠 آموزش اتصال", "tutorials").row()
         keyboard.text("👇 دریافت QR code 👇", "account:subscription:get_qrcode").row()
         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription$/.test(ctx.match[0])) {
             keyboard.text("Clash", "account:agency:users:detail:" + ctx.match[1] + ":subscription:clash")
@@ -91,6 +91,7 @@ class AccountSubscriptionService {
             );
             await ctx.answerCallbackQuery();
         } catch (error) {
+
             if (axios.isAxiosError(error)) {
                 await ctx.reply("Error: SystemError")
             } else {
@@ -146,7 +147,7 @@ class AccountSubscriptionService {
             }
 
             await ctx.editMessageText(
-                `<a href="http://bot.ezvpn.co/qrcode/?content=${suburl}">🔻</a> <pre>${suburl}</pre>`,
+                `<a href="http://bot.ezvpn.co/qrcode/?content=${suburl}&_=${+new Date()}">🔻</a> <pre>${suburl}</pre>`,
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
             );
 

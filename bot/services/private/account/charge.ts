@@ -159,7 +159,6 @@ class AccountChargeService {
         }
         try {
             const aid = ctx.session.user?.account_id!
-            ctx.reply("hello1")
 
             // create order
             const order = await Order.create({

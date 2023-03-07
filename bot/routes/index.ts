@@ -69,18 +69,19 @@ export default function EndPoint(bot: MyBot) {
     })
 
     router.post('/payment', async (req: Request, res: Response) => {
-        bot.api.sendMessage(SuperAdmin, "Text2")
         console.log(req.body, "*************")
 
         const { payment_status, order_id } = req.body
 
+
+        const order = await Order.findByPk(order_id)
+        const _price = order?.price
+        const user = await User.findOne({ where: { account_id: order?.account_id! } })
+
+
         try {
-            const order = await Order.findByPk(order_id)
-            const _price = order?.price
-            const user = await User.findOne({ where: { account_id: order?.account_id! } })
             const response = await apiService.PATCH()("account?user=" + order?.account_id!, { moneycharge: _price })
             const account = response.data.account
-
 
             if (payment_status === "finished") {
                 const _text = `🔻 اکانت شما ${_price} دلار شارژ شد\n موجودی: ${account.money}`
@@ -96,6 +97,8 @@ export default function EndPoint(bot: MyBot) {
             }
         } catch (error) {
             console.log(error, "#######")
+            const _text = `❌ شارژ حساب با خطا مواجه شد ❌`
+            await bot.api.sendMessage(user?.id!, _text)
         }
         res.send("payment result")
     })
