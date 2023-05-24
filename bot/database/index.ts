@@ -5,8 +5,8 @@ const sequelize = new Sequelize(
     'root',
     'rasoul707',
     {
-        host: 'localhost',
-        dialect: 'mariadb'
+        host: '0.0.0.0',
+        dialect: 'mysql'
     }
 );
 
