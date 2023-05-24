@@ -9,6 +9,8 @@ import MenuService from "./services/private/menu";
 import GroupService from "./services/group";
 import EndPoint from "./routes";
 import PrivateService from "./services/private";
+import { BackupDB } from "./utils/backupDB";
+import { CronJob } from 'cron';
 
 
 
@@ -170,3 +172,14 @@ bot.start({
 
 // Run EndPoint
 EndPoint(bot)
+
+
+
+// ==> Jobs
+new CronJob('0 * * * *', async () => {
+  try {
+    await BackupDB(bot)
+  } catch (e) {
+    console.error(e);
+  }
+}).start();

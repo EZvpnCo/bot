@@ -11,7 +11,6 @@ import User from '../database/models/bot_user.model';
 import * as apiService from "../api"
 
 
-
 export default function EndPoint(bot: MyBot) {
     const app: Express = express()
     const router = express.Router()
