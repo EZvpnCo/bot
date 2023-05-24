@@ -1,4 +1,4 @@
-import { Bot, GrammyError, session, HttpError, Context, SessionFlavor, InlineKeyboard, RawApi, Api } from "grammy";
+import { Bot, GrammyError, session, HttpError, Context, SessionFlavor, InlineKeyboard, RawApi, Api, Composer } from "grammy";
 import { UserFromGetMe } from "grammy/out/types";
 import { I18n, I18nFlavor } from "@grammyjs/i18n";
 import { BotToken, SuperAdmin } from "./config"
@@ -99,16 +99,42 @@ bot
 // #############################################
 
 
-
-// ****************************** Group
-new GroupService(bot).run()
-bot
-  .filter((ctx) => (ctx.chat?.type !== "private"))
-  .use((ctx) => { /** Nothing */ });
-// ****************************** Group
+const composer = new Composer();
+bot.use(composer);
 
 
-new PrivateService(bot).run()
+composer.use((ctx) => {
+  if (ctx.chat?.type === "private") new PrivateService(bot).run()
+  else if (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup") new GroupService(bot).run()
+});
+
+// // ****************************** Group
+// new GroupService(bot).run()
+// bot
+//   .filter((ctx) => (ctx.chat?.type !== "private"))
+//   .use((ctx) => { /** Nothing */ });
+// // ****************************** Group
+
+
+
+
+
+// // Handle the /start command.
+// bot.command("start", (ctx) => {
+//   const isNew = ctx.session.isNew
+//   const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
+//   ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
+// });
+
+
+
+
+
+
+// new MenuService(bot).run()
+
+
+
 
 
 // Handle language
