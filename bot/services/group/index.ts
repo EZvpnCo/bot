@@ -4,6 +4,7 @@ import { AdminGP, SuperAdmin } from "../../config";
 import User from "../../database/models/bot_user.model";
 import * as apiService from "../../api"
 import mysqldump from 'mysqldump';
+import { readFileSync } from "fs";
 
 
 class GroupService {
@@ -31,18 +32,30 @@ class GroupService {
     private backup_database = async (ctx: MyContext, _next: NextFunction) => {
         if (ctx.chat?.id !== AdminGP) return await _next()
         const text = "Backup Started ...";
-        ctx.reply(text);
+        const m = await ctx.reply(text);
 
-        const d = new Date().toDateString()
-        mysqldump({
-            connection: {
-                host: '0.0.0.0',
-                user: 'root',
-                password: 'rasoul707',
-                database: 'ezvpn_dashboard',
-            },
-            dumpToFile: `backup_dump_${d}.sql`,
-        });
+        try {
+            const d = new Date().toISOString()
+            await mysqldump({
+                connection: {
+                    host: '0.0.0.0',
+                    user: 'root',
+                    password: 'rasoul707',
+                    database: 'ezvpn_dashboard',
+                },
+                dumpToFile: `temp/backup_dump_${d}.sql`,
+            });
+            await ctx.api.editMessageText(m.chat.id, m.message_id, "Backup Success")
+
+            const _file = readFileSync(`temp/backup_dump_${d}.sql`)
+            console.log(_file);
+        } catch (error) {
+            await ctx.api.editMessageText(m.chat.id, m.message_id, "Backup Failed")
+        }
+
+
+
+
     }
 
 
