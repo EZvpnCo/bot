@@ -1,4 +1,4 @@
-import { Bot, Keyboard, NextFunction } from "grammy";
+import { Bot, InputFile, Keyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import { AdminGP, SuperAdmin } from "../../config";
 import User from "../../database/models/bot_user.model";
@@ -48,7 +48,7 @@ class GroupService {
             await ctx.api.editMessageText(m.chat.id, m.message_id, "Backup Success")
 
             const _file = readFileSync(`temp/backup_dump_${d}.sql`)
-            console.log(_file);
+            await ctx.replyWithDocument(new InputFile(_file), { caption: `#backup\n${d}` })
         } catch (error) {
             await ctx.api.editMessageText(m.chat.id, m.message_id, "Backup Failed")
         }
