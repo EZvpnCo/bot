@@ -42,16 +42,16 @@ class GroupService {
                     host: '0.0.0.0',
                     user: 'root',
                     password: 'rasoul707',
-                    database: 'ezvpn_dashboard',
+                    database: 'ezvpn_dashboard ezvpn_bot ezshell',
                 },
                 dumpToFile: `temp/backup_dump_${d}.sql`,
             });
-            await ctx.api.editMessageText(m.chat.id, m.message_id, "Backup Success")
-
+            await ctx.api.deleteMessage(m.chat.id, m.message_id)
             const _file = readFileSync(`temp/backup_dump_${d}.sql`)
             await ctx.replyWithDocument(new InputFile(_file, `Backup-${d}.sql`), { caption: `#backup\n${d}` })
         } catch (error) {
             await ctx.api.editMessageText(m.chat.id, m.message_id, "Backup Failed")
+            console.log(error);
         }
 
 
