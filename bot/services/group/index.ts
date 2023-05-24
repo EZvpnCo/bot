@@ -4,7 +4,7 @@ import { AdminGP, SuperAdmin } from "../../config";
 import User from "../../database/models/bot_user.model";
 import * as apiService from "../../api"
 import mysqldump from 'mysqldump';
-import { readFileSync } from "fs";
+import { readFileSync, unlinkSync } from "fs";
 import moment from "moment";
 
 
@@ -52,6 +52,7 @@ class GroupService {
                 });
                 const _file = readFileSync(ff)
                 await ctx.replyWithDocument(new InputFile(_file, `BackupDB_${dbname}_${datetime}.sql`), { caption: `#Backup\n${dbname}\n${datetime}` })
+                unlinkSync(ff)
             }
             await ctx.api.deleteMessage(m.chat.id, m.message_id)
         } catch (error) {
