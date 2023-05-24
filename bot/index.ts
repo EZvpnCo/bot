@@ -99,19 +99,16 @@ bot
 // #############################################
 
 
-bot.use((ctx) => {
-  if (ctx.chat?.type === "private") {
-    ctx.reply("PRivateeee")
-    new PrivateService(bot).run()
-  }
-  else if (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup") {
-    ctx.reply("GrOup")
-    new GroupService(bot).run()
-  }
-});
+
+// ****************************** Group
+new GroupService(bot).run()
+bot
+  .filter((ctx) => (ctx.chat?.type !== "private"))
+  .use((ctx) => { /** Nothing */ });
+// ****************************** Group
 
 
-
+new PrivateService(bot).run()
 
 
 // Handle language
