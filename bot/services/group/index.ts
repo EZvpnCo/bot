@@ -5,6 +5,7 @@ import User from "../../database/models/bot_user.model";
 import * as apiService from "../../api"
 import mysqldump from 'mysqldump';
 import { readFileSync } from "fs";
+import moment from "moment";
 
 
 class GroupService {
@@ -35,7 +36,7 @@ class GroupService {
         const m = await ctx.reply(text);
 
         try {
-            const d = new Date().toISOString()
+            const d = moment().format("YYYY-MM-DD HH:mm:ss")
             await mysqldump({
                 connection: {
                     host: '0.0.0.0',
@@ -48,7 +49,7 @@ class GroupService {
             await ctx.api.editMessageText(m.chat.id, m.message_id, "Backup Success")
 
             const _file = readFileSync(`temp/backup_dump_${d}.sql`)
-            await ctx.replyWithDocument(new InputFile(_file), { caption: `#backup\n${d}` })
+            await ctx.replyWithDocument(new InputFile(_file, `Backup-${d}.sql`), { caption: `#backup\n${d}` })
         } catch (error) {
             await ctx.api.editMessageText(m.chat.id, m.message_id, "Backup Failed")
         }
