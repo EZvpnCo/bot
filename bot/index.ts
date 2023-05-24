@@ -104,8 +104,7 @@ bot.use(composer);
 
 
 composer.use((ctx) => {
-  if (ctx.chat?.type === "private") new PrivateService(bot).run()
-  else if (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup") new GroupService(bot).run()
+  new PrivateService(bot).run()
 });
 
 // // ****************************** Group
