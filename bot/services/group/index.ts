@@ -3,8 +3,7 @@ import { MyContext } from "../..";
 import { AdminGP, SuperAdmin } from "../../config";
 import User from "../../database/models/bot_user.model";
 import * as apiService from "../../api"
-import { spawn } from "child_process";
-import { createWriteStream } from "fs";
+import mysqldump from 'mysqldump';
 
 
 class GroupService {
@@ -34,25 +33,16 @@ class GroupService {
         const text = "Backup Started ...";
         ctx.reply(text);
 
-        const wstream = createWriteStream('dumpfilename.sql');
-        const mysqldump = spawn('mysqldump', [
-            '-u',
-            'root',
-            '-prasoul707',
-            '--databases ezvpn_dashboard ezvpn_bot ezshell',
-            ' < data.sql'
-        ]);
-
-        mysqldump
-            .stdout
-            .pipe(wstream)
-            .on('finish', function () {
-                ctx.reply("Backup Success");
-            })
-            .on('error', function (err: any) {
-                ctx.reply("Backup Failed");
-                ctx.reply(JSON.stringify(err))
-            });
+        const d = new Date().toDateString()
+        mysqldump({
+            connection: {
+                host: '0.0.0.0',
+                user: 'root',
+                password: 'rasoul707',
+                database: 'ezvpn_dashboard',
+            },
+            dumpToFile: `backup_dump_${d}.sql`,
+        });
     }
 
 
