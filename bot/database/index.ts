@@ -6,7 +6,7 @@ const sequelize = new Sequelize(
     'rasoul707',
     {
         host: 'localhost',
-        dialect: 'mysql'
+        dialect: 'mariadb'
     }
 );
 
