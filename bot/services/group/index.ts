@@ -3,6 +3,9 @@ import { MyContext } from "../..";
 import { AdminGP, SuperAdmin } from "../../config";
 import User from "../../database/models/bot_user.model";
 import * as apiService from "../../api"
+import { spawn } from "child_process";
+import { createWriteStream } from "fs";
+
 
 class GroupService {
     private bot;
@@ -28,8 +31,26 @@ class GroupService {
 
     private backup_database = async (ctx: MyContext, _next: NextFunction) => {
         if (ctx.chat?.id !== AdminGP) return await _next()
-        const text = "Preparing backups ...";
+        const text = "Backup Started ...";
         ctx.reply(text);
+
+        const wstream = createWriteStream('dumpfilename.sql');
+        const mysqldump = spawn('mysqldump', [
+            '-u',
+            'root',
+            '-prasoul707',
+        ]);
+
+        mysqldump
+            .stdout
+            .pipe(wstream)
+            .on('finish', function () {
+                ctx.reply("Backup Success");
+            })
+            .on('error', function (err: any) {
+                ctx.reply("Backup Failed");
+                ctx.reply(JSON.stringify(err))
+            });
     }
 
 
