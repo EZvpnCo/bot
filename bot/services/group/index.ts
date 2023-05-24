@@ -36,7 +36,7 @@ class GroupService {
         const m = await ctx.reply(text);
 
         try {
-            const datetime = moment().format("YYYY-MM-DD HH:mm:ss")
+            const datetime = moment().format("YYYY-MM-DD-HH-mm-ss")
             const databases = ['ezvpn_dashboard', 'ezvpn_bot', 'ezshell']
             for (let iii = 0; iii < databases.length; iii++) {
                 const dbname = databases[iii]
