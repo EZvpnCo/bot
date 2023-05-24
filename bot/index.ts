@@ -101,7 +101,7 @@ const composer = new Composer();
 bot.use(composer);
 
 
-bot
+composer
   .filter((ctx) => (ctx.chat?.type === "private"))
   .use((ctx) => {
     bot.command("start", (ctx) => {
