@@ -147,7 +147,7 @@ class AccountSubscriptionService {
             }
 
             await ctx.editMessageText(
-                `<a href="http://bot.ezvpn.co/qrcode/?content=${suburl}&_=${+new Date()}">🔻</a> <pre>${suburl}</pre>`,
+                `<a href="https://bot.ezvpn.co/qrcode/?content=${suburl}&_=${+new Date()}">🔻</a> <pre>${suburl}</pre>`,
                 { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
             );
 
