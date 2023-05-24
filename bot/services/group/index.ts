@@ -1,4 +1,4 @@
-import { Bot, NextFunction } from "grammy";
+import { Bot, Keyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import { AdminGP, SuperAdmin } from "../../config";
 import User from "../../database/models/bot_user.model";
@@ -14,11 +14,22 @@ class GroupService {
         this.bot.command("start", async (ctx, _next) => {
             if (ctx.chat?.id !== AdminGP) return await _next()
             const text = "اینجا گروه ادمینه";
-            ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
+            const keys = new Keyboard()
+                .text("/backup_database").row()
+                .text("/users_list").row()
+                .text("/servers_list").row()
+            ctx.reply(text, { parse_mode: 'MarkdownV2', reply_markup: keys }).catch(e => console.log(e));
         });
         this.bot.callbackQuery(/^superAdmin:user:profile:([0-9]+)$/, this.userProfile)
         this.bot.callbackQuery(/^superAdmin:user:message:([0-9]+)$/, this.userMessage)
+        this.bot.command("backup_database", this.backup_database);
         this.bot.on("message", this.sendMessage)
+    }
+
+    private backup_database = async (ctx: MyContext, _next: NextFunction) => {
+        if (ctx.chat?.id !== AdminGP) return await _next()
+        const text = "Preparing backups ...";
+        ctx.reply(text);
     }
 
 
