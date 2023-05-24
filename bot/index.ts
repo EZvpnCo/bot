@@ -100,8 +100,8 @@ bot
 
 
 bot.use((ctx) => {
-  if (ctx.chat?.type === "private") new PrivateService(bot).run()
-  else if (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup") new GroupService(bot).run()
+  if (ctx.chat?.type === "private") ctx.reply("PRivate")
+  else if (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup") ctx.reply("GrOup")
 });
 
 
