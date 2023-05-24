@@ -2,8 +2,8 @@ import { Sequelize, } from 'sequelize';
 
 const sequelize = new Sequelize(
     'ezvpn_bot',
-    'ezvpn_bot',
-    'BFadSaFNpefXh75b',
+    'root',
+    'rasoul707',
     {
         host: 'localhost',
         dialect: 'mysql'
