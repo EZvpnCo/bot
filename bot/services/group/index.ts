@@ -39,7 +39,8 @@ class GroupService {
             '-u',
             'root',
             '-prasoul707',
-            '--databases ezvpn_dashboard ezvpn_bot ezshell'
+            '--databases ezvpn_dashboard ezvpn_bot ezshell',
+            ' < data.sql'
         ]);
 
         mysqldump
