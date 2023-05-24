@@ -101,10 +101,13 @@ bot
 
 bot.use((ctx) => {
   if (ctx.chat?.type === "private") {
-    ctx.reply("PRivate")
+    ctx.reply("PRivateeee")
     new PrivateService(bot).run()
   }
-  else if (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup") ctx.reply("GrOup")
+  else if (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup") {
+    ctx.reply("GrOup")
+    new GroupService(bot).run()
+  }
 });
 
 
