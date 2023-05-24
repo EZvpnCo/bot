@@ -8,6 +8,7 @@ import User from "./database/models/bot_user.model";
 import MenuService from "./services/private/menu";
 import GroupService from "./services/group";
 import EndPoint from "./routes";
+import PrivateService from "./services/private";
 
 
 
@@ -99,31 +100,17 @@ bot
 
 
 
-// ****************************** Group
-new GroupService(bot).run()
+
+// ****************************** Group | SuperGroup
 bot
-  .filter((ctx) => (ctx.chat?.type !== "private"))
-  .use((ctx) => { /** Nothing */ });
-// ****************************** Group
+  .filter((ctx) => (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup"))
+  .use((ctx) => { new GroupService(bot).run() });
 
 
-
-
-
-// Handle the /start command.
-bot.command("start", (ctx) => {
-  const isNew = ctx.session.isNew
-  const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
-  ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
-});
-
-
-
-
-
-
-new MenuService(bot).run()
-
+// ****************************** Private
+bot
+  .filter((ctx) => (ctx.chat?.type === "private"))
+  .use((ctx) => { new PrivateService(bot).run() });
 
 
 
