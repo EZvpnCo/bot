@@ -1,5 +1,5 @@
 
-export const BotToken = "5809126302:AAEvo0ECMTbs-7VHQPfjWfOtofBe231xHhg"
+export const BotToken = "5809126302:AAGzDT6YcU_7f-R0w4EmnDy5FwXliSt7lE8"
 export const SuperAdmin = 115025624
 export const AdminGP = -1001424073479
 
