@@ -8,6 +8,7 @@ import User from "./database/models/bot_user.model";
 import MenuService from "./services/private/menu";
 import GroupService from "./services/group";
 import EndPoint from "./routes";
+import PrivateService from "./services/private";
 
 
 
@@ -97,38 +98,9 @@ bot
 // #############################################
 
 
-const composer = new Composer();
-bot.use(composer);
 
-
-composer
-  .filter((ctx) => (ctx.chat?.type === "private"))
-  .use((ctx) => {
-    bot.command("start", (ctx) => {
-      const isNew = ctx.session.isNew
-      const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
-      ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
-    });
-    new MenuService(bot).run()
-    // new PrivateService(bot).run()
-  });
-
-// composer
-//   .filter((ctx) => (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup"))
-//   .use((ctx) => {
-//     new GroupService(bot).run()
-//   });
-
-
-
-
-
-// // Handle the /start command.
-// bot.command("start", (ctx) => {
-//   const isNew = ctx.session.isNew
-//   const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
-//   ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
-// });
+new GroupService(bot).run()
+new PrivateService(bot).run()
 
 
 
@@ -154,6 +126,10 @@ bot.command("language", async (ctx) => {
   await ctx.i18n.setLocale(ctx.match);
   await ctx.reply(ctx.t("language.language-set"));
 });
+
+
+
+
 
 
 

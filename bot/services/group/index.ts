@@ -11,12 +11,12 @@ class GroupService {
     }
 
     public run() {
-        this.bot.callbackQuery(/^superAdmin:user:profile:([0-9]+)$/, this.userProfile)
-        this.bot.callbackQuery(/^superAdmin:user:message:([0-9]+)$/, this.userMessage)
         this.bot.command("start", (ctx) => {
             const text = "اینجا گروه ادمینه";
             ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
         });
+        this.bot.callbackQuery(/^superAdmin:user:profile:([0-9]+)$/, this.userProfile)
+        this.bot.callbackQuery(/^superAdmin:user:message:([0-9]+)$/, this.userMessage)
         this.bot.on("message", ctx => ctx.reply("گرفتم"))
         this.bot.on("message", this.sendMessage)
     }
