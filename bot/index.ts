@@ -99,18 +99,11 @@ bot
 // #############################################
 
 
+bot.use((ctx) => {
+  if (ctx.chat?.type === "private") new PrivateService(bot).run()
+  else if (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup") new GroupService(bot).run()
+});
 
-
-// ****************************** Group | SuperGroup
-bot
-  .filter((ctx) => (ctx.chat?.type === "group" || ctx.chat?.type === "supergroup"))
-  .use((ctx) => { new GroupService(bot).run() });
-
-
-// ****************************** Private
-bot
-  .filter((ctx) => (ctx.chat?.type === "private"))
-  .use((ctx) => { new PrivateService(bot).run() });
 
 
 
