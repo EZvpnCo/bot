@@ -17,6 +17,7 @@ class GroupService {
             const text = "اینجا گروه ادمینه!";
             ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
         });
+        this.bot.on("message", ctx => ctx.reply("گرفتم"))
         this.bot.on("message", this.sendMessage)
     }
 
