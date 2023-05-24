@@ -12,10 +12,10 @@ jobs:
           node-version: "18"
       - name: update-project
         run: |
-          ssh root@5.188.190.125 -p 4343
-          yes
-          9PYfnpPCPD5N
-          cd /data/wwwroot/bot.ezvpn.co/
+          ssh root@5.188.190.125 -p 4343 'cd /data/wwwroot/bot.ezvpn.co/
           git pull
           npm run build
           npm start &
+          '
+          yes
+          9PYfnpPCPD5N
