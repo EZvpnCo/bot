@@ -1,0 +1,21 @@
+name: CD-Update
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: update-project
+        run: |
+          ssh root@5.188.190.125 -p 4343
+          yes
+          9PYfnpPCPD5N
+          cd /data/wwwroot/bot.ezvpn.co/
+          git pull
+          npm run build
+          npm start &
