@@ -36,19 +36,23 @@ class GroupService {
         const m = await ctx.reply(text);
 
         try {
-            const d = moment().format("YYYY-MM-DD HH:mm:ss")
-            await mysqldump({
-                connection: {
-                    host: '0.0.0.0',
-                    user: 'root',
-                    password: 'rasoul707',
-                    database: 'ezvpn_dashboard ezvpn_bot ezshell',
-                },
-                dumpToFile: `temp/backup_dump_${d}.sql`,
-            });
+            const datetime = moment().format("YYYY-MM-DD HH:mm:ss")
+            const databases = ['ezvpn_dashboard', 'ezvpn_bot', 'ezshell']
+            databases.forEach(async (dbname) => {
+                const ff = `temp/BackupDB_${dbname}_${datetime}.sql`
+                await mysqldump({
+                    connection: {
+                        host: '0.0.0.0',
+                        user: 'root',
+                        password: 'rasoul707',
+                        database: dbname,
+                    },
+                    dumpToFile: ff,
+                });
+                const _file = readFileSync(ff)
+                await ctx.replyWithDocument(new InputFile(_file, `BackupDB_${dbname}_${datetime}.sql`), { caption: `#Backup\n${dbname}\n${datetime}` })
+            })
             await ctx.api.deleteMessage(m.chat.id, m.message_id)
-            const _file = readFileSync(`temp/backup_dump_${d}.sql`)
-            await ctx.replyWithDocument(new InputFile(_file, `Backup-${d}.sql`), { caption: `#backup\n${d}` })
         } catch (error) {
             await ctx.api.editMessageText(m.chat.id, m.message_id, "Backup Failed")
             console.log(error);
