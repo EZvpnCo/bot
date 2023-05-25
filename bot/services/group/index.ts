@@ -18,7 +18,7 @@ class GroupService {
     public run() {
         this.bot.command("start", async (ctx, _next) => {
             if (ctx.chat?.id !== AdminGP) return await _next()
-            const text = "اینجا گروه ادمینه";
+            const text = "Management Group\n\nSelect action:";
             const keys = new Keyboard()
                 .text("/backup_database").row()
                 .text("/users_list").row()
