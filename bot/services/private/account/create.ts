@@ -70,6 +70,8 @@ class AccountCreateService {
                 await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`, { parse_mode: "HTML" });
                 new AccountService(this.bot).response(ctx)
             } catch (error) {
+                console.log(error);
+
                 if (axios.isAxiosError(error)) {
                     await ctx.reply("Error: SystemError")
                 } else {
