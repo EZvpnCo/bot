@@ -176,7 +176,7 @@ EndPoint(bot)
 
 
 // ==> Jobs
-new CronJob('0 * * * *', async () => {
+new CronJob('0 */12 * * *', async () => {
   try {
     await BackupDB(bot)
   } catch (e) {
