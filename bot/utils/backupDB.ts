@@ -18,7 +18,7 @@ export const BackupDB = async (bot: Bot<MyContext, Api<RawApi>>) => {
                 connection: {
                     host: '0.0.0.0',
                     user: 'root',
-                    password: 'rasoul707',
+                    password: 'tehONDretSVERveRnive',
                     database: dbname,
                 },
                 dumpToFile: ff,
