@@ -5,7 +5,6 @@ const sequelize = new Sequelize(
     'root',
     'tehONDretSVERveRnive',
     {
-        host: '0.0.0.0',
         dialect: 'mysql'
     }
 );
