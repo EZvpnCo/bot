@@ -22,6 +22,13 @@ class AccountCreateService {
     }
 
     private response = async (ctx: MyContext) => {
+        const uid = ctx.session.user?.account_id
+        if (!!uid) {
+            // await ctx.answerCallbackQuery({ show_alert: true, text: "شما عضو ربات هستید!!!", });
+            new AccountService(this.bot).response(ctx)
+            return
+        }
+
         ctx.session.inputState = {
             category: "account:create",
             parameter: "email",
