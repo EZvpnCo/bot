@@ -20,23 +20,31 @@ class GroupService {
             if (ctx.chat?.id !== AdminGP) return await _next()
             const text = "Management Group\n\nSelect action:";
             const keys = new Keyboard()
-                .text("/backup_database").row()
-                .text("/users_list").row()
-                .text("/servers_list").row()
+                .text("/Backup")
+                .text("/Users")
             ctx.reply(text, { parse_mode: 'MarkdownV2', reply_markup: keys }).catch(e => console.log(e));
         });
         this.bot.callbackQuery(/^superAdmin:user:profile:([0-9]+)$/, this.userProfile)
         // this.bot.callbackQuery(/^superAdmin:user:recharge:([0-9]+)$/, this.userRecharge)
         this.bot.callbackQuery(/^superAdmin:user:message:([0-9]+)$/, this.userMessage)
-        this.bot.command("backup_database", this.backup_database);
+        this.bot.command("Backup", this.backup);
+        this.bot.command("Users", this.users);
         this.bot.on("message", this.sendMessage)
     }
 
-    private backup_database = async (ctx: MyContext, _next: NextFunction) => {
+    private backup = async (ctx: MyContext, _next: NextFunction) => {
         if (ctx.chat?.id !== AdminGP) return await _next()
-
         await BackupDB(this.bot)
     }
+
+    private users = async (ctx: MyContext, _next: NextFunction) => {
+        if (ctx.chat?.id !== AdminGP) return await _next()
+
+        await ctx.reply("لیست کاربران:")
+    }
+
+
+
 
 
     private checkUser = async (ctx: MyContext, _next: NextFunction) => {
