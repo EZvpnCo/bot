@@ -107,7 +107,8 @@ class GroupService {
         const amount = ctx?.match ? ctx?.match[2] : 0;
 
         // do charge
-        await apiService.PATCH()("account?user=" + account.id!, { moneycharge: amount })
+
+        await apiService.PATCH()("account/charge?user=" + account.id!, { moneycharge: amount })
 
         await ctx.api.sendMessage(user.id, `ایزی یوزر عزیز حساب شما به مبلغ ${amount}$ شارژ شد`)
         await ctx.answerCallbackQuery({ text: "با موفقیت شارژ شد", show_alert: true });

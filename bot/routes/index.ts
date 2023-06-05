@@ -81,7 +81,7 @@ export default function EndPoint(bot: MyBot) {
 
         try {
             if (payment_status === "finished") {
-                const response = await apiService.PATCH()("account?user=" + order?.account_id!, { moneycharge: _price })
+                const response = await apiService.PATCH()("account/charge?user=" + order?.account_id!, { moneycharge: _price })
                 const account = response.data.account
 
                 const _text = `🔻 اکانت شما ${_price} دلار شارژ شد\n موجودی: ${account.money}`
