@@ -1,4 +1,4 @@
-import { Bot, InputFile, Keyboard, NextFunction } from "grammy";
+import { Bot, InlineKeyboard, InputFile, Keyboard, NextFunction } from "grammy";
 import { MyContext } from "../..";
 import { AdminGP, SuperAdmin } from "../../config";
 import User from "../../database/models/bot_user.model";
@@ -89,21 +89,31 @@ class GroupService {
 🧩 ${account.node_group}
 ⭐️ ${account.class}
 
-⌛️ Expire: ${account.class_expire} (${account.remaining_days} Day)
+⌛️ Expire: ${account.class_expire}
 📤 Traffic: ${account.used_traffic} / ${account.total_traffic_gb > 5000 ? "Unlimited" : account.total_traffic}
 🖥 Device: ${(account.node_connector > 0 ? "~" + " / " + account.node_connector : "Unlimited")}
 💰 Wallet: ${account.money}$
 
 🖥 TLG:
 ${user.id}
-${user.first_name + " " + user.last_name} ${user.username ? "@" + user.username : ""}
+${user.first_name} ${user.last_name ? user.last_name : ""} ${user.username ? "@" + user.username : ""}
 `
+
+
+        const keyboard = new InlineKeyboard()
+        keyboard.text("🎲 اطلاعات اشتراک", `superAdmin:user:subscription:${user?.id}`)
+        keyboard.text("⚡️ خرید اشتراک", `superAdmin:user:purchase:${user?.id}`)
+        keyboard.row()
+        keyboard.text("💵 شارژ حساب", `superAdmin:user:charge:${user?.id}`)
+        keyboard.row()
+        keyboard.text('💬 ارسال پیام', `superAdmin:user:message:${user?.id}`)
+        keyboard.row()
 
         await ctx.editMessageText(
             _text,
             {
                 parse_mode: "HTML",
-                // reply_markup: _keys
+                reply_markup: keyboard
             }
         );
         await ctx.answerCallbackQuery();
