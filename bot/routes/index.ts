@@ -80,10 +80,6 @@ export default function EndPoint(bot: MyBot) {
         const user = await User.findOne({ where: { account_id: order?.account_id! } })
 
         try {
-
-
-
-
             if (payment_status === "finished") {
                 const response = await apiService.PATCH()("account?user=" + order?.account_id!, { moneycharge: _price })
                 const account = response.data.account

@@ -26,7 +26,7 @@ class GroupService {
         });
         this.bot.callbackQuery(/^superAdmin:user:profile:([0-9]+)$/, this.userProfile)
         this.bot.callbackQuery(/^superAdmin:user:charge:([0-9]+)$/, this.userCharge)
-        this.bot.callbackQuery(/^superAdmin:user:confirm_charge:([0-9]+):([0-9]+)$/, this.userConfirmCharge)
+        this.bot.callbackQuery(/^superAdmin:user:confirm_charge:([0-9]+):([+-]?([0-9]*[.])?[0-9]+)$/, this.userConfirmCharge)
         this.bot.callbackQuery(/^superAdmin:user:message:([0-9]+)$/, this.userMessage)
         this.bot.command("Backup", this.backup);
         this.bot.command("Users", this.users);
@@ -107,9 +107,11 @@ class GroupService {
         const amount = ctx?.match ? ctx?.match[2] : 0;
 
         // do charge
+        await apiService.PATCH()("account?user=" + account.id!, { moneycharge: amount })
 
         await ctx.api.sendMessage(user.id, `ایزی یوزر عزیز حساب شما به مبلغ ${amount}$ شارژ شد`)
         await ctx.answerCallbackQuery({ text: "با موفقیت شارژ شد", show_alert: true });
+        this.userProfile(ctx, _next);
     }
 
 
