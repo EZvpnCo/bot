@@ -25,10 +25,12 @@ class GroupService {
             ctx.reply(text, { parse_mode: 'MarkdownV2', reply_markup: keys }).catch(e => console.log(e));
         });
         this.bot.callbackQuery(/^superAdmin:user:profile:([0-9]+)$/, this.userProfile)
-        // this.bot.callbackQuery(/^superAdmin:user:recharge:([0-9]+)$/, this.userRecharge)
+        this.bot.callbackQuery(/^superAdmin:user:charge:([0-9]+)$/, this.userCharge)
+        this.bot.callbackQuery(/^superAdmin:user:confirm_charge:([0-9]+):([0-9]+)$/, this.userConfirmCharge)
         this.bot.callbackQuery(/^superAdmin:user:message:([0-9]+)$/, this.userMessage)
         this.bot.command("Backup", this.backup);
         this.bot.command("Users", this.users);
+        this.bot.on("message", this.charge)
         this.bot.on("message", this.sendMessage)
     }
 
@@ -56,7 +58,7 @@ class GroupService {
         const uid = _user?.account_id
         if (uid) {
             try {
-                const response = await apiService.GET()("account?user=" + uid)
+                const response: any = await apiService.GET()("account?user=" + uid)
                 return { user: _user, account: response.data.account }
             } catch (error) {
                 return null
@@ -67,11 +69,9 @@ class GroupService {
 
     private userMessage = async (ctx: MyContext, _next: NextFunction) => {
         if (ctx.chat?.id !== AdminGP) return await _next()
-
         const response = await this.checkUser(ctx, _next)
         if (!response) return await ctx.reply("User or Account not found!")
         const { user, account } = response
-
         ctx.session.inputState = {
             category: "superAdmin:user",
             parameter: "message",
@@ -81,6 +81,35 @@ class GroupService {
         }
         await ctx.reply(`Ok, I'm waiting for your message\n${account.email}`)
         await ctx.answerCallbackQuery();
+    }
+
+    private userCharge = async (ctx: MyContext, _next: NextFunction) => {
+        if (ctx.chat?.id !== AdminGP) return await _next()
+        const response = await this.checkUser(ctx, _next)
+        if (!response) return await ctx.reply("User or Account not found!")
+        const { user, account } = response
+        ctx.session.inputState = {
+            category: "superAdmin:user",
+            parameter: "charge",
+            subID: user.id,
+            messageID: null,
+            data: `{}`,
+        }
+        await ctx.reply(`Ok, Send charge amount\n${account.email}`)
+        await ctx.answerCallbackQuery();
+    }
+
+    private userConfirmCharge = async (ctx: MyContext, _next: NextFunction) => {
+        if (ctx.chat?.id !== AdminGP) return await _next()
+        const response = await this.checkUser(ctx, _next)
+        if (!response) return await ctx.reply("User or Account not found!")
+        const { user, account } = response
+        const amount = ctx?.match ? ctx?.match[2] : 0;
+
+        // do charge
+
+        await ctx.api.sendMessage(user.id, `ایزی یوزر عزیز حساب شما به مبلغ ${amount}$ شارژ شد`)
+        await ctx.answerCallbackQuery({ text: "با موفقیت شارژ شد", show_alert: true });
     }
 
 
@@ -109,9 +138,9 @@ ${user.first_name} ${user.last_name ? user.last_name : ""} ${user.username ? "@"
 
 
         const keyboard = new InlineKeyboard()
-        keyboard.text("🎲 اطلاعات اشتراک", `superAdmin:user:subscription:${user?.id}`)
-        keyboard.text("⚡️ خرید اشتراک", `superAdmin:user:purchase:${user?.id}`)
-        keyboard.row()
+        // keyboard.text("🎲 اطلاعات اشتراک", `superAdmin:user:subscription:${user?.id}`)
+        // keyboard.text("⚡️ خرید اشتراک", `superAdmin:user:purchase:${user?.id}`)
+        // keyboard.row()
         keyboard.text("💵 شارژ حساب", `superAdmin:user:charge:${user?.id}`)
         keyboard.row()
         keyboard.text('💬 ارسال پیام', `superAdmin:user:message:${user?.id}`)
@@ -131,6 +160,8 @@ ${user.first_name} ${user.last_name ? user.last_name : ""} ${user.username ? "@"
     private sendMessage = async (ctx: MyContext, _next: NextFunction) => {
         const ii = ctx.session.inputState
         if (ctx.chat?.id !== AdminGP) return await _next()
+
+
         if (!ii || ii.category !== "superAdmin:user" || ii.parameter !== "message") {
             return await _next()
         }
@@ -139,6 +170,24 @@ ${user.first_name} ${user.last_name ? user.last_name : ""} ${user.username ? "@"
         await ctx.reply("Your message sent successfully")
         ctx.session.inputState = null
     }
+
+    private charge = async (ctx: MyContext, _next: NextFunction) => {
+        const ii = ctx.session.inputState
+        if (ctx.chat?.id !== AdminGP) return await _next()
+        if (!ii || ii.category !== "superAdmin:user" || ii.parameter !== "charge") {
+            return await _next()
+        }
+        const accountID = ii.subID!
+        const price = parseFloat(ctx.message?.text || "0") || 0;
+        if (!price) return await ctx.reply("Amount is wrong! send just an english number like: 2.5")
+        const keyboard = new InlineKeyboard()
+        keyboard.text("Yes, Charge please", `superAdmin:user:confirm_charge:${accountID}:${price}`)
+        keyboard.text('No No No', `superAdmin:user:profile:${accountID}`)
+        await ctx.reply("Are you sure that you want to charge this user:\n" + price + "$", { reply_markup: keyboard })
+        ctx.session.inputState = null
+    }
+
+
 
 }
 
