@@ -26,6 +26,7 @@ class GroupService {
             ctx.reply(text, { parse_mode: 'MarkdownV2', reply_markup: keys }).catch(e => console.log(e));
         });
         this.bot.callbackQuery(/^superAdmin:user:profile:([0-9]+)$/, this.userProfile)
+        // this.bot.callbackQuery(/^superAdmin:user:recharge:([0-9]+)$/, this.userRecharge)
         this.bot.callbackQuery(/^superAdmin:user:message:([0-9]+)$/, this.userMessage)
         this.bot.command("backup_database", this.backup_database);
         this.bot.on("message", this.sendMessage)
@@ -60,8 +61,7 @@ class GroupService {
         if (ctx.chat?.id !== AdminGP) return await _next()
 
         const response = await this.checkUser(ctx, _next)
-        if (!response)
-            return await ctx.reply("User or Account not found!")
+        if (!response) return await ctx.reply("User or Account not found!")
         const { user, account } = response
 
         ctx.session.inputState = {
@@ -80,6 +80,32 @@ class GroupService {
         if (ctx.chat?.id !== AdminGP) return await _next()
         ctx.session.inputState = null
 
+        const response = await this.checkUser(ctx, _next)
+        if (!response) return await ctx.reply("User or Account not found!")
+        const { user, account } = response
+
+        const _text = `🔻 <b>اطلاعات کاربر:</b>\n\n👤 <b>${account.user_name}</b>
+📧 <pre>${account.email}</pre>
+🧩 ${account.node_group}
+⭐️ ${account.class}
+
+⌛️ Expire: ${account.class_expire} (${account.remaining_days} Day)
+📤 Traffic: ${account.used_traffic} / ${account.total_traffic_gb > 5000 ? "Unlimited" : account.total_traffic}
+🖥 Device: ${(account.node_connector > 0 ? "~" + " / " + account.node_connector : "Unlimited")}
+💰 Wallet: ${account.money}$
+
+🖥 TLG:
+${user.id}
+${user.first_name + " " + user.last_name} ${user.username ? "@" + user.username : ""}
+`
+
+        await ctx.editMessageText(
+            _text,
+            {
+                parse_mode: "HTML",
+                // reply_markup: _keys
+            }
+        );
         await ctx.answerCallbackQuery();
     }
 

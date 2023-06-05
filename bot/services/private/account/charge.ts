@@ -41,7 +41,12 @@ class AccountChargeService {
 
     private text = async (ctx: MyContext) => {
         return `🔻 در حال حاضر شما می توانید با استفاده از کریپتو و کد شارژ حساب خود را شارژ کنید.
-برای دریافت کد شارژ با پشتیبانی در ارتباط باشید`
+برای دریافت کد شارژ با پشتیبانی در ارتباط باشید
+
+جهت واریز ریالی لطفا معادل میزان شارژ خود را به شماره کارت زیر واریز کرده و سپس فیش آن را از بخش ارسال فیش واریزی ارسال کنید. پس از بررسی حساب شما شارژ خواهد شد.
+6219861904623146
+محمد زنگنه
+`
     }
 
     private response = async (ctx: MyContext) => {
@@ -231,6 +236,7 @@ class AccountChargeService {
             return await _next()
         }
         const keyboard = new InlineKeyboard()
+        keyboard.text('Profile', `superAdmin:user:profile:${ctx.session.user?.id}`)
         keyboard.text('💬 Send message', `superAdmin:user:message:${ctx.session.user?.id}`)
         const text = `🔻 یک فیش از طرف اکانت ${ctx.session.account.email} برای شارژ اکانت ارسال شد:`
         await this.bot.api.sendMessage(AdminGP, text, { reply_markup: keyboard })
