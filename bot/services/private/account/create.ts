@@ -77,6 +77,8 @@ class AccountCreateService {
                 await ctx.session.user?.save()
                 await ctx.reply("☑️ ثبت نام با موفقیت انجام شد" + `\nEmail: <pre>${u.email}</pre>\nPassword: <pre>${u.password}</pre>`, { parse_mode: "HTML" });
                 new AccountService(this.bot).response(ctx)
+
+                // await ctx.api.sendMessage(1, "");
             } catch (error) {
                 console.log(error);
 
