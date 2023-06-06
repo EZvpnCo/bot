@@ -67,8 +67,11 @@ class AccountCreateService {
             else if (text !== "/skip") u.code = text
             ctx.session.inputState.data = JSON.stringify(u)
             // register
+            const data = JSON.parse(ctx.session.inputState.data)
             try {
-                const data = JSON.parse(ctx.session.inputState.data)
+
+
+
                 const response = await apiService.POST()("register", data)
                 if (!response.data.account_id) {
                     throw response
@@ -87,6 +90,7 @@ class AccountCreateService {
                 } else {
                     const ee = error as { data: { msg: string } }
                     await ctx.reply("Error: " + ee.data.msg)
+                    await ctx.reply(JSON.stringify(data))
                 }
                 setTimeout(async () => {
                     await this.response(ctx)
