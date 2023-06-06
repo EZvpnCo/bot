@@ -21,7 +21,7 @@ class AccountCreateService {
         return `🔻 لطفا ایمیل خود را وارد کنید (این ایمیل صرفا جهت اطلاع رسانی و همچنین ورود به پنل استفاده می شود و تمامی اطلاعات شما پیش ما محفوط می ماند):`
     }
 
-    private response = async (ctx: MyContext) => {
+    public response = async (ctx: MyContext) => {
         const uid = ctx.session.user?.account_id
         if (!!uid) {
             // await ctx.answerCallbackQuery({ show_alert: true, text: "شما عضو ربات هستید!!!", });
@@ -50,7 +50,7 @@ class AccountCreateService {
         const text = ctx.message?.text
         const u = JSON.parse(ctx.session.inputState.data!)
 
-        if (ctx.session.inputState?.parameter === "email") {
+        if (ctx.session.inputState?.parameter === "email" && !ctx.session.user?.referral_code) {
             const randomPassword = Math.random().toString(36).slice(-8)
             u.password = randomPassword
             u.code = ""
@@ -62,8 +62,9 @@ class AccountCreateService {
             await ctx.reply("🔻 در صورتی که کد دعوت دارید آن را وارد کنید. در غیر اینصورت بر روی /skip کلیک کنید:");
             return
         }
-        else if (ctx.session.inputState?.parameter === "code") {
-            if (text !== "/skip") u.code = text
+        else if (ctx.session.inputState?.parameter === "code" || ctx.session.user?.referral_code) {
+            if (ctx.session.user?.referral_code) u.code = ctx.session.user?.referral_code
+            else if (text !== "/skip") u.code = text
             ctx.session.inputState.data = JSON.stringify(u)
             // register
             try {

@@ -10,6 +10,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare is_premium: boolean;
     declare is_active: boolean;
     declare account_id: number | null;
+    declare referral_code: string | null;
 }
 
 User.init(
@@ -48,6 +49,10 @@ User.init(
         },
         account_id: {
             type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        referral_code: {
+            type: DataTypes.STRING,
             allowNull: true
         },
     },
