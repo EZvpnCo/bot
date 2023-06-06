@@ -50,28 +50,28 @@ class AccountCreateService {
         const text = ctx.message?.text
         const u = JSON.parse(ctx.session.inputState.data!)
 
-        if (ctx.session.inputState?.parameter === "email" && !ctx.session.user?.referral_code) {
+
+        if (ctx.session.inputState?.parameter === "email") {
             const randomPassword = Math.random().toString(36).slice(-8)
             u.password = randomPassword
-            u.code = ""
+            u.code = ctx.session.user?.referral_code || ""
             u.name = text?.split("@")[0]
             u.email = text
             ctx.session.inputState.data = JSON.stringify(u)
             ctx.session.inputState.parameter = "code"
 
-            await ctx.reply("🔻 در صورتی که کد دعوت دارید آن را وارد کنید. در غیر اینصورت بر روی /skip کلیک کنید:");
-            return
+            if (!ctx.session.user?.referral_code) {
+                await ctx.reply("🔻 در صورتی که کد دعوت دارید آن را وارد کنید. در غیر اینصورت بر روی /skip کلیک کنید:");
+                return
+            }
         }
-        else if (ctx.session.inputState?.parameter === "code" || ctx.session.user?.referral_code) {
+        if (ctx.session.inputState?.parameter === "code") {
             if (ctx.session.user?.referral_code) u.code = ctx.session.user?.referral_code
             else if (text !== "/skip") u.code = text
             ctx.session.inputState.data = JSON.stringify(u)
             // register
             const data = JSON.parse(ctx.session.inputState.data)
             try {
-
-
-
                 const response = await apiService.POST()("register", data)
                 if (!response.data.account_id) {
                     throw response
