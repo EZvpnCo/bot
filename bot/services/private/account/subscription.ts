@@ -10,9 +10,14 @@ interface SubType {
     "json": string,
     "clash": string,
     "surfboard": string,
+
+    "all": string,
+    "vmess": string,
+    "tjvmess": string,
+
     "ss": string,
     "v2ray": string,
-    "trojan": string
+    "trojan": string,
 }
 
 
@@ -41,6 +46,10 @@ class AccountSubscriptionService {
             keyboard.text("Clash", "account:agency:users:detail:" + ctx.match[1] + ":subscription:clash")
             keyboard.text("Surfboard", "account:agency:users:detail:" + ctx.match[1] + ":subscription:surfboard")
             keyboard.row()
+            keyboard.text("All", "account:agency:users:detail:" + ctx.match[1] + ":subscription:all")
+            keyboard.text("VmessOnly", "account:agency:users:detail:" + ctx.match[1] + ":subscription:vmess")
+            keyboard.text("TrojanVmess", "account:agency:users:detail:" + ctx.match[1] + ":subscription:tjvmess")
+            keyboard.row()
             keyboard.text("ShadowSocks", "account:agency:users:detail:" + ctx.match[1] + ":subscription:ss")
             keyboard.text("V2ray", "account:agency:users:detail:" + ctx.match[1] + ":subscription:v2ray")
             keyboard.text("Trojan", "account:agency:users:detail:" + ctx.match[1] + ":subscription:trojan")
@@ -50,6 +59,10 @@ class AccountSubscriptionService {
         else {
             keyboard.text("Clash", "account:subscription:clash")
             keyboard.text("Surfboard", "account:subscription:surfboard")
+            keyboard.row()
+            keyboard.text("All", "account:subscription:all")
+            keyboard.text("VmessOnly", "account:subscription:vmess")
+            keyboard.text("TrojanVmess", "account:subscription:tjvmess")
             keyboard.row()
             keyboard.text("ShadowSocks", "account:subscription:ss")
             keyboard.text("V2ray", "account:subscription:v2ray")
@@ -66,6 +79,10 @@ class AccountSubscriptionService {
         _data += '<b>🔗 JSON:</b>\n<pre>' + this.subscriptions?.json + '</pre>\n\n'
         _data += '<b>🔗 Clash:</b>\n<pre>' + this.subscriptions?.clash + '</pre>\n\n'
         _data += '<b>🔗 Surfboard:</b>\n<pre>' + this.subscriptions?.surfboard + '</pre>\n\n'
+
+        _data += '<b>🔗 All:</b>\n<pre>' + this.subscriptions?.all + '</pre>\n\n'
+        _data += '<b>🔗 VmessOnly:</b>\n<pre>' + this.subscriptions?.vmess + '</pre>\n\n'
+        _data += '<b>🔗 TrojanVmess:</b>\n<pre>' + this.subscriptions?.tjvmess + '</pre>\n\n'
 
         _data += '<b>🔗 ShadowSocks:</b>\n<pre>' + this.subscriptions?.ss + '</pre>\n\n'
         _data += '<b>🔗 V2ray:</b>\n<pre>' + this.subscriptions?.v2ray + '</pre>\n\n'
@@ -129,11 +146,23 @@ class AccountSubscriptionService {
 
             let suburl = ''
             switch (subtype) {
+                case 'json':
+                    suburl = s.json
+                    break
                 case 'clash':
                     suburl = s.clash
                     break
                 case 'surfboard':
                     suburl = s.surfboard
+                    break
+                case 'all':
+                    suburl = s.all
+                    break
+                case 'vmess':
+                    suburl = s.vmess
+                    break
+                case 'tjvmess':
+                    suburl = s.tjvmess
                     break
                 case 'ss':
                     suburl = s.ss
