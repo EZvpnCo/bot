@@ -109,7 +109,7 @@ class AccountService {
             keyboard.text("⚡️ خرید اشتراک", "account:purchase")
             keyboard.row()
             keyboard.text("💵 شارژ حساب", "account:charge")
-            keyboard.text("لینک من", "account:referral")
+            keyboard.text("🔗 لینک من", "account:referral")
             keyboard.row()
             keyboard.text("💰 پنل فروش", "account:agency")
             keyboard.row()
