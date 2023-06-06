@@ -10,6 +10,7 @@ import AccountLogoutService from "./logout";
 import AccountPurchaseService from "./purchase";
 import AccountSubscriptionService from "./subscription";
 import { backKeyboards } from "../../../utils/backKeyboards";
+import AccountReferralService from "./referral";
 
 
 class AccountService {
@@ -31,6 +32,7 @@ class AccountService {
         new AccountPurchaseService(this.bot).run()
         new AccountSubscriptionService(this.bot).run()
         new AccountChargeService(this.bot).run()
+        new AccountReferralService(this.bot).run()
         new AgencyService(this.bot).run()
     }
 
@@ -107,6 +109,7 @@ class AccountService {
             keyboard.text("⚡️ خرید اشتراک", "account:purchase")
             keyboard.row()
             keyboard.text("💵 شارژ حساب", "account:charge")
+            keyboard.text("لینک من", "account:referral")
             keyboard.row()
             keyboard.text("💰 پنل فروش", "account:agency")
             keyboard.row()
