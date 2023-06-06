@@ -16,6 +16,11 @@ class AccountLogoutService {
 
     private response = async (ctx: MyContext) => {
         ctx.session.inputState = null
+
+        await ctx.answerCallbackQuery({ show_alert: true, text: "فعلا امکان خروج از حساب وجود ندارد. با پشتیبانی در ارتباط باشید" });
+
+        return
+
         ctx.session.user!.account_id = null
         await ctx.session.user?.save()
 

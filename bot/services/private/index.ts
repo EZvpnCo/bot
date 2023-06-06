@@ -10,9 +10,11 @@ class PrivateService {
 
     public run() {
         this.bot.command("start", (ctx) => {
+            const refCode = ctx.match;
             const isNew = ctx.session.isNew
             const text = isNew ? ctx.t("welcome") : ctx.t("welcome-back");
             ctx.reply(text, { parse_mode: 'MarkdownV2' }).catch(e => console.log(e));
+            ctx.reply(JSON.stringify(refCode))
         });
         new MenuService(this.bot).run()
     }
