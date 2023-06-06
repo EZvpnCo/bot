@@ -164,6 +164,7 @@ class AccountPurchaseService {
                 const account = parseInt(ctx.match[1])
                 item = parseInt(ctx.match[2]);
                 await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "", account })
+                await ctx.reply("hello : " + item);
             }
             else {
                 await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
