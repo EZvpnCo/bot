@@ -163,8 +163,7 @@ class AccountPurchaseService {
             if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):purchase:([0-9]+):confirm$/.test(ctx.match[0])) {
                 const account = parseInt(ctx.match[1])
                 item = parseInt(ctx.match[2]);
-                await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "", account })
-                await ctx.reply("hello : " + item);
+                await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "", subuid: account })
             }
             else {
                 await apiService.POST()("account/purchase?user=" + uid, { plan: item, coupon: "" })
