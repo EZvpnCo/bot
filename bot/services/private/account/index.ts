@@ -83,7 +83,7 @@ class AccountService {
 🖥 Device: ${(a.node_connector > 0 ? "~" + " / " + a.node_connector : "Unlimited")}
 💰 Wallet: ${a.money}$
 
-<b>🧲 Invitation:</b> <pre>${a.code ?? "-"}</pre>
+<b>🧲 Invitation:</b> <pre>${a.referral_code ?? "-"}</pre>
 `
 
 

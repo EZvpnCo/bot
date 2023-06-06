@@ -36,7 +36,7 @@ class AgencyService {
 <b>👥 Users:</b> ${agency.accounts}
 <b>💵 Paybacks:</b> ${agency.paybacks}$
 
-<b>🧲 Invitation:</b> <pre>${agency.referral_code}</pre>
+<b>🧲 Invitation:</b> <pre>${agency.code}</pre>
 `
     }
 
