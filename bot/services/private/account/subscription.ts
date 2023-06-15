@@ -133,17 +133,11 @@ class AccountSubscriptionService {
 
 
 
-    private singleConfig = async (ctx: MyContext, uid?: number | null) => {
+    private singleConfig = async (ctx: MyContext, v2: string, tj: string) => {
         ctx.session.inputState = null
-
+        await ctx.reply("hhhhh")
         try {
-            const response = await apiService.GET()("account/subscription?user=" + uid)
-            const s: SubType = response.data.subscription
-
-            const v2 = s.v2ray
-            const tj = s.v2ray
-
-            await ctx.reply(v2)
+            await ctx.reply("helllllllllllo")
             await ctx.reply(tj)
 
         } catch (error) {
@@ -203,7 +197,7 @@ class AccountSubscriptionService {
                     suburl = s.trojan
                     break
                 case 'single_config':
-                    await this.singleConfig(ctx, uid)
+                    await this.singleConfig(ctx, s.v2ray, s.trojan)
                     break
             }
             if (suburl) {
