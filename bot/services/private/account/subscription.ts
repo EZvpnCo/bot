@@ -178,9 +178,25 @@ class AccountSubscriptionService {
                     suburl = s.trojan
                     break
                 case 'single_config':
+                    const tj = s.trojan
+                    const v2 = s.v2ray
+                    const ss = s.ss
+
+
                     await ctx.reply("hhhhh")
                     await ctx.reply("helllllllllllo")
-                    // await ctx.reply(tj)
+
+
+                    const d = await fetch('https://jsonplaceholder.typicode.com/comments')
+                    const dm = await d.text()
+                    await ctx.reply(dm)
+
+
+
+                    const ld = await fetch(tj)
+                    const ldm = await ld.text()
+                    await ctx.reply(ldm)
+
 
 
                     break
