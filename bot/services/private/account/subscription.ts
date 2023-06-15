@@ -30,8 +30,8 @@ class AccountSubscriptionService {
     public run() {
         this.bot.callbackQuery(["account:subscription", /^account:agency:users:detail:([0-9]+):subscription$/], this.response)
         this.bot.callbackQuery([
-            /^account:subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess)$/,
-            /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess)$/
+            /^account:subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/,
+            /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/
         ], this.detailSubscription)
     }
 
@@ -133,25 +133,6 @@ class AccountSubscriptionService {
 
 
 
-    private singleConfig = async (ctx: MyContext, v2: string, tj: string) => {
-        ctx.session.inputState = null
-        await ctx.reply("hhhhh")
-        try {
-            await ctx.reply("helllllllllllo")
-            await ctx.reply(tj)
-
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                await ctx.reply("Error: SystemError")
-            } else {
-                const ee = error as { data: { msg: string } }
-                await ctx.reply("Error: " + ee.data.msg)
-            }
-        }
-
-    }
-
-
     private detailSubscription = async (ctx: MyContext) => {
         ctx.session.inputState = null
 
@@ -159,7 +140,7 @@ class AccountSubscriptionService {
         try {
             let uid = ctx.session.user?.account_id
             let subtype = ctx.match![1]!
-            if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess)$/.test(ctx.match[0])) {
+            if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0])) {
                 uid = parseInt(ctx.match[1])
                 subtype = ctx.match![2]!
             }
@@ -197,7 +178,11 @@ class AccountSubscriptionService {
                     suburl = s.trojan
                     break
                 case 'single_config':
-                    await this.singleConfig(ctx, s.v2ray, s.trojan)
+                    await ctx.reply("hhhhh")
+                    await ctx.reply("helllllllllllo")
+                    // await ctx.reply(tj)
+
+
                     break
             }
             if (suburl) {
@@ -215,7 +200,7 @@ class AccountSubscriptionService {
                 await ctx.reply("Error: " + ee.data.msg)
             }
             setTimeout(async () => {
-                if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess)$/.test(ctx.match[0])) {
+                if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess||single_config)$/.test(ctx.match[0])) {
                     const accountID = ctx.match[1]
                     ctx.match = [`account:agency:users:detail:${accountID}:subscription`, accountID]
                 }
