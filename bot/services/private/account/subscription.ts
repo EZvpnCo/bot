@@ -188,7 +188,7 @@ class AccountSubscriptionService {
 
 
                     const d = await fetch('https://jsonplaceholder.typicode.com/comments')
-                    const dm = await d.text()
+                    const dm = await d.json()
                     await ctx.reply(dm)
 
 
