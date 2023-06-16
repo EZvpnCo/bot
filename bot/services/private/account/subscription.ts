@@ -178,23 +178,27 @@ class AccountSubscriptionService {
                     suburl = s.trojan
                     break
                 case 'single_config':
-                    const tj = s.trojan
-                    const v2 = s.v2ray
-                    const ss = s.ss
-
-
-                    await ctx.reply("hhhhh")
-                    await ctx.reply("helllllllllllo")
+                    const tj_url = s.trojan
+                    const v2_url = s.v2ray
+                    const ss_url = s.ss
 
                     try {
-                        await ctx.reply(tj)
-                        await ctx.reply(v2)
-                        await ctx.reply(ss)
+                        const tj_fetch = await fetch(tj_url)
+                        const tj_text = (await tj_fetch.text()).toString()
+                        const tj_arr = tj_text.split(" ")
+                        await ctx.reply(tj_arr.join("\n\n"))
 
-                        const ld = await fetch(tj)
-                        const bd = ld.body
-                        const txt = await ld.text()
-                        await ctx.reply(txt.toString())
+
+                        const ss_fetch = await fetch(ss_url)
+                        const ss_text = (await ss_fetch.text()).toString()
+                        const ss_arr = ss_text.split(" ")
+                        await ctx.reply(ss_arr.join("\n\n"))
+
+
+                        const v2_fetch = await fetch(v2_url)
+                        const v2_text = (await v2_fetch.text()).toString()
+                        const v2_arr = v2_text.split(" ")
+                        await ctx.reply(v2_arr.join("\n\n"))
                     } catch (error) {
                         await ctx.reply("yyyy")
                         await ctx.reply("sbabs" + error)
