@@ -210,7 +210,10 @@ class AccountSubscriptionService {
                         await ctx.reply("yyyy" + (ctx.match?.[0] || ""))
                         keyboard.text(ctx.t("back-to-home-btn"), (ctx.match?.[0] || "menu"))
 
-
+                        await ctx.editMessageText(
+                            `:لیست سرورها`,
+                            { parse_mode: "HTML", reply_markup: keyboard }
+                        );
 
 
                     } catch (error) {
