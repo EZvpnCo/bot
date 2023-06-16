@@ -193,7 +193,7 @@ class AccountSubscriptionService {
                         const btnList: string[] = []
                         const buttons: { name: string, url: string }[] = []
 
-
+                        const isAgentMember = !!((Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0])))
                         for (let i = 0; i < all_list.length; i++) {
                             const item = all_list[i].split("#")
                             const name = item[1]
@@ -201,23 +201,22 @@ class AccountSubscriptionService {
                                 btnList.push(name)
                                 buttons.push({
                                     name,
-                                    url: ((Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0])))
-                                        ? "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name
+                                    url: isAgentMember
+                                        ? "account:agency:users:detail:" + ctx.match![1]! + ":subscription:get_config:" + name
                                         : "account:subscription:get_config:" + name
                                 })
                             }
                         }
 
-                        console.log(buttons)
-
-                        // await ctx.reply("M > " + JSON.stringify(buttons))
-
                         const keyboard = new InlineKeyboard()
                         for (let i = 0; i < buttons.length; i++) {
                             const item = buttons[i]
-                            keyboard.text(item.name, item.url).row()
+                            keyboard.text(item.name, item.url)
+                            if (i % 2 === 1) keyboard.row()
                         }
-                        keyboard.text("برگشت", "menu").row()
+                        if (buttons.length % 2 === 1) keyboard.row()
+                        keyboard.text("برگشت", isAgentMember ? ("account:agency:users:detail:" + ctx.match![1]! + ":subscription") : "account:subscription")
+                        keyboard.text("صفحه اصلی", "menu")
                         await ctx.editMessageText(`لیست سرورها:`, { reply_markup: keyboard });
                     } catch (error) {
                         await ctx.reply("Err: " + error)
