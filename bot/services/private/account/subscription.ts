@@ -183,76 +183,28 @@ class AccountSubscriptionService {
                     suburl = s.trojan
                     break
                 case 'single_config':
-                    const tj_url = s.trojan
-                    const v2_url = s.v2ray
-                    const ss_url = s.ss
 
                     try {
-                        const tj_fetch = await fetch(tj_url)
-                        const tj_text = (await tj_fetch.text()).toString()
-                        const tj_arr = tj_text.split("\n")
+                        const all_fetch = await fetch(s.all)
+                        const all_text = (await all_fetch.text()).toString()
+                        const all_list = all_text.split("\n")
 
-                        const ss_fetch = await fetch(ss_url)
-                        const ss_text = (await ss_fetch.text()).toString()
-                        const ss_arr = ss_text.split(" ")
-
-                        const v2_fetch = await fetch(v2_url)
-                        const v2_text = (await v2_fetch.text()).toString()
-                        const v2_arr = v2_text.split(" ")
 
                         const btnList: string[] = []
                         const buttons: { name: string, url: string }[] = []
 
-                        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0])) {
-                            for (let i = 0; i < tj_arr.length; i++) {
-                                const item = tj_arr[i].split("#")
-                                const name = item[1]
-                                if (!!name && !btnList.includes(name)) {
-                                    btnList.push(name)
-                                    buttons.push({ name, url: "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name })
-                                }
-                            }
-                            for (let i = 0; i < ss_arr.length; i++) {
-                                const item = ss_arr[i].split("#")
-                                const name = item[1]
-                                if (!!name && !btnList.includes(name)) {
-                                    btnList.push(name)
-                                    buttons.push({ name, url: "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name })
-                                }
-                            }
-                            for (let i = 0; i < v2_arr.length; i++) {
-                                const item = ss_arr[i].split("#")
-                                const name = item[1]
-                                if (!!name && !btnList.includes(name)) {
-                                    btnList.push(name)
-                                    buttons.push({ name, url: "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name })
-                                }
-                            }
-                        }
-                        else {
-                            for (let i = 0; i < tj_arr.length; i++) {
-                                const item = tj_arr[i].split("#")
-                                const name = item[1]
-                                if (!!name && !btnList.includes(name)) {
-                                    btnList.push(name)
-                                    buttons.push({ name, url: "account:subscription:get_config:" + name })
-                                }
-                            }
-                            for (let i = 0; i < ss_arr.length; i++) {
-                                const item = ss_arr[i].split("#")
-                                const name = item[1]
-                                if (!!name && !btnList.includes(name)) {
-                                    btnList.push(name)
-                                    buttons.push({ name, url: "account:subscription:get_config:" + name })
-                                }
-                            }
-                            for (let i = 0; i < v2_arr.length; i++) {
-                                const item = ss_arr[i].split("#")
-                                const name = item[1]
-                                if (!!name && !btnList.includes(name)) {
-                                    btnList.push(name)
-                                    buttons.push({ name, url: "account:subscription:get_config:" + name })
-                                }
+
+                        for (let i = 0; i < all_list.length; i++) {
+                            const item = all_list[i].split("#")
+                            const name = item[1]
+                            if (!!name && !btnList.includes(name)) {
+                                btnList.push(name)
+                                buttons.push({
+                                    name,
+                                    url: ((Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0])))
+                                        ? "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name
+                                        : "account:subscription:get_config:" + name
+                                })
                             }
                         }
 
