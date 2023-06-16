@@ -202,23 +202,21 @@ class AccountSubscriptionService {
                             const name = item[1]
                             if (!btnList.includes(name)) {
                                 btnList.push(name)
-                                keyboard.text(name, "single_config:" + name).row()
+                                keyboard.text(name, "single_config:").row()
                             }
                         }
-
-
-                        await ctx.reply("yyyy" + (ctx.match?.[0] || ""))
-                        keyboard.text(ctx.t("back-to-home-btn"), (ctx.match?.[0] || "menu"))
+                        keyboard.text("برگشت", "").row()
 
                         await ctx.editMessageText(
                             `:لیست سرورها`,
-                            { parse_mode: "HTML", reply_markup: keyboard }
+                            { reply_markup: keyboard }
                         );
+
 
 
                     } catch (error) {
                         await ctx.reply("yyyy")
-                        await ctx.reply("sbabs" + error)
+                        await ctx.reply("ababs" + error)
                     }
 
 
