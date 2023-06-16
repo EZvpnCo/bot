@@ -207,6 +207,9 @@ class AccountSubscriptionService {
                                 })
                             }
                         }
+
+                        console.log(buttons)
+
                         const keyboard = new InlineKeyboard()
                         for (let i = 0; i < buttons.length; i++) {
                             const item = buttons[i]
@@ -223,7 +226,6 @@ class AccountSubscriptionService {
                     break
             }
             if (suburl) {
-                await ctx.reply("cccc " + JSON.stringify(ctx?.match) + " mmm")
                 await ctx.editMessageText(
                     `<a href="https://bot.ezvpn.co/qrcode/?content=${suburl}&_=${+new Date()}">🔻</a> <pre>${suburl}</pre>`,
                     { parse_mode: "HTML", reply_markup: await this.keyboard(ctx) }
