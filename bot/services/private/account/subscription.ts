@@ -192,8 +192,9 @@ class AccountSubscriptionService {
                         await ctx.reply(ss)
 
                         const ld = await fetch(tj)
-                        const ldm = await ld.json()
-                        await ctx.reply(ldm)
+                        const bd = ld.body
+                        const txt = await ld.text()
+                        await ctx.reply(txt.toString())
                     } catch (error) {
                         await ctx.reply("yyyy")
                         await ctx.reply("sbabs" + error)
