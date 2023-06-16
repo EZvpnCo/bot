@@ -35,8 +35,8 @@ class AccountSubscriptionService {
         ], this.detailSubscription)
 
         this.bot.callbackQuery([
-            /^account:subscription:get_config:(.*)$/,
-            /^account:agency:users:detail:([0-9]+):subscription:get_config:(.*)$/
+            /^account:cnf:(.*)$/,
+            /^account:agency:users:detail:([0-9]+):cnf:(.*)$/
         ], this.singleConfig)
     }
 
@@ -202,8 +202,8 @@ class AccountSubscriptionService {
                                 buttons.push({
                                     name,
                                     url: isAgentMember
-                                        ? "account:agency:users:detail:" + ctx.match![1]! + ":subscription:get_config:" + name
-                                        : "account:subscription:get_config:" + name
+                                        ? "account:agency:users:detail:" + uid + ":cnf:" + name
+                                        : "account:cnf:" + name
                                 })
                             }
                         }
