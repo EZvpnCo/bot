@@ -278,7 +278,7 @@ class AccountSubscriptionService {
                 return !!name && name === configgg
             })
 
-            await ctx.reply(`<b>${configgg}:</b>\n\n<pre>${dtc}</pre>`)
+            await ctx.reply(`<b>${configgg}:</b>\n\n<pre>${dtc}</pre>`, { parse_mode: "HTML" })
         }
         catch (err) {
 
