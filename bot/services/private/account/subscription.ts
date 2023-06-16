@@ -202,10 +202,13 @@ class AccountSubscriptionService {
                             const name = item[1]
                             if (!btnList.includes(name)) {
                                 btnList.push(name)
-                                keyboard.text(name, "single_config:").row()
+                                // keyboard.text(name, "single_config:").row()
                             }
                         }
                         keyboard.text("برگشت", "").row()
+
+
+                        await ctx.reply("hello" + JSON.stringify(btnList))
 
                         await ctx.editMessageText(
                             `:لیست سرورها`,
