@@ -33,6 +33,11 @@ class AccountSubscriptionService {
             /^account:subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/,
             /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/
         ], this.detailSubscription)
+
+        this.bot.callbackQuery([
+            /^account:subscription:get_config:(.*)$/,
+            /^account:agency:users:detail:([0-9]+):subscription:get_config:(.*)$/
+        ], this.singleConfig)
     }
 
 
@@ -135,15 +140,15 @@ class AccountSubscriptionService {
 
     private detailSubscription = async (ctx: MyContext) => {
         ctx.session.inputState = null
-
+        let uid = ctx.session.user?.account_id
+        let subtype = ctx.match![1]!
+        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0])) {
+            uid = parseInt(ctx.match[1])
+            subtype = ctx.match![2]!
+        }
 
         try {
-            let uid = ctx.session.user?.account_id
-            let subtype = ctx.match![1]!
-            if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0])) {
-                uid = parseInt(ctx.match[1])
-                subtype = ctx.match![2]!
-            }
+
 
             const response = await apiService.GET()("account/subscription?user=" + uid)
             const s: SubType = response.data.subscription
@@ -236,10 +241,6 @@ class AccountSubscriptionService {
                         await ctx.reply("Err: " + error)
                     }
 
-
-
-
-
                     break
             }
             if (suburl) {
@@ -257,7 +258,7 @@ class AccountSubscriptionService {
                 await ctx.reply("Error: " + ee.data.msg)
             }
             setTimeout(async () => {
-                if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess||single_config)$/.test(ctx.match[0])) {
+                if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0])) {
                     const accountID = ctx.match[1]
                     ctx.match = [`account:agency:users:detail:${accountID}:subscription`, accountID]
                 }
@@ -265,6 +266,30 @@ class AccountSubscriptionService {
             }, 500)
         }
 
+    }
+
+
+
+    private singleConfig = async (ctx: MyContext) => {
+        ctx.session.inputState = null
+        let uid = ctx.session.user?.account_id
+        let configgg = ctx.match![1]!
+        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:get_config:(.*)$/.test(ctx.match[0])) {
+            uid = parseInt(ctx.match[1])
+            configgg = ctx.match![2]!
+            await ctx.reply("fp")
+        }
+
+        await ctx.reply("fff")
+        await ctx.reply(configgg)
+
+
+        try {
+
+        }
+        catch (err) {
+
+        }
     }
 
 }
