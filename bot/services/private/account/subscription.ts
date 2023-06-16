@@ -186,19 +186,33 @@ class AccountSubscriptionService {
                         const tj_fetch = await fetch(tj_url)
                         const tj_text = (await tj_fetch.text()).toString()
                         const tj_arr = tj_text.split(" ")
-                        await ctx.reply(tj_arr.join("\n\n"))
-
 
                         const ss_fetch = await fetch(ss_url)
                         const ss_text = (await ss_fetch.text()).toString()
                         const ss_arr = ss_text.split(" ")
-                        await ctx.reply(ss_arr.join("\n\n"))
-
 
                         const v2_fetch = await fetch(v2_url)
                         const v2_text = (await v2_fetch.text()).toString()
                         const v2_arr = v2_text.split(" ")
-                        await ctx.reply(v2_arr.join("\n\n"))
+
+                        const btnList: string[] = []
+                        const keyboard = new InlineKeyboard()
+                        for (let i = 0; i < tj_arr.length; i++) {
+                            const item = tj_arr[i].split("#")
+                            const name = item[1]
+                            if (!btnList.includes(name)) {
+                                btnList.push(name)
+                                keyboard.text(name, "single_config:" + name).row()
+                            }
+                        }
+
+
+                        await ctx.reply("yyyy" + (ctx.match?.[0] || ""))
+                        keyboard.text(ctx.t("back-to-home-btn"), (ctx.match?.[0] || "menu"))
+
+
+
+
                     } catch (error) {
                         await ctx.reply("yyyy")
                         await ctx.reply("sbabs" + error)
