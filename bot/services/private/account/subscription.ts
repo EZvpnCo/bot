@@ -187,12 +187,12 @@ class AccountSubscriptionService {
                     await ctx.reply("helllllllllllo")
 
                     try {
-                        const d = await fetch('https://jsonplaceholder.typicode.com/comments')
-                        const dm = await d.json()
-                        await ctx.reply(dm)
+                        await ctx.reply(tj)
+                        await ctx.reply(v2)
+                        await ctx.reply(ss)
 
                         const ld = await fetch(tj)
-                        const ldm = await ld.text()
+                        const ldm = await ld.json()
                         await ctx.reply(ldm)
                     } catch (error) {
                         await ctx.reply("yyyy")
