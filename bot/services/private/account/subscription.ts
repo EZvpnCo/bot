@@ -195,27 +195,27 @@ class AccountSubscriptionService {
                         const v2_text = (await v2_fetch.text()).toString()
                         const v2_arr = v2_text.split(" ")
 
-                        const btnList: string[] = []
-                        const keyboard = new InlineKeyboard()
-                        for (let i = 0; i < tj_arr.length; i++) {
-                            const item = tj_arr[i].split("#")
-                            const name = item[1]
-                            if (!btnList.includes(name)) {
-                                btnList.push(name)
-                                // keyboard.text(name, "single_config:").row()
-                            }
-                        }
-                        keyboard.text("برگشت", "").row()
+                        // const btnList: string[] = []
+                        // const keyboard = new InlineKeyboard()
+                        // for (let i = 0; i < tj_arr.length; i++) {
+                        //     const item = tj_arr[i].split("#")
+                        //     const name = item[1]
+                        //     if (!btnList.includes(name)) {
+                        //         btnList.push(name)
+                        //         // keyboard.text(name, "single_config:").row()
+                        //     }
+                        // }
+                        // keyboard.text("برگشت", "").row()
 
 
-                        await ctx.reply("hello" + JSON.stringify(btnList))
+                        // await ctx.reply("hello" + JSON.stringify(btnList))
 
-                        await ctx.editMessageText(
-                            `:لیست سرورها`,
-                            { reply_markup: keyboard }
-                        );
+                        // await ctx.editMessageText(
+                        //     `:لیست سرورها`,
+                        //     { reply_markup: keyboard }
+                        // );
 
-
+                        await ctx.reply("hello" + tj_arr.join("\n\n\nMMM"))
 
                     } catch (error) {
                         await ctx.reply("yyyy")
