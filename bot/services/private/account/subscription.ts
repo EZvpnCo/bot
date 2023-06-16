@@ -212,7 +212,6 @@ class AccountSubscriptionService {
                                     buttons.push({ name, url: "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name })
                                 }
                             }
-
                             for (let i = 0; i < ss_arr.length; i++) {
                                 const item = ss_arr[i].split("#")
                                 const name = item[1]
@@ -221,7 +220,6 @@ class AccountSubscriptionService {
                                     buttons.push({ name, url: "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name })
                                 }
                             }
-
                             for (let i = 0; i < v2_arr.length; i++) {
                                 const item = ss_arr[i].split("#")
                                 const name = item[1]
@@ -240,7 +238,6 @@ class AccountSubscriptionService {
                                     buttons.push({ name, url: "account:subscription:get_config:" + name })
                                 }
                             }
-
                             for (let i = 0; i < ss_arr.length; i++) {
                                 const item = ss_arr[i].split("#")
                                 const name = item[1]
@@ -249,7 +246,6 @@ class AccountSubscriptionService {
                                     buttons.push({ name, url: "account:subscription:get_config:" + name })
                                 }
                             }
-
                             for (let i = 0; i < v2_arr.length; i++) {
                                 const item = ss_arr[i].split("#")
                                 const name = item[1]
@@ -259,6 +255,9 @@ class AccountSubscriptionService {
                                 }
                             }
                         }
+
+                        await ctx.reply("M > " + JSON.stringify(buttons))
+
                         const keyboard = new InlineKeyboard()
                         for (let i = 0; i < buttons.length; i++) {
                             const item = buttons[i]
