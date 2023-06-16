@@ -185,7 +185,7 @@ class AccountSubscriptionService {
                     try {
                         const tj_fetch = await fetch(tj_url)
                         const tj_text = (await tj_fetch.text()).toString()
-                        const tj_arr = tj_text.split(" ")
+                        const tj_arr = tj_text.split("\r\n")
 
                         const ss_fetch = await fetch(ss_url)
                         const ss_text = (await ss_fetch.text()).toString()
@@ -212,7 +212,7 @@ class AccountSubscriptionService {
                             { reply_markup: keyboard }
                         );
 
-                        await ctx.reply("hello" + tj_arr.map((v) => "trojan://" + v))
+                        await ctx.reply("hello\n\n" + tj_arr.map((v) => "MnM" + v))
 
                     } catch (error) {
                         await ctx.reply("yyyy")
