@@ -186,16 +186,20 @@ class AccountSubscriptionService {
                     await ctx.reply("hhhhh")
                     await ctx.reply("helllllllllllo")
 
+                    try {
+                        const d = await fetch('https://jsonplaceholder.typicode.com/comments')
+                        const dm = await d.json()
+                        await ctx.reply(dm)
 
-                    const d = await fetch('https://jsonplaceholder.typicode.com/comments')
-                    const dm = await d.json()
-                    await ctx.reply(dm)
+                        const ld = await fetch(tj)
+                        const ldm = await ld.text()
+                        await ctx.reply(ldm)
+                    } catch (error) {
+                        await ctx.reply("yyyy")
+                        await ctx.reply("sbabs" + error)
+                    }
 
 
-
-                    const ld = await fetch(tj)
-                    const ldm = await ld.text()
-                    await ctx.reply(ldm)
 
 
 
