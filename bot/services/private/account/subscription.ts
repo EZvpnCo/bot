@@ -204,7 +204,6 @@ class AccountSubscriptionService {
                         const buttons: { name: string, url: string }[] = []
 
                         if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0])) {
-                            ctx.reply("user of agent")
                             for (let i = 0; i < tj_arr.length; i++) {
                                 const item = tj_arr[i].split("#")
                                 const name = item[1]
@@ -213,9 +212,26 @@ class AccountSubscriptionService {
                                     buttons.push({ name, url: "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name })
                                 }
                             }
+
+                            for (let i = 0; i < ss_arr.length; i++) {
+                                const item = ss_arr[i].split("#")
+                                const name = item[1]
+                                if (!!name && !btnList.includes(name)) {
+                                    btnList.push(name)
+                                    buttons.push({ name, url: "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name })
+                                }
+                            }
+
+                            for (let i = 0; i < v2_arr.length; i++) {
+                                const item = ss_arr[i].split("#")
+                                const name = item[1]
+                                if (!!name && !btnList.includes(name)) {
+                                    btnList.push(name)
+                                    buttons.push({ name, url: "account:agency:users:detail:" + ctx.match[1] + ":subscription:get_config:" + name })
+                                }
+                            }
                         }
                         else {
-                            ctx.reply("user normal")
                             for (let i = 0; i < tj_arr.length; i++) {
                                 const item = tj_arr[i].split("#")
                                 const name = item[1]
@@ -224,19 +240,32 @@ class AccountSubscriptionService {
                                     buttons.push({ name, url: "account:subscription:get_config:" + name })
                                 }
                             }
+
+                            for (let i = 0; i < ss_arr.length; i++) {
+                                const item = ss_arr[i].split("#")
+                                const name = item[1]
+                                if (!!name && !btnList.includes(name)) {
+                                    btnList.push(name)
+                                    buttons.push({ name, url: "account:subscription:get_config:" + name })
+                                }
+                            }
+
+                            for (let i = 0; i < v2_arr.length; i++) {
+                                const item = ss_arr[i].split("#")
+                                const name = item[1]
+                                if (!!name && !btnList.includes(name)) {
+                                    btnList.push(name)
+                                    buttons.push({ name, url: "account:subscription:get_config:" + name })
+                                }
+                            }
                         }
                         const keyboard = new InlineKeyboard()
-
-
                         for (let i = 0; i < buttons.length; i++) {
                             const item = buttons[i]
-                            keyboard.text(item.name, item.url)
+                            keyboard.text(item.name, item.url).row()
                         }
-
                         keyboard.text("برگشت", "menu").row()
-
                         await ctx.editMessageText(`لیست سرورها:`, { reply_markup: keyboard });
-
                     } catch (error) {
                         await ctx.reply("Err: " + error)
                     }
@@ -290,6 +319,9 @@ class AccountSubscriptionService {
         catch (err) {
 
         }
+
+        await ctx.answerCallbackQuery()
+
     }
 
 }
