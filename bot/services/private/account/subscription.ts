@@ -208,6 +208,8 @@ class AccountSubscriptionService {
                             }
                         }
 
+                        console.log(buttons)
+
                         // await ctx.reply("M > " + JSON.stringify(buttons))
 
                         const keyboard = new InlineKeyboard()
