@@ -256,18 +256,29 @@ class AccountSubscriptionService {
         ctx.session.inputState = null
         let uid = ctx.session.user?.account_id
         let configgg = ctx.match![1]!
-        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription:get_config:(.*)$/.test(ctx.match[0])) {
+        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):cnf:(.*)$/.test(ctx.match[0])) {
             uid = parseInt(ctx.match[1])
             configgg = ctx.match![2]!
-            await ctx.reply("fp")
         }
 
-        await ctx.reply("fff")
-        await ctx.reply(configgg)
+
 
 
         try {
+            const response = await apiService.GET()("account/subscription?user=" + uid)
+            const s: SubType = response.data.subscription
 
+            const all_fetch = await fetch(s.all)
+            const all_text = (await all_fetch.text()).toString()
+            const all_list = all_text.split("\n")
+
+            const dtc = all_list.filter((v) => {
+                const item = v.split("#")
+                const name = item[1]
+                return !!name && name === configgg
+            })
+
+            await ctx.reply(`<b>${configgg}:</b>\n\n<pre>${dtc}</pre>`)
         }
         catch (err) {
 
