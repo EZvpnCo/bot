@@ -202,7 +202,7 @@ class AccountSubscriptionService {
                             const name = item[1]
                             if (!btnList.includes(name)) {
                                 btnList.push(name)
-                                keyboard.text("YoMo", "single_config:")
+                                keyboard.text("YoMo" + name, "single_config:")
                                     .row()
                             }
                         }
