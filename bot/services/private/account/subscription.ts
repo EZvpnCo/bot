@@ -208,7 +208,7 @@ class AccountSubscriptionService {
                             }
                         }
 
-                        await ctx.reply("M > " + JSON.stringify(buttons))
+                        // await ctx.reply("M > " + JSON.stringify(buttons))
 
                         const keyboard = new InlineKeyboard()
                         for (let i = 0; i < buttons.length; i++) {
