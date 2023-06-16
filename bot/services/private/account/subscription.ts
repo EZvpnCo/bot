@@ -47,7 +47,7 @@ class AccountSubscriptionService {
         const keyboard = new InlineKeyboard()
         keyboard.text("🛠 آموزش اتصال", "tutorials").row()
         keyboard.text("👇 دریافت QR code 👇", "account:subscription:get_qrcode").row()
-        if (Array.isArray(ctx.match) && /^account:agency:users:detail:([0-9]+):subscription$/.test(ctx.match[0])) {
+        if (Array.isArray(ctx.match) && (/^account:agency:users:detail:([0-9]+):subscription$/.test(ctx.match[0]) || /^account:agency:users:detail:([0-9]+):subscription:(clash|surfboard|ss|v2ray|trojan|all|vmess|tjvmess|single_config)$/.test(ctx.match[0]))) {
             keyboard.text("Clash", "account:agency:users:detail:" + ctx.match[1] + ":subscription:clash")
             keyboard.text("Surfboard", "account:agency:users:detail:" + ctx.match[1] + ":subscription:surfboard")
             keyboard.row()
