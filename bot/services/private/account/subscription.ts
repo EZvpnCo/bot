@@ -202,23 +202,20 @@ class AccountSubscriptionService {
                             const name = item[1]
                             if (!btnList.includes(name)) {
                                 btnList.push(name)
-                                keyboard.text(name, "single_config:").row()
+                                // keyboard.text(name, "single_config:").row()
                             }
                         }
-                        keyboard.text("برگشت", "menu").row()
+                        // keyboard.text("برگشت", "menu").row()
 
-                        await ctx.editMessageText(
-                            `:لیست سرورها`,
-                            { reply_markup: keyboard }
-                        );
-
-                        let jrr = null
-                        jrr = tj_text.toString().split("\n")
-                        await ctx.reply(jrr.join("\n\n@@@@\n\n"))
+                        // await ctx.editMessageText(
+                        //     `:لیست سرورها`,
+                        //     { reply_markup: keyboard }
+                        // );
+                        await ctx.reply(tj_arr.join("\n\n@@@@\n\n"))
+                        await ctx.reply(btnList.join("\n\n$$$\n\n"))
 
                     } catch (error) {
-                        await ctx.reply("yyyy")
-                        await ctx.reply("ababs" + error)
+                        await ctx.reply("Err: " + error)
                     }
 
 
